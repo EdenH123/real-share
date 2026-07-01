@@ -6,9 +6,10 @@ Fractional, tokenized ownership of rental property for Israeli investors — at 
 
 ## Start building
 
-Open this repo in Claude Code and say:
+Open this repo in a fresh Claude Code session. Two ways:
 
-> **"Read BUILD-BRIEF.md and build the RealShare PWA."**
+- **Autonomous (recommended):** paste the `/goal` block from **[BUILD-PROMPT.md](BUILD-PROMPT.md)** — it loops and builds the whole app to a deployable v1 on its own.
+- **Interactive:** say **"Read BUILD-BRIEF.md and build the RealShare PWA."**
 
 ## What's here
 
