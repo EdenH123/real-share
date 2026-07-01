@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --app-max: 480px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #e9eef1;
+  color: theme("colors.ink");
+  font-family: theme("fontFamily.sans");
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numbers always render LTR with tabular figures, even inside RTL text. */
+.num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Serif display for headers / hero numbers. */
+.font-display {
+  font-family: theme("fontFamily.serif");
+  letter-spacing: -0.01em;
+}
+/* In Hebrew, serif Latin display faces don't cover glyphs well;
+   fall back to the heavy sans which reads as an editorial display in HE. */
+html[lang="he"] .font-display {
+  font-family: theme("fontFamily.sans");
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* Eyebrow kicker */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: theme("letterSpacing.eyebrow");
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: theme("colors.gold.text");
+}
+html[lang="he"] .eyebrow {
+  /* Hebrew has no uppercase; use spacing + weight for the same kicker feel */
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+/* Hide scrollbars inside the app frame for a native feel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Smooth momentum scroll in the scroll area */
+.app-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid theme("colors.teal.DEFAULT");
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Range slider styling (invest amount) */
+input[type="range"].rs-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  background: theme("colors.hairline");
+  outline: none;
+}
+input[type="range"].rs-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: theme("colors.gold.DEFAULT");
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(15, 34, 51, 0.25);
+  cursor: pointer;
+}
+input[type="range"].rs-range::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: theme("colors.gold.DEFAULT");
+  border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(15, 34, 51, 0.25);
+  cursor: pointer;
+}
