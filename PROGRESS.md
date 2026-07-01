@@ -1,0 +1,63 @@
+# RealShare v1 — Build Progress
+
+Status: **v1 complete.** Production-grade, installable PWA built per `BUILD-BRIEF.md`.
+All milestones done, verified visually in Hebrew (RTL) **and** English, `npm run build`
+passes with zero errors, no runtime console errors on any screen.
+
+Last verified: 2026-07-01.
+
+## Milestones (BUILD-BRIEF.md §9)
+
+- [x] **M1 — Scaffold Next.js PWA + Tailwind + RTL + i18n + design tokens**
+  - Next.js 14 (App Router) + TypeScript + Tailwind CSS.
+  - Installable PWA: `public/manifest.webmanifest` + `public/sw.js` (offline app shell), generated PNG icons (192/512/maskable/apple-touch).
+  - i18n: lightweight `I18nProvider` (`lib/i18n.tsx`) with full `he`/`en` dictionaries (`lib/locales/`). **Hebrew RTL is the default**; language persists to `localStorage`; `<html dir/lang>` updates live.
+  - Design tokens in `tailwind.config.ts`: navy `#0F2233`/`#1B3A5B`, teal `#1F6675`, gold `#E0A458` (text `#A56B2A`), semantic green/red, surfaces. Fonts via `next/font`: Fraunces (serif display, EN) + Assistant (Hebrew+Latin body).
+
+- [x] **M2 — Design-system components + tab shell**
+  - `IconMedallion` (gold circle + navy glyph ~52%), `Card`, `Button`/`ButtonLink`, `Eyebrow`, `StatusChip`, `ProgressBar`, `IllustrativeTag`, `Sheet` (bottom sheet), `DisclaimerBar`, `SectionTitle`, `NotFoundInline`.
+  - `AppFrame` phone-frame shell (viewport-locked, internal scroll), `TabBar` (RTL: בית · מפה · מסחר · תיק · פרופיל), `Header`, `LanguageToggle`.
+
+- [x] **M3 — Home + Map + Property detail (waterfall) on seed data**
+  - Onboarding (3 slides → waitlist/home), Home dashboard (portfolio snapshot, filters, featured, how-it-works, markets, waitlist CTA).
+  - Map/Properties (market filter, list + stylized map view, cards).
+  - Property detail with the cost→net **StatWaterfall** (€7,500 gross → −€3,125 opex → −€394 CIT → **€3,981 net = 2.65%**), key figures, token price card, "your €1,000 over 5yr" returns, documents, escrow note.
+
+- [x] **M4 — Invest flow (simulated) + waitlist capture**
+  - `/invest/[id]`: choose tokens (min 1, slider + quick-add), review (subtotal, ~2% setup fee, total, illustrative est. income), escrow explainer, confirm → success (flagged preview, adds to demo portfolio) → waitlist offer.
+  - Real waitlist capture: `WaitlistForm` → `POST /api/waitlist` (validates email, records signup; best-effort file persistence with graceful fallback).
+
+- [x] **M5 — Marketplace + Portfolio**
+  - `/trade`: per-property order book (bids/asks with depth bars), RealShare estimated (NAV) price, spread, simulated bid/ask placement, honest liquidity note, your simulated orders.
+  - `/portfolio`: total value/return, invested/accrued/next-payout, holdings breakdown, rent distributions (paid/upcoming), empty state.
+
+- [x] **M6 — Profile (mock tax report) + Notifications + language toggle**
+  - `/profile`: user + KYC (mock), language toggle, links, reset demo.
+  - `/profile/tax`: auto-generated **mock Israeli tax report** (dividend-like distributions, capital gains, creditable 9% foreign tax, 25% estimated Israeli tax, net, Form 1301 pre-fill) — the Blink-style moat.
+  - `/notifications`: payouts, funding rounds, sale votes, system; read-state persisted.
+
+- [x] **M7 — Disclaimers pass + PWA install + polish**
+  - Persistent plain-language disclaimer legend (HE+EN) on **every** screen via `DisclaimerBar`, opening the full legal disclaimer. Dedicated `/legal` + `/about`.
+  - All yield/return/price/tax figures carry an **Illustrative** tag; "Invest"/"Trade" carry simulation badges; token classification & tax framed as *pending ITA/ISA*, never asserted as fact.
+  - PWA verified installable: valid manifest (standalone, icons, start_url, theme), service worker **registered + active + controlling** the page, iOS apple-touch tags.
+
+- [x] **M8 — Build passes + deploy docs + PROGRESS.md + push**
+  - `npm run build`: **zero errors**, 13 routes. Playwright verification of 12 screens × 2 languages: **no console/page errors**.
+  - `README.md` documents install/run and the one-command Vercel deploy for a solo non-engineer.
+  - Committed and pushed to the working branch.
+
+## Key decisions & assumptions
+
+- **Deploy branch:** work is committed to `claude/realshare-v1-build-ship-q1bw1y` (the designated feature branch), which tracks to `origin`. Open a PR to `main` to merge.
+- **Vercel:** no deploy credentials were present in the environment, so deployment is documented (one command) rather than executed — see README.
+- **Property imagery:** the environment has no outbound access to image CDNs, so property "photos" are on-brand generated gradients + skyline silhouettes. This keeps the PWA fully offline-capable and free of runtime console/network errors. Swap in real photos by pointing `PropertyImage` at real URLs (remote host already allow-listed in `next.config.mjs`).
+- **Waitlist persistence:** the API route validates and records signups (logs + best-effort JSON file). On read-only/serverless hosts the file write is skipped gracefully. For durable production storage, connect a form service / DB (Resend, Supabase, a Google-Sheet webhook) — one function swap in `app/api/waitlist/route.ts`.
+- **i18n approach:** a small custom provider (not `next-intl` routing) keeps the stack simple for a solo non-engineer while still delivering full RTL mirroring via CSS logical properties.
+- **Seed numbers** are the real deck figures (BUILD-BRIEF §8): worked example €150k→€3,981 net/2.65%; markets Budapest/Athens/Portugal/Israel; funding/active/failed/exit-vote lifecycle states; mock auto tax report in Profile.
+- **FX:** an illustrative fixed €→₪ rate is used only where ₪ framing appears; all headline figures are shown in € as in the deck.
+
+## How verified
+
+- `npm run build` → compiled successfully, 13 routes, no type/lint errors.
+- Production server + Playwright screenshots of every screen in `he` and `en`; console-error listener attached — **none fired**.
+- PWA: manifest + SW served with correct content types; SW registered/active/controlling confirmed programmatically.
