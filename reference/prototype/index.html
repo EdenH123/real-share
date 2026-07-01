@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1A73E8">
+<title>RealShare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1A73E8; --primary-dark:#1557B0; --primary-light:#E8F0FE;
+  --green:#00C48C; --green-dark:#00A878; --green-bg:#E6F9F1;
+  --amber:#FFB020; --amber-bg:#FFF3D6; --amber-text:#B07D00;
+  --error:#E53E3E; --error-bg:#FDECEC;
+  --bg:#F8F9FC; --surface:#FFFFFF;
+  --t1:#1A1D26; --t2:#6B7280; --t3:#9CA3AF; --border:#E5E7EB; --divider:#F1F3F7;
+  --r-card:14px; --r-btn:10px; --pill:24px;
+  --shadow:0 1px 3px rgba(20,30,60,.06), 0 1px 2px rgba(20,30,60,.04);
+  --shadow-md:0 4px 16px rgba(20,30,60,.08), 0 1px 4px rgba(20,30,60,.05);
+  --shadow-lg:0 12px 40px rgba(20,30,60,.16), 0 4px 12px rgba(20,30,60,.08);
+  --grad:linear-gradient(135deg,#1A73E8 0%,#1557B0 55%,#00C48C 140%);
+  --grad-hero:linear-gradient(135deg,#2A7DEE 0%,#1557B0 60%,#0E9C76 120%);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Heebo','Inter',system-ui,sans-serif;color:var(--t1);
+  background:#0c1322;
+  background-image:radial-gradient(ellipse at 20% 0%,#1b2940 0%,transparent 55%),radial-gradient(ellipse at 80% 100%,#102033 0%,transparent 55%),linear-gradient(160deg,#0c1322,#0a0f1c);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;letter-spacing:-.1px}
+.num{font-family:'Inter','Heebo',sans-serif;direction:ltr;unicode-bidi:isolate;font-feature-settings:"tnum" 1;letter-spacing:-.2px}
+
+/* ===== phone frame ===== */
+#phone{width:100%;max-width:412px;height:100dvh;max-height:892px;background:var(--bg);position:relative;
+  overflow:hidden;display:flex;flex-direction:column}
+@media(min-width:480px){#phone{border-radius:46px;height:min(880px,calc(100dvh - 24px));
+  box-shadow:0 0 0 11px #11151f,0 0 0 13px #232a38,0 50px 120px -20px rgba(0,0,0,.7),inset 0 0 4px rgba(255,255,255,.04);}}
+/* notch */
+.notch{position:absolute;top:0;inset-inline:0;height:0;z-index:300;display:flex;justify-content:center;pointer-events:none}
+@media(min-width:480px){.notch::after{content:"";position:absolute;top:10px;width:128px;height:30px;background:#0a0d14;border-radius:18px;box-shadow:inset 0 0 4px rgba(255,255,255,.06)}}
+
+/* ===== iOS status bar ===== */
+.statusbar{position:relative;z-index:60;height:46px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px 0 22px;font-family:Inter;font-weight:700;font-size:14px;color:#fff;flex-shrink:0;background:transparent;direction:ltr}
+.statusbar.dark{color:var(--t1)}
+.statusbar .time{font-variant-numeric:tabular-nums;letter-spacing:.3px;font-weight:800}
+.statusbar .right{display:flex;align-items:center;gap:6px}
+.statusbar svg{display:block}
+@media(max-width:479px){.statusbar{padding-top:env(safe-area-inset-top)}}
+
+/* ===== generic ===== */
+#app{flex:1;min-height:0;display:flex;flex-direction:column}
+.screen{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:84px;position:relative}
+.screen::-webkit-scrollbar{display:none}
+.pad{padding:0 16px}
+.sec-title{font-size:18px;font-weight:800;margin:22px 16px 12px;display:flex;justify-content:space-between;align-items:center;letter-spacing:-.4px}
+.sec-title .link{color:var(--primary);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px}
+.sec-title .link:active{opacity:.6}
+.muted{color:var(--t2)}
+
+/* ===== header ===== */
+.hdr{padding:8px 16px 12px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:50;min-height:52px}
+.hdr h1{font-size:21px;font-weight:800;letter-spacing:-.5px}
+.hdr .sub{font-size:13px;color:var(--t2);font-weight:500}
+.hdr.solid{background:rgba(248,249,252,.82);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--divider)}
+.hdr.sticky{position:sticky;top:0}
+.iconbtn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--surface);cursor:pointer;
+  position:relative;box-shadow:var(--shadow);transition:transform .15s var(--spring),background .15s;color:var(--t1)}
+.iconbtn:active{transform:scale(.9);background:var(--bg)}
+.badge-dot{position:absolute;top:-2px;inset-inline-end:-2px;background:var(--error);color:#fff;font-size:10px;font-weight:800;
+  min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px;border:2px solid var(--surface)}
+.back{cursor:pointer;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);transition:transform .15s var(--spring)}
+.back:active{transform:scale(.9)}
+
+/* ===== hero portfolio card ===== */
+.hero{margin:6px 16px 0;border-radius:22px;padding:20px 20px 18px;color:#fff;position:relative;overflow:hidden;
+  background:var(--grad-hero);box-shadow:0 16px 38px -10px rgba(26,115,232,.55)}
+.hero::before{content:"";position:absolute;top:-60%;inset-inline-end:-30%;width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.22),transparent 65%)}
+.hero::after{content:"";position:absolute;bottom:-50%;inset-inline-start:-20%;width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,196,140,.4),transparent 65%)}
+.hero>*{position:relative;z-index:1}
+.hero .lbl{font-size:13px;opacity:.85;font-weight:600;display:flex;align-items:center;gap:6px}
+.hero .big{font-size:36px;font-weight:900;letter-spacing:-1.2px;margin-top:3px;line-height:1.1}
+.hero .pill-ret{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 10px;font-size:13px;font-weight:700;margin-top:8px;backdrop-filter:blur(4px)}
+.hero .spark{position:absolute;bottom:14px;inset-inline-end:18px;opacity:.85}
+.hero .row{display:flex;gap:10px;margin-top:16px;border-top:1px solid rgba(255,255,255,.2);padding-top:14px}
+.hero .row>div{flex:1}
+.hero .row .k{font-size:11.5px;opacity:.82;font-weight:600}
+.hero .row .v{font-size:17px;font-weight:800;margin-top:2px}
+.hero .row .v.green{color:#aef5db}
+
+/* ===== cards ===== */
+.card{background:var(--surface);border-radius:var(--r-card);box-shadow:var(--shadow-md);overflow:hidden;cursor:pointer;
+  transition:transform .18s var(--ease),box-shadow .18s;position:relative;border:1px solid rgba(229,231,235,.6)}
+.card:active{transform:scale(.978)}
+.stagger{opacity:0;transform:translateY(14px);animation:rise .5s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* ===== art-directed property photo (pure CSS) ===== */
+.photo{height:158px;position:relative;overflow:hidden;background:#1b2330}
+.photo .sky{position:absolute;inset:0}
+.photo .sun{position:absolute;width:90px;height:90px;border-radius:50%;filter:blur(2px);opacity:.85}
+.photo .sky-glow{position:absolute;inset:0;background:radial-gradient(120% 90% at 75% 95%,rgba(255,255,255,.28),transparent 55%)}
+.photo .skyline{position:absolute;left:0;right:0;bottom:0;height:78px}
+.photo .grain{position:absolute;inset:0;opacity:.06;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='80' height='80' filter='url(%23n)'/%3E%3C/svg%3E")}
+.photo .vignette{position:absolute;inset:0;box-shadow:inset 0 -40px 60px -10px rgba(0,0,0,.45),inset 0 14px 40px -10px rgba(0,0,0,.18)}
+.tag{position:absolute;top:12px;inset-inline-end:12px;border-radius:var(--pill);padding:6px 12px;font-size:11px;font-weight:800;z-index:3;
+  backdrop-filter:blur(8px);display:flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.tag i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.tag.fund{background:rgba(230,249,241,.92);color:var(--green-dark)} .tag.fund i{background:var(--green)}
+.tag.active{background:rgba(232,240,254,.92);color:var(--primary-dark)} .tag.active i{background:var(--primary)}
+.tag.vote{background:rgba(255,243,214,.94);color:var(--amber-text)} .tag.vote i{background:var(--amber)}
+.fav{position:absolute;top:12px;inset-inline-start:12px;z-index:3;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.18);backdrop-filter:blur(8px);display:grid;place-items:center;cursor:pointer;border:1px solid rgba(255,255,255,.25)}
+.fav:active{transform:scale(.85)}
+
+.card .body{padding:14px 15px 15px}
+.card h3{font-size:16.5px;font-weight:800;letter-spacing:-.4px}
+.card .addr{color:var(--t2);font-size:12.5px;margin-top:3px;display:flex;align-items:center;gap:4px}
+.metrics{display:flex;gap:10px;margin-top:14px}
+.metrics .m{flex:1}
+.metrics .m .k{font-size:11px;color:var(--t3);font-weight:600}
+.metrics .m .vv{font-size:15px;font-weight:800;margin-top:3px}
+.metrics .m .vv.green{color:var(--green-dark)}
+.prog{height:8px;border-radius:6px;background:#EDF0F5;margin-top:14px;overflow:hidden;position:relative}
+.prog>i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--primary),var(--green));position:relative;width:0;transition:width 1s var(--ease)}
+.prog>i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:translateX(-100%);animation:shimmer 2.2s infinite}
+@keyframes shimmer{100%{transform:translateX(200%)}}
+.prog-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);margin-top:8px}
+.prog-meta b{color:var(--t1);font-weight:800}
+.cd{display:inline-flex;align-items:center;gap:4px;color:var(--amber-text);font-weight:700}
+
+/* horizontal rails */
+.hscroll{display:flex;gap:13px;overflow-x:auto;padding:2px 16px 6px;scroll-snap-type:x mandatory}
+.hscroll::-webkit-scrollbar{display:none}
+.hscroll .card{min-width:212px;scroll-snap-align:start}
+
+/* ===== buttons ===== */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:var(--r-btn);padding:16px;
+  font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;color:#fff;position:relative;overflow:hidden;
+  background:var(--primary);box-shadow:0 8px 20px -6px rgba(26,115,232,.5);transition:transform .12s var(--spring),box-shadow .2s;letter-spacing:-.2px}
+.btn:active{transform:scale(.97)}
+.btn.grad{background:var(--grad)}
+.btn.sec{background:var(--surface);color:var(--primary);box-shadow:inset 0 0 0 1.5px var(--primary)}
+.btn.ghost{background:transparent;color:var(--primary);box-shadow:none}
+.btn.amber{background:var(--amber);color:#5a3d00;box-shadow:0 8px 20px -6px rgba(255,176,32,.5)}
+.btn[disabled]{opacity:.55;pointer-events:none;filter:grayscale(.2)}
+.btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.4);transform:scale(0);animation:rip .55s ease-out;pointer-events:none}
+@keyframes rip{to{transform:scale(2.5);opacity:0}}
+
+/* ===== bottom nav ===== */
+.nav{position:absolute;bottom:0;inset-inline:0;height:64px;z-index:120;display:flex;
+  background:rgba(255,255,255,.86);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid rgba(229,231,235,.7);padding-bottom:env(safe-area-inset-bottom)}
+.nav .item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  color:var(--t3);font-size:10.5px;font-weight:700;cursor:pointer;position:relative;transition:color .2s}
+.nav .item.on{color:var(--primary)}
+.nav .item svg{width:25px;height:25px;transition:transform .25s var(--spring)}
+.nav .item.on svg{transform:translateY(-1px)}
+.nav .item::before{content:"";position:absolute;top:0;width:26px;height:3px;border-radius:0 0 3px 3px;background:var(--primary);
+  transform:scaleX(0);transition:transform .3s var(--spring)}
+.nav .item.on::before{transform:scaleX(1)}
+
+/* ===== map ===== */
+.map{position:relative;height:100%;overflow:hidden;
+  background:linear-gradient(160deg,#eef2f8 0%,#e4eaf3 100%)}
+.map .parcel{position:absolute;border-radius:5px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(180,195,220,.4)}
+.map .green-area{position:absolute;border-radius:50%;background:radial-gradient(circle,#cfe9d6,#bfe0c8);opacity:.7}
+.map .river{position:absolute;top:-10%;bottom:-10%;inset-inline-start:44%;width:74px;
+  background:linear-gradient(180deg,#9fc3e8,#7fb0e0);transform:rotate(11deg);filter:blur(.5px);
+  box-shadow:0 0 0 1px rgba(120,160,210,.4)}
+.map .river::after{content:"";position:absolute;inset:0;opacity:.4;background:repeating-linear-gradient(180deg,transparent,transparent 18px,rgba(255,255,255,.5) 19px,transparent 22px)}
+.map .bridge{position:absolute;width:84px;height:7px;background:#c9d2e0;border-radius:2px;transform:rotate(11deg);box-shadow:0 1px 2px rgba(0,0,0,.12);z-index:2}
+.map .road{position:absolute;background:#fff;opacity:.85;border-radius:4px}
+.map .dist-lbl{position:absolute;font-family:Inter;font-weight:800;font-size:11px;color:#94a3bd;letter-spacing:.5px}
+.pin{position:absolute;cursor:pointer;z-index:5;transform:translate(-50%,-100%);transition:transform .2s var(--spring)}
+.pin .blob{width:38px;height:38px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 14px rgba(0,0,0,.3);
+  display:grid;place-items:center;border:2.5px solid #fff;position:relative}
+.pin .blob span{transform:rotate(45deg);color:#fff;font-weight:900;font-size:10.5px;font-family:Inter}
+.pin .pulse{position:absolute;inset:0;border-radius:50%;animation:pulse 2.4s infinite}
+.pin.pop{animation:pinpop .4s var(--spring)}
+@keyframes pinpop{0%{transform:translate(-50%,-100%) scale(0)}60%{transform:translate(-50%,-100%) scale(1.15)}100%{transform:translate(-50%,-100%) scale(1)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,196,140,.4)}100%{box-shadow:0 0 0 16px rgba(0,196,140,0)}}
+.pin.sel{transform:translate(-50%,-100%) scale(1.22);z-index:6}
+.pin.g .blob{background:linear-gradient(135deg,#00C48C,#00A878)} .pin.g .pulse{box-shadow:0 0 0 0 rgba(0,196,140,.4)}
+.pin.b .blob{background:linear-gradient(135deg,#2A7DEE,#1557B0)}
+.pin.y .blob{background:linear-gradient(135deg,#FFB020,#E89000)}
+.cluster{position:absolute;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:rgba(26,115,232,.92);
+  color:#fff;display:grid;place-items:center;font-family:Inter;font-weight:900;font-size:15px;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.28);z-index:4}
+.legend{position:absolute;bottom:90px;inset-inline-start:14px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-radius:14px;
+  box-shadow:var(--shadow-lg);padding:11px 13px;font-size:12px;font-weight:600}
+.legend div{display:flex;align-items:center;gap:8px;margin:4px 0}
+.legend i{width:11px;height:11px;border-radius:50%}
+.map-toggle{position:absolute;top:14px;inset-inline-end:14px;z-index:8;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border-radius:24px;box-shadow:var(--shadow-md);display:flex;padding:4px;gap:2px}
+.map-toggle button{border:none;background:transparent;font-family:inherit;font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:20px;cursor:pointer;color:var(--t2);display:flex;align-items:center;gap:5px}
+.map-toggle button.on{background:var(--primary);color:#fff}
+
+/* map popup */
+.popup{position:absolute;bottom:90px;inset-inline:16px;background:var(--surface);border-radius:18px;box-shadow:var(--shadow-lg);
+  padding:12px;display:flex;gap:12px;align-items:center;z-index:9;opacity:0;transform:translateY(20px) scale(.96);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--spring)}
+.popup.show{opacity:1;transform:none;pointer-events:auto}
+.popup .pp{width:66px;height:66px;border-radius:12px;flex-shrink:0;overflow:hidden;position:relative}
+
+/* ===== sheet / modal ===== */
+.sheet-bg{position:absolute;inset:0;background:rgba(12,18,34,.5);backdrop-filter:blur(2px);z-index:200;display:flex;align-items:flex-end;
+  opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet-bg.show{opacity:1;pointer-events:auto}
+.sheet{background:var(--surface);width:100%;border-radius:26px 26px 0 0;padding:10px 18px calc(20px + env(safe-area-inset-bottom));
+  max-height:94%;overflow-y:auto;transform:translateY(100%);transition:transform .4s var(--spring);box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+.sheet::-webkit-scrollbar{display:none}
+.sheet-bg.show .sheet{transform:translateY(0)}
+.grip{width:42px;height:5px;border-radius:3px;background:var(--border);margin:6px auto 16px}
+.row-line{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--divider);font-size:14px}
+.row-line:last-of-type{border:none}
+.row-line .lbl{color:var(--t2);font-weight:500} .row-line b{font-weight:800;font-size:15px}
+.qty{display:flex;align-items:center;gap:8px;justify-content:center;margin:18px 0 6px}
+.qty button{width:50px;height:50px;border-radius:16px;border:none;background:var(--primary-light);color:var(--primary);
+  font-size:26px;font-weight:700;cursor:pointer;display:grid;place-items:center;transition:transform .1s var(--spring),background .15s;font-family:Inter}
+.qty button:active{transform:scale(.88);background:#d6e4fd}
+.qty .q{font-size:40px;font-weight:900;min-width:96px;text-align:center;font-family:Inter;letter-spacing:-2px}
+.chips{display:flex;gap:8px;justify-content:center;margin:6px 0 16px;flex-wrap:wrap}
+.chip{padding:9px 15px;border-radius:22px;background:var(--bg);border:1.5px solid var(--border);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.chip:active{transform:scale(.94)}
+.chip.on{background:var(--primary-light);border-color:var(--primary);color:var(--primary)}
+.steps{display:flex;align-items:center;gap:6px;justify-content:center;margin:2px 0 16px}
+.steps .dot{height:6px;border-radius:3px;background:var(--border);width:24px;transition:all .35s var(--ease)}
+.steps .dot.on{background:var(--primary);width:38px}
+.steps .dot.done{background:var(--green)}
+.ack{display:flex;gap:11px;align-items:flex-start;background:var(--bg);border-radius:14px;padding:14px;margin:14px 0;cursor:pointer;border:1.5px solid var(--border);transition:border-color .2s}
+.ack.on{border-color:var(--green);background:var(--green-bg)}
+.ack .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--t3);flex-shrink:0;display:grid;place-items:center;transition:all .2s var(--spring);margin-top:1px}
+.ack.on .box{background:var(--green);border-color:var(--green)}
+.ack .box svg{opacity:0;transform:scale(0);transition:all .2s var(--spring)}
+.ack.on .box svg{opacity:1;transform:scale(1)}
+.info-box{background:var(--primary-light);border-radius:14px;padding:14px;font-size:12.5px;color:var(--primary-dark);margin:14px 0;line-height:1.65;display:flex;gap:10px}
+.info-box svg{flex-shrink:0;margin-top:1px}
+
+/* ===== detail ===== */
+.gallery{height:268px;position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.gallery::-webkit-scrollbar{display:none}
+.gallery .slide{min-width:100%;scroll-snap-align:start;position:relative;overflow:hidden}
+.gallery .dots{position:absolute;bottom:16px;inset-inline:0;display:flex;gap:6px;justify-content:center;z-index:4}
+.gallery .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .3s}
+.gallery .dots i.on{background:#fff;width:20px;border-radius:4px}
+.gallery .gtop{position:absolute;top:0;inset-inline:0;height:90px;background:linear-gradient(rgba(0,0,0,.35),transparent);z-index:3;pointer-events:none}
+.detail-pad{padding:18px 16px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.kpi{background:var(--bg);border-radius:13px;padding:12px 11px;border:1px solid var(--divider)}
+.kpi .k{font-size:11px;color:var(--t2);font-weight:600} .kpi .v{font-size:16px;font-weight:800;margin-top:4px}
+.kpi .v.green{color:var(--green-dark)}
+.expand{border:1px solid var(--border);border-radius:14px;padding:0;margin-top:11px;overflow:hidden;background:var(--surface)}
+.expand .h{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:14.5px;padding:15px;cursor:pointer}
+.expand .h .plus{width:24px;height:24px;border-radius:50%;background:var(--bg);display:grid;place-items:center;transition:transform .3s var(--spring);color:var(--primary);font-weight:700;font-size:18px}
+.expand.open .h .plus{transform:rotate(135deg)}
+.expand .c{max-height:0;overflow:hidden;transition:max-height .35s var(--ease);padding:0 15px}
+.expand .c-in{font-size:13px;color:var(--t2);line-height:1.7;padding-bottom:15px}
+.expand.open .c{max-height:240px}
+.divider{height:1px;background:var(--divider);margin:18px 0}
+.doc-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--divider);cursor:pointer}
+.doc-row:active{opacity:.6}
+.doc-ic{width:40px;height:40px;border-radius:10px;background:var(--primary-light);display:grid;place-items:center;flex-shrink:0;color:var(--primary)}
+.mini-map{height:140px;border-radius:14px;overflow:hidden;position:relative;margin-top:6px;background:linear-gradient(160deg,#eef2f8,#e4eaf3);border:1px solid var(--divider)}
+.sticky-cta{position:sticky;bottom:0;background:linear-gradient(transparent,var(--surface) 28%);padding:18px 16px calc(18px + env(safe-area-inset-bottom));z-index:30}
+.sticky-cta .row{display:flex;gap:10px;align-items:center}
+.sticky-cta .price{flex-shrink:0}
+.sticky-cta .price .k{font-size:11px;color:var(--t2)}
+.sticky-cta .price .v{font-size:20px;font-weight:900}
+
+/* ===== portfolio ===== */
+.holding{display:flex;gap:13px;align-items:center;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);
+  padding:12px;margin-bottom:11px;cursor:pointer;transition:transform .15s;border:1px solid var(--divider)}
+.holding:active{transform:scale(.985)}
+.holding .pic{width:56px;height:56px;border-radius:12px;flex-shrink:0;overflow:hidden;position:relative}
+.holding .info{flex:1;min-width:0}
+.holding .nm{font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.holding .sm{font-size:12px;color:var(--t2);margin-top:3px}
+.holding .val{text-align:end;flex-shrink:0}
+.holding .val .vv{font-weight:800;font-family:Inter;font-size:15px}
+.holding .val .ch{font-size:12.5px;font-weight:700;margin-top:2px}
+.up{color:var(--green-dark)} .down{color:var(--error)}
+.chart-card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-md);padding:16px 14px 12px;margin-bottom:14px;border:1px solid var(--divider)}
+.tf-chips{display:flex;gap:6px;margin-top:14px;background:var(--bg);border-radius:12px;padding:4px}
+.tf-chips button{flex:1;border:none;background:transparent;font-family:inherit;font-weight:700;font-size:12.5px;padding:8px 0;border-radius:9px;cursor:pointer;color:var(--t2);transition:all .2s}
+.tf-chips button.on{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+.donut-wrap{display:flex;align-items:center;gap:16px;background:var(--surface);border-radius:16px;box-shadow:var(--shadow-md);padding:18px;margin-bottom:14px;border:1px solid var(--divider)}
+.legend2{flex:1}
+.legend2 div{display:flex;align-items:center;gap:9px;font-size:13px;margin:7px 0;font-weight:600}
+.legend2 i{width:12px;height:12px;border-radius:4px;flex-shrink:0}
+.legend2 .pct{margin-inline-start:auto;color:var(--t2);font-family:Inter;font-weight:700}
+
+/* ===== marketplace ===== */
+.mk{display:flex;gap:13px;align-items:center;background:var(--surface);border-radius:14px;box-shadow:var(--shadow);
+  padding:12px;margin-bottom:11px;cursor:pointer;transition:transform .15s;border:1px solid var(--divider)}
+.mk:active{transform:scale(.985)}
+.mk .pic{width:52px;height:52px;border-radius:12px;flex-shrink:0;overflow:hidden;position:relative}
+.search{background:var(--surface);border:1.5px solid var(--border);border-radius:24px;padding:13px 18px;margin:8px 16px 4px;
+  display:flex;align-items:center;gap:10px;color:var(--t3);font-size:14px;font-weight:500;box-shadow:var(--shadow)}
+.sort-chips{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 6px}
+.sort-chips::-webkit-scrollbar{display:none}
+.sort-chips .sc{padding:8px 15px;border-radius:22px;background:var(--surface);border:1.5px solid var(--border);font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .15s}
+.sort-chips .sc.on{background:var(--t1);color:#fff;border-color:var(--t1)}
+
+/* ===== profile ===== */
+.profile-top{display:flex;align-items:center;gap:15px;padding:8px 16px 18px}
+.avatar{width:66px;height:66px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:26px;font-weight:900;
+  box-shadow:0 8px 20px -6px rgba(26,115,232,.5);position:relative}
+.avatar .ring{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--green);opacity:.6}
+.menu{background:var(--surface);border-radius:16px;box-shadow:var(--shadow-md);margin:0 16px 14px;overflow:hidden;border:1px solid var(--divider)}
+.menu .grp-h{font-size:12px;font-weight:700;color:var(--t3);padding:14px 16px 6px}
+.menu .mi{display:flex;align-items:center;gap:13px;padding:15px 16px;border-bottom:1px solid var(--divider);font-size:15px;cursor:pointer;font-weight:600;transition:background .15s}
+.menu .mi:active{background:var(--bg)}
+.menu .mi:last-child{border:none}
+.menu .mi .mic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:var(--bg);color:var(--t2)}
+.menu .mi .r{margin-inline-start:auto;color:var(--t3);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.verified{color:var(--green-dark);font-weight:700;font-size:13px;display:flex;align-items:center;gap:4px}
+
+/* ===== notifications ===== */
+.notif{display:flex;gap:13px;padding:14px 16px;border-bottom:1px solid var(--divider);background:var(--surface)}
+.notif .nic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.notif .ntx{flex:1}
+.notif .nti{font-weight:700;font-size:14px}
+.notif .nbd{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.5}
+.notif .ntm{font-size:11px;color:var(--t3);margin-top:4px;font-family:Inter}
+.notif.unread{background:linear-gradient(90deg,rgba(232,240,254,.5),transparent)}
+
+/* ===== skeleton ===== */
+.skel{background:linear-gradient(90deg,#eef1f6 25%,#f6f8fb 50%,#eef1f6 75%);background-size:200% 100%;animation:sk 1.3s infinite;border-radius:8px}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ===== success ===== */
+.success{position:absolute;inset:0;background:var(--surface);z-index:250;display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;overflow:hidden}
+.success.show{display:flex}
+.success h1{font-size:25px;font-weight:900;letter-spacing:-.6px}
+.check{width:104px;height:104px;border-radius:50%;background:var(--green-bg);display:grid;place-items:center;margin-bottom:22px;position:relative}
+.check::before{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid var(--green);opacity:0;animation:ring .9s .2s ease-out forwards}
+@keyframes ring{0%{transform:scale(.7);opacity:.7}100%{transform:scale(1.25);opacity:0}}
+.check svg{stroke-dasharray:48;stroke-dashoffset:48;animation:draw .6s .25s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.check-pop{animation:pop .5s var(--spring)}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.confetti{position:absolute;width:9px;height:14px;top:38%;border-radius:2px;opacity:0}
+.confetti.go{animation:conf 1.4s var(--ease) forwards}
+@keyframes conf{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(360px) rotate(540deg)}}
+.sum-card{background:var(--bg);border-radius:16px;padding:16px;width:100%;margin-top:24px;text-align:start;border:1px solid var(--divider)}
+
+/* ===== toast ===== */
+.toast{position:absolute;top:54px;inset-inline:16px;background:rgba(26,29,38,.96);backdrop-filter:blur(10px);color:#fff;padding:13px 16px;border-radius:14px;
+  font-size:13.5px;font-weight:600;z-index:260;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow-lg);
+  border-inline-start:4px solid var(--green);opacity:0;transform:translateY(-20px);pointer-events:none;transition:all .3s var(--spring)}
+.toast.show{opacity:1;transform:none}
+
+/* ===== demo pill ===== */
+.demo-pill{position:absolute;top:50px;inset-inline-start:50%;transform:translateX(50%);z-index:55;
+  background:rgba(26,29,38,.4);backdrop-filter:blur(8px);color:#fff;font-size:10px;font-weight:700;
+  padding:4px 11px;border-radius:20px;letter-spacing:.3px;border:1px solid rgba(255,255,255,.18);pointer-events:none}
+.demo-pill.dark{background:rgba(255,255,255,.7);color:var(--t2);border-color:var(--border)}
+
+.disclaimer{font-size:11px;color:var(--t3);text-align:center;padding:16px 26px;line-height:1.7}
+.risk-banner{background:var(--amber-bg);color:var(--amber-text);border-radius:12px;padding:11px 14px;font-size:12px;font-weight:600;display:flex;gap:9px;align-items:center;margin:14px 16px 0;line-height:1.5}
+
+/* ===== splash ===== */
+#splash{position:absolute;inset:0;z-index:400;background:var(--grad-hero);display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .6s,visibility .6s}
+#splash.hide{opacity:0;visibility:hidden}
+.splash-mark{width:96px;height:96px;position:relative}
+.splash-mark svg{width:100%;height:100%}
+.splash-mark .draw{stroke-dasharray:120;stroke-dashoffset:120;animation:draw2 1s .2s var(--ease) forwards}
+@keyframes draw2{to{stroke-dashoffset:0}}
+.splash-name{color:#fff;font-size:30px;font-weight:900;letter-spacing:-1px;margin-top:18px;opacity:0;animation:fadeUp .7s .7s forwards}
+.splash-sub{color:rgba(255,255,255,.85);font-size:14px;font-weight:500;margin-top:6px;opacity:0;animation:fadeUp .7s .9s forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.splash-dots{position:absolute;bottom:60px;display:flex;gap:6px;opacity:0;animation:fadeUp .5s 1.1s forwards}
+.splash-dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);animation:bounce 1.2s infinite}
+.splash-dots i:nth-child(2){animation-delay:.15s}.splash-dots i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+/* ===== onboarding ===== */
+#onboard{position:absolute;inset:0;z-index:380;background:var(--surface);display:none;flex-direction:column}
+#onboard.show{display:flex}
+.ob-track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth}
+.ob-track::-webkit-scrollbar{display:none}
+.ob-slide{min-width:100%;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center}
+.ob-art{width:200px;height:200px;margin-bottom:32px;display:grid;place-items:center;position:relative}
+.ob-slide h2{font-size:26px;font-weight:900;letter-spacing:-.6px}
+.ob-slide p{color:var(--t2);font-size:15px;line-height:1.6;margin-top:12px;max-width:300px}
+.ob-foot{padding:18px 24px calc(28px + env(safe-area-inset-bottom))}
+.ob-dots{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.ob-dots i{width:8px;height:8px;border-radius:4px;background:var(--border);transition:all .3s var(--spring)}
+.ob-dots i.on{background:var(--primary);width:26px}
+.ob-skip{position:absolute;top:calc(14px + env(safe-area-inset-top));inset-inline-end:20px;z-index:5;color:var(--t2);font-weight:700;font-size:14px;cursor:pointer;background:none;border:none;font-family:inherit}
+
+.tabview{flex:1;min-height:0;display:flex;flex-direction:column;animation:tabIn .35s var(--ease)}
+@keyframes tabIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.spin{width:16px;height:16px;border-radius:50%;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;display:inline-block;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div class="notch"></div>
+  <div id="statusbar" class="statusbar">
+    <span class="time">9:41</span>
+    <span class="right">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4.5" width="3" height="7.5" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><path d="M8.5 2.2c2.3 0 4.4.9 6 2.4l1.5-1.6A11 11 0 0 0 8.5 0 11 11 0 0 0 1 3l1.5 1.6c1.6-1.5 3.7-2.4 6-2.4Zm0 4c1.2 0 2.3.5 3.1 1.3l1.5-1.6a7 7 0 0 0-9.2 0L5.4 7.5A4.4 4.4 0 0 1 8.5 6.2Zm0 4 2-2.1a2.8 2.8 0 0 0-4 0l2 2.1Z"/></svg>
+      <svg width="26" height="13" viewBox="0 0 26 13" fill="none"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" stroke-opacity=".5" stroke-width="1.2"/><rect x="2.6" y="2.6" width="16" height="7.8" rx="1.6" fill="currentColor"/><rect x="23.5" y="4" width="1.6" height="5" rx="1" fill="currentColor" fill-opacity=".5"/></svg>
+    </span>
+  </div>
+  <div id="demoPill" class="demo-pill">DEMO · נתונים לדוגמה</div>
+  <div id="toast" class="toast"></div>
+  <div id="app"></div>
+  <div id="success" class="success"></div>
+  <div id="sheet-bg" class="sheet-bg"><div id="sheet" class="sheet"></div></div>
+  <div class="nav" id="nav"></div>
+
+  <div id="onboard"></div>
+  <div id="splash">
+    <div class="splash-mark">
+      <svg viewBox="0 0 96 96" fill="none">
+        <path class="draw" d="M20 76V40L48 20l28 20v36" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="draw" d="M38 76V54h20v22" stroke="rgba(255,255,255,.7)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:.5s"/>
+      </svg>
+    </div>
+    <div class="splash-name">RealShare</div>
+    <div class="splash-sub">נדל״ן בבעלות משותפת</div>
+    <div class="splash-dots"><i></i><i></i><i></i></div>
+  </div>
+</div>
+<script>
+/* ============================ DATA ============================ */
+const fmt=n=>'₪'+Math.round(n).toLocaleString('en-US');
+const fmtK=n=>n>=1000?'₪'+(n/1000).toFixed(1).replace(/\.0$/,'')+'k':'₪'+Math.round(n);
+
+const props=[
+ {id:1,name:'דירת סטודיו · רובע XIII',short:'סטודיו · ואצי',addr:'אנג׳לפלד, ליד שדרת ואצי',dist:'XIII',look:'sunset',
+  status:'fund',yield:5.6,token:100,raised:72,days:9,hrs:14,investors:214,size:42,rooms:1,floor:3,year:1998,monthly:1.05,price:148000,tokens:2000},
+ {id:2,name:'דירת 2 חדרים · רובע IX',short:'2 חד׳ · ראדאי',addr:'פרנצוורוש, רחוב ראדאי',dist:'IX',look:'mint',
+  status:'fund',yield:5.2,token:115,raised:45,days:18,hrs:3,investors:96,size:58,rooms:2,floor:2,year:2005,monthly:1.18,price:205000,tokens:2000},
+ {id:3,name:'דירת 2 חדרים · רובע VII',short:'2 חד׳ · הרובע היהודי',addr:'ארז׳בטוורוש, הרובע היהודי',dist:'VII',look:'amber',
+  status:'active',yield:5.1,token:112,change:2.3,size:55,rooms:2,floor:4,year:1930,monthly:1.02,price:168000,tokens:2000},
+ {id:4,name:'דירה · רובע VI',short:'דירה · אנדראשי',addr:'טרזוורוש, ליד שדרת אנדראשי',dist:'VI',look:'violet',
+  status:'vote',yield:4.8,token:121,change:-0.6,size:60,rooms:2,floor:5,year:1925,monthly:0.96,price:178000,tokens:2000},
+ {id:5,name:'דירת 2 חדרים · רובע V',short:'2 חד׳ · בלוורוש',addr:'בלוורוש, מרכז העיר',dist:'V',look:'dusk',
+  status:'active',yield:4.9,token:118,change:1.1,size:62,rooms:2,floor:3,year:1928,monthly:1.0,price:210000,tokens:2000},
+ {id:6,name:'דירת גן · רובע XIII',short:'דירת גן · קרב',addr:'אויליפוטשבארוש, ליד הדנובה',dist:'XIII',look:'teal',
+  status:'fund',yield:5.4,token:108,raised:88,days:4,hrs:8,investors:301,size:64,rooms:2,floor:1,year:2012,monthly:1.1,price:232000,tokens:2000},
+ {id:7,name:'לופט · רובע VII',short:'לופט · קזינצי',addr:'ארז׳בטוורוש, רחוב קזינצי',dist:'VII',look:'rose',
+  status:'active',yield:5.3,token:124,change:3.1,size:48,rooms:1,floor:6,year:1935,monthly:1.12,price:152000,tokens:2000},
+ {id:8,name:'דירת מרפסת · רובע VI',short:'מרפסת · אופרה',addr:'טרזוורוש, ליד האופרה',dist:'VI',look:'night',
+  status:'active',yield:4.7,token:130,change:0.8,size:70,rooms:3,floor:4,year:1922,monthly:1.05,price:248000,tokens:2000},
+];
+
+/* ============================ STORE (persistent state) ============================ */
+const SKEY='realshare_demo_v1';
+const DEFAULT_STATE={
+ onboarded:false, wallet:50000,
+ holdings:{ '3':{tokens:120,cost:12000,active:true},
+            '5':{tokens:95,cost:10260,active:true},
+            '1':{tokens:180,cost:18000,pending:true,accrued:42} },
+ raised:{}, listings:[], votes:{}, favs:[], txns:[],
+ notifs:[
+   {ty:'income',t:'תשלום שכירות התקבל',b:'₪62 הופקדו לחשבונך מרובע VII',m:'לפני שעתיים',u:1,grp:'today'},
+   {ty:'fund',t:'מימון כמעט הושלם',b:'דירת גן · רובע XIII הגיעה ל-88% מהיעד',m:'לפני 5 שעות',u:1,grp:'today'},
+   {ty:'vote',t:'הצבעת מכירה נפתחה',b:'בעלי הטוקנים ברובע VI מתבקשים להצביע',m:'אתמול',u:1,grp:'week'},
+   {ty:'income',t:'תשלום שכירות התקבל',b:'₪51 הופקדו לחשבונך מרובע V',m:'לפני 3 ימים',u:0,grp:'week'},
+   {ty:'alert',t:'עדכון מסמך משפטי',b:'תנאי השימוש עודכנו · נדרש אישורך',m:'לפני 5 ימים',u:0,grp:'week'},
+ ],
+};
+function loadState(){try{const r=JSON.parse(localStorage.getItem(SKEY));if(r&&r.holdings)return r;}catch(e){}return JSON.parse(JSON.stringify(DEFAULT_STATE));}
+let S=loadState();
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch(e){}}
+function applyRaised(){props.forEach(p=>{if(S.raised[p.id]!=null)p.raised=S.raised[p.id];});}
+function resetDemo(){localStorage.removeItem(SKEY);S=JSON.parse(JSON.stringify(DEFAULT_STATE));applyRaised();recompute();toast('נתוני ההדגמה אופסו','♻️');go('home');}
+
+/* ---- selectors ---- */
+function propById(id){return props.find(p=>p.id===+id);}
+function holdingsList(){return Object.keys(S.holdings).map(id=>{const p=propById(id);const h=S.holdings[id];if(!p)return null;if((h.tokens||0)<=0&&!h.pending)return null;
+  return {p,tokens:h.tokens||0,cost:h.cost||0,pending:!!h.pending,accrued:h.accrued||0,val:(h.tokens||0)*p.token,ch:p.change||0};}).filter(Boolean);}
+function portfolioValue(){return holdingsList().reduce((s,h)=>s+h.val,0);}
+function portfolioCost(){return holdingsList().reduce((s,h)=>s+h.cost,0);}
+function monthlyIncome(){return Math.round(holdingsList().reduce((s,h)=>s+(h.pending?0:h.tokens*h.p.monthly),0));}
+function totalReturnPct(){const c=portfolioCost();return c?((portfolioValue()-c)/c*100):0;}
+function unread(){return S.notifs.filter(n=>n.u).length;}
+function ownedTokens(id){const h=S.holdings[id];return h&&!h.pending?(h.tokens||0):0;}
+function allocation(){const by={};holdingsList().forEach(h=>{by[h.p.dist]=(by[h.p.dist]||0)+h.val;});
+  const tot=Object.values(by).reduce((a,b)=>a+b,0)||1;const pal=['#1A73E8','#00C48C','#FFB020','#9C6ADE','#E5734A'];
+  return Object.entries(by).sort((a,b)=>b[1]-a[1]).map((e,i)=>[pal[i%pal.length],Math.round(e[1]/tot*100),'רובע '+e[0]]);}
+
+/* ---- mutations (the "backend") ---- */
+function addTxn(type,p,qty,amt){S.txns.unshift({type,pid:p?p.id:null,qty,amt,t:Date.now()});}
+function notify(ty,t,b){S.notifs.unshift({ty,t,b,m:'עכשיו',u:1,grp:'today'});}
+function markNotifsRead(){S.notifs.forEach(n=>n.u=0);save();}
+function invest(p,qty){const cost=qty*p.token,fee=cost*0.02,total=cost+fee;
+ if(total>S.wallet)return{ok:false,err:'יתרה לא מספקת'};
+ S.wallet-=total;const h=S.holdings[p.id]||(S.holdings[p.id]={tokens:0,cost:0});
+ h.tokens=(h.tokens||0)+qty;h.cost=(h.cost||0)+cost;
+ if(p.status==='fund'){h.pending=true;if(h.accrued==null)h.accrued=0;
+   const delta=cost/p.price*100;p.raised=Math.min(100,Math.round((p.raised+delta)*10)/10);S.raised[p.id]=p.raised;
+   notify('fund','השקעה נקלטה',`רכשת ${qty} טוקנים ב${p.short} · בנאמנות עד השלמת המימון`);
+   if(p.raised>=100)notify('fund','🎉 המימון הושלם!',`${p.short} מומן במלואו — הטוקנים יופעלו בקרוב`);
+ }else{h.active=true;notify('income','קנייה בוצעה',`רכשת ${qty} טוקנים ב${p.short}`);}
+ addTxn('buy',p,qty,total);save();return{ok:true};}
+function sellTokens(p,qty,price){const h=S.holdings[p.id];if(!h||(h.tokens||0)<qty||h.pending)return{ok:false,err:'אין מספיק טוקנים'};
+ h.tokens-=qty;const proceeds=qty*price*0.98;S.wallet+=proceeds;if((h.tokens||0)<=0)delete S.holdings[p.id];
+ S.listings.push({id:Date.now(),pid:p.id,qty,price});addTxn('sell',p,qty,proceeds);
+ notify('income','מכירה בוצעה',`מכרת ${qty} טוקנים ב${p.short} · ${fmt(proceeds)} זוכו לארנק`);save();return{ok:true,proceeds};}
+function castVote(p,choice){S.votes[p.id]=choice;notify('vote','הצבעתך נקלטה',`הצבעת ${choice==='for'?'בעד':'נגד'} מכירת ${p.short}`);save();}
+function deposit(amt){S.wallet+=amt;addTxn('deposit',null,0,amt);notify('income','הפקדה בוצעה',`${fmt(amt)} נוספו לארנק`);save();}
+
+/* ---- live view vars (names the screens already use), recomputed each render ---- */
+let holdings=[],PORTFOLIO_VALUE=0,PORTFOLIO_INCOME=0,PORTFOLIO_RETURN=0,PORTFOLIO_COST=0;
+function recompute(){holdings=holdingsList();PORTFOLIO_VALUE=portfolioValue();PORTFOLIO_COST=portfolioCost();PORTFOLIO_INCOME=monthlyIncome();PORTFOLIO_RETURN=+(totalReturnPct().toFixed(1));}
+applyRaised();
+
+const statusTag={fund:['fund','מימון פתוח'],active:['active','פעיל בשוק'],vote:['vote','הצבעת מכירה']};
+
+/* art-directed CSS property visuals — distinct palette + skyline per "look" */
+const looks={
+ sunset:{sky:'linear-gradient(180deg,#3a2a52 0%,#8a4a6e 38%,#e07a5f 72%,#f2cc8f 100%)',sun:'#ffd9a0',sunPos:'right:18%;bottom:8%',b:'#241b33'},
+ mint:{sky:'linear-gradient(180deg,#1d4e4a 0%,#2e7d72 45%,#7fc7a8 80%,#d8f0dc 100%)',sun:'#eafff0',sunPos:'left:22%;bottom:14%',b:'#10302c'},
+ amber:{sky:'linear-gradient(180deg,#2d2438 0%,#6b4a52 40%,#c98a55 75%,#f0c987 100%)',sun:'#ffe0a8',sunPos:'right:26%;bottom:10%',b:'#221a26'},
+ violet:{sky:'linear-gradient(180deg,#241b40 0%,#4a3a78 42%,#8a6fb0 78%,#d8c8ec 100%)',sun:'#e8d8ff',sunPos:'left:30%;bottom:16%',b:'#1a1430'},
+ dusk:{sky:'linear-gradient(180deg,#16233f 0%,#2a4068 42%,#5e7aa8 78%,#c2d2e8 100%)',sun:'#dbe8ff',sunPos:'right:22%;bottom:12%',b:'#101a30'},
+ teal:{sky:'linear-gradient(180deg,#103840 0%,#1d6a72 45%,#4faab0 80%,#cdeef0 100%)',sun:'#e0fbff',sunPos:'left:24%;bottom:12%',b:'#0c2a30'},
+ rose:{sky:'linear-gradient(180deg,#33203a 0%,#7a3a5e 42%,#d07a8e 78%,#f5d8de 100%)',sun:'#ffe0e8',sunPos:'right:24%;bottom:10%',b:'#261624'},
+ night:{sky:'linear-gradient(180deg,#0e1730 0%,#1e2c52 42%,#3a4e80 78%,#8a9bc0 100%)',sun:'#cfd8ff',sunPos:'left:20%;bottom:18%',b:'#0a1226'},
+};
+function skylineSVG(b,lit){
+ // building silhouettes with lit windows; deterministic per call
+ const rects=[[8,38,30,40],[42,20,38,58],[86,46,26,32],[116,28,42,50],[164,40,30,38],[198,14,40,64],[244,34,34,44],[284,24,24,54]];
+ let s='';
+ rects.forEach((r,bi)=>{
+   s+=`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" fill="${b}"/>`;
+   for(let wy=r[1]+5;wy<r[1]+r[3]-4;wy+=8){
+     for(let wx=r[0]+4;wx<r[0]+r[2]-3;wx+=7){
+       const on=((bi*7+wx*3+wy)%5<2);
+       s+=`<rect x="${wx}" y="${wy}" width="3.4" height="4.4" fill="${on?lit:'rgba(255,255,255,.06)'}"/>`;
+     }
+   }
+ });
+ return `<svg class="skyline" viewBox="0 0 300 78" preserveAspectRatio="none" style="height:78px">${s}</svg>`;
+}
+function photoHTML(p,h){
+ const L=looks[p.look]||looks.dusk;
+ const lit=p.look==='night'||p.look==='dusk'?'#ffd98a':'#fff2c8';
+ return `<div class="sky" style="background:${L.sky}"></div>
+  <div class="sun" style="background:radial-gradient(circle,${L.sun},transparent 65%);${L.sunPos}"></div>
+  <div class="sky-glow"></div>${skylineSVG(L.b,lit)}<div class="grain"></div><div class="vignette"></div>`;
+}
+
+/* ============================ STATE / ICONS ============================ */
+let activeTab='home', activeDetail=null, prevView='home';
+let investStep=1, investQty=10, investAck=false, investBusy=false;
+let gallIndex=0, mapMode='map';
+const favs=new Set(S.favs);
+
+const icons={
+ home:'<path d="M3 9.8 12 3l9 6.8V21H3z"/><path d="M9 21v-7h6v7"/>',
+ homeF:'<path d="M3 9.8 12 3l9 6.8V21H3z" fill="currentColor" stroke="none"/><path d="M9.5 21v-6h5v6" fill="#fff" stroke="none"/>',
+ map:'<path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/>',
+ mapF:'<path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z" fill="currentColor" stroke="currentColor"/><path d="M9 3v15M15 6v15" stroke="#fff"/>',
+ mk:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>',
+ mkF:'<path d="M3 3v18h18" fill="none" stroke="currentColor"/><path d="M7 14l4-4 3 3 5-6" stroke="currentColor"/>',
+ pf:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/>',
+ pfF:'<circle cx="12" cy="12" r="9" fill="currentColor" stroke="none"/><path d="M12 7v5l3.5 2" stroke="#fff"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+ userF:'<circle cx="12" cy="8" r="4" fill="currentColor" stroke="none"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6" fill="currentColor" stroke="none"/>',
+};
+const tabs=[['home','בית','home'],['map','מפה','map'],['mk','מסחר','mk'],['portfolio','תיק','pf'],['profile','פרופיל','user']];
+
+/* ============================ HELPERS ============================ */
+function el(id){return document.getElementById(id)}
+function svg(path,o){o=o||{};return `<svg width="${o.w||20}" height="${o.h||o.w||20}" viewBox="0 0 24 24" fill="none" stroke="${o.s||'currentColor'}" stroke-width="${o.sw||2}" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`}
+const chevStart='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 6 9 12 15 18"/></svg>';
+const pinIc='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+
+let toastT;
+function toast(t,emoji){const e=el('toast');e.innerHTML=(emoji?emoji+' ':'')+t;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),2400);}
+
+function ripple(ev){const b=ev.currentTarget;const r=document.createElement('span');r.className='ripple';
+ const rect=b.getBoundingClientRect();const d=Math.max(rect.width,rect.height);
+ r.style.width=r.style.height=d+'px';r.style.left=(ev.clientX-rect.left-d/2)+'px';r.style.top=(ev.clientY-rect.top-d/2)+'px';
+ b.appendChild(r);setTimeout(()=>r.remove(),560);}
+
+function setStatusbarTheme(dark){
+ const sb=el('statusbar');sb.classList.toggle('dark',dark);
+ el('demoPill').classList.toggle('dark',dark);
+}
+
+/* count-up animation */
+function countUp(node,target,opts){
+ opts=opts||{};const dur=opts.dur||1100;const start=performance.now();const pre=opts.pre||'';const dec=opts.dec||0;
+ function step(now){let t=Math.min(1,(now-start)/dur);t=1-Math.pow(1-t,3);
+   const v=target*t;
+   node.textContent=pre+(dec?v.toFixed(dec):Math.round(v).toLocaleString('en-US'));
+   if(t<1)requestAnimationFrame(step);else node.textContent=pre+(dec?target.toFixed(dec):Math.round(target).toLocaleString('en-US'));}
+ requestAnimationFrame(step);
+}
+
+/* sparkline path builder */
+function sparkPath(data,w,h,pad){pad=pad||2;const mn=Math.min(...data),mx=Math.max(...data),rg=(mx-mn)||1;
+ return data.map((d,i)=>{const x=pad+(i/(data.length-1))*(w-pad*2);const y=pad+(1-(d-mn)/rg)*(h-pad*2);return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)}).join(' ');}
+function sparkSVG(data,color,w,h){w=w||64;h=h||26;const p=sparkPath(data,w,h,2);
+ return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><path d="${p}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
+
+/* ============================ CARD BUILDERS ============================ */
+function tagHTML(p){const t=statusTag[p.status];return `<div class="tag ${t[0]}"><i></i>${t[1]}</div>`}
+function favHTML(p){const on=favs.has(p.id);
+ return `<div class="fav" onclick="event.stopPropagation();toggleFav(${p.id},this)">
+   <svg width="17" height="17" viewBox="0 0 24 24" fill="${on?'#fff':'none'}" stroke="#fff" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3.2 1.2 4 2.5C10.8 6.2 12 5 14 5c3.5 0 5 4 3.5 7-2.5 4.5-9.5 9-9.5 9z"/></svg></div>`}
+function toggleFav(id,node){if(favs.has(id)){favs.delete(id);toast('הוסר מהמועדפים')}else{favs.add(id);toast('נוסף למועדפים','★')}
+ S.favs=[...favs];save();
+ const on=favs.has(id);node.querySelector('svg').setAttribute('fill',on?'#fff':'none');}
+
+function fundCard(p,i){return `<div class="card stagger" style="animation-delay:${(i||0)*70}ms;margin-bottom:14px" onclick="openDetail(${p.id})">
+ <div class="photo">${photoHTML(p)}${tagHTML(p)}${favHTML(p)}</div>
+ <div class="body"><h3>${p.name}</h3><div class="addr">${pinIc}${p.addr}</div>
+ <div class="metrics">
+   <div class="m"><div class="k">מחיר טוקן</div><div class="vv num">${fmt(p.token)}</div></div>
+   <div class="m"><div class="k">תשואה שנתית</div><div class="vv green num">${p.yield}%</div></div>
+   <div class="m"><div class="k">נותרו</div><div class="vv cd num">${p.days}ימ׳ ${p.hrs}ש׳</div></div>
+ </div>
+ <div class="prog"><i data-w="${p.raised}"></i></div>
+ <div class="prog-meta"><span><b class="num">${p.raised}%</b> מומן</span><span class="num">${p.investors} משקיעים</span></div>
+ </div></div>`}
+
+function railCard(p,i){return `<div class="card stagger" style="animation-delay:${(i||0)*70}ms" onclick="openDetail(${p.id})">
+ <div class="photo" style="height:118px">${photoHTML(p)}${tagHTML(p)}</div>
+ <div class="body"><h3 style="font-size:14.5px">${p.short}</h3><div class="addr" style="font-size:11.5px">${pinIc}רובע ${p.dist}</div>
+ <div class="metrics" style="margin-top:11px">
+   <div class="m"><div class="k">מחיר</div><div class="vv num">${fmt(p.token)}</div></div>
+   <div class="m"><div class="k">תשואה</div><div class="vv green num">${p.yield}%</div></div>
+ </div></div></div>`}
+
+function fundedCard(p,i){return `<div class="card stagger" style="animation-delay:${(i||0)*70}ms;display:flex;align-items:center;gap:12px;padding:11px;margin-bottom:11px" onclick="openDetail(${p.id})">
+ <div style="width:60px;height:60px;border-radius:12px;overflow:hidden;position:relative;flex-shrink:0">${photoHTML(p)}</div>
+ <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.short}</div>
+   <div class="addr" style="font-size:11.5px;margin-top:3px">${pinIc}רובע ${p.dist} · נסגר במלואו</div></div>
+ <div style="text-align:end;flex-shrink:0"><div class="num" style="font-weight:800;font-size:14px">${p.yield}%</div>
+   <div style="font-size:11px;color:var(--green-dark);font-weight:700;display:flex;align-items:center;gap:3px;justify-content:flex-end">
+     <span style="width:6px;height:6px;border-radius:50%;background:var(--green)"></span>פעיל</div></div>
+ </div>`}
+
+/* ============================ HOME ============================ */
+function screenHome(){
+ const funding=props.filter(p=>p.status==='fund');
+ const active=props.filter(p=>p.status==='active').slice(0,4);
+ const funded=props.filter(p=>p.status==='active').slice(2,5);
+ const heroSpark=[38,41,40,44,43,47,46,52];
+ return `<div class="hdr">
+   <div><div class="sub">בוקר טוב,</div><h1>עדן הייזר</h1></div>
+   <div class="iconbtn" onclick="openNotifs()">${svg('<path d="M10 3a5 5 0 0 0-5 5v4l-2 3h14l-2-3V8a5 5 0 0 0-5-5z"/><path d="M8 18a2 2 0 0 0 4 0"/>',{w:21})}${unread()?'<span class="badge-dot num">'+unread()+'</span>':''}</div>
+ </div>
+ <div class="screen">
+   <div class="hero">
+     <div class="lbl">${svg('<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 3v18"/>',{w:14,s:'rgba(255,255,255,.9)'})}שווי התיק שלך</div>
+     <div class="big num" data-count="${PORTFOLIO_VALUE}" data-pre="₪">₪0</div>
+     <span class="pill-ret">${svg('<path d="M7 17 17 7M9 7h8v8"/>',{w:14,s:'#aef5db'})}<span class="num">+${PORTFOLIO_RETURN}%</span> מאז ההצטרפות</span>
+     <div class="spark">${sparkSVG(heroSpark,'rgba(255,255,255,.9)',90,40)}</div>
+     <div class="row">
+       <div><div class="k">הכנסה החודש</div><div class="v green num">+₪${PORTFOLIO_INCOME}</div></div>
+       <div><div class="k">נכסים</div><div class="v num">${holdings.length}</div></div>
+       <div><div class="k">תשואה כוללת</div><div class="v green num">+${PORTFOLIO_RETURN}%</div></div>
+     </div>
+   </div>
+   <div class="sec-title">מימון עכשיו <span class="link" onclick="go('map')">לכל הנכסים ${chevStart}</span></div>
+   <div class="pad">${funding.map((p,i)=>fundCard(p,i)).join('')}</div>
+   <div class="sec-title">פעילים בשוק <span class="link" onclick="go('mk')">למסחר ${chevStart}</span></div>
+   <div class="hscroll">${active.map((p,i)=>railCard(p,i)).join('')}</div>
+   <div class="sec-title">מומנו לאחרונה</div>
+   <div class="pad">${funded.map((p,i)=>fundedCard(p,i)).join('')}</div>
+   <div style="height:14px"></div>
+ </div>`;
+}
+
+/* ============================ MAP ============================ */
+function screenMap(){
+ const pinByStatus={fund:'g',active:'b',vote:'y'};
+ // positions: [x%, y%]
+ const pos={1:[28,30],2:[60,56],3:[40,40],4:[70,24],5:[36,64],6:[24,52],7:[52,34],8:[64,42]};
+ const pins=props.map(p=>{const c=pinByStatus[p.status];const pr=pos[p.id];
+   return `<div class="pin ${c}" id="pin${p.id}" style="left:${pr[0]}%;top:${pr[1]}%" onclick="selectPin(${p.id})">
+     ${c==='g'?'<span class="pulse"></span>':''}
+     <div class="blob"><span class="num">${p.yield}%</span></div></div>`}).join('');
+ const list=props.map((p,i)=>mkRow(p,i)).join('');
+ return `<div class="hdr solid sticky"><h1>נכסים · בודפשט</h1>
+   <div class="iconbtn" onclick="toast('סינון: תשואה · מחיר · סטטוס · רובע')">${svg('<path d="M3 5h18M6 12h12M10 19h4"/>',{w:20})}</div></div>
+ <div class="screen" style="padding:0;overflow-y:auto;display:${mapMode==='map'?'block':'none'}" id="mapView">
+   <div class="map">
+     <div class="green-area" style="left:6%;top:12%;width:90px;height:90px"></div>
+     <div class="green-area" style="right:8%;bottom:30%;width:70px;height:70px"></div>
+     <div class="parcel" style="left:10%;top:18%;width:40px;height:30px"></div>
+     <div class="parcel" style="left:18%;top:46%;width:54px;height:38px"></div>
+     <div class="parcel" style="right:14%;top:30%;width:46px;height:34px"></div>
+     <div class="parcel" style="right:22%;bottom:18%;width:60px;height:40px"></div>
+     <div class="parcel" style="left:46%;bottom:12%;width:38px;height:30px"></div>
+     <div class="river"></div>
+     <div class="bridge" style="left:40%;top:38%"></div>
+     <div class="bridge" style="left:42%;top:64%"></div>
+     <div class="road" style="left:0;right:0;top:42%;height:7px;transform:rotate(-3deg)"></div>
+     <div class="road" style="left:30%;top:0;bottom:0;width:7px;transform:rotate(6deg)"></div>
+     <div class="road" style="left:0;right:0;top:72%;height:5px;transform:rotate(2deg)"></div>
+     <div class="dist-lbl" style="left:14%;top:10%">XIII</div>
+     <div class="dist-lbl" style="left:46%;top:20%">VI</div>
+     <div class="dist-lbl" style="left:48%;top:48%">VII</div>
+     <div class="dist-lbl" style="right:12%;bottom:40%">IX</div>
+     <div class="dist-lbl" style="left:30%;bottom:18%">V</div>
+     <div class="cluster" style="left:13%;top:50%">2</div>
+     ${pins}
+     <div class="map-toggle">
+       <button class="${mapMode==='map'?'on':''}" onclick="setMapMode('map')">${svg('<path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/>',{w:14})}מפה</button>
+       <button class="${mapMode==='list'?'on':''}" onclick="setMapMode('list')">${svg('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',{w:14})}רשימה</button>
+     </div>
+     <div class="legend">
+       <div><i style="background:var(--green)"></i>מימון פתוח</div>
+       <div><i style="background:var(--primary)"></i>פעיל בשוק</div>
+       <div><i style="background:var(--amber)"></i>הצבעת מכירה</div>
+     </div>
+     <div id="popup" class="popup"></div>
+   </div>
+ </div>
+ <div class="screen" style="display:${mapMode==='list'?'block':'none'};padding-top:10px" id="listView">
+   <div class="map-toggle" style="position:static;margin:4px 16px 10px;width:fit-content;background:var(--bg)">
+     <button onclick="setMapMode('map')">${svg('<path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/>',{w:14})}מפה</button>
+     <button class="on" onclick="setMapMode('list')">${svg('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',{w:14})}רשימה</button>
+   </div>
+   <div class="pad">${list}</div>
+   <div style="height:10px"></div>
+ </div>`;
+}
+function setMapMode(m){mapMode=m;render();renderNav();}
+function selectPin(id){const p=props.find(x=>x.id===id);
+ document.querySelectorAll('.pin').forEach(n=>n.classList.remove('sel'));
+ const pn=el('pin'+id);pn.classList.add('sel','pop');setTimeout(()=>pn.classList.remove('pop'),420);
+ const pop=el('popup');
+ pop.innerHTML=`<div class="pp">${photoHTML(p)}</div>
+  <div style="flex:1;min-width:0" onclick="openDetail(${p.id})">
+   <div style="font-weight:800;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.short}</div>
+   <div class="addr" style="font-size:11.5px;margin-top:2px">${pinIc}${p.addr}</div>
+   <div style="margin-top:6px;font-size:13px;display:flex;gap:8px;align-items:center">
+     <b class="num">${fmt(p.token)}</b><span style="color:var(--border)">|</span>
+     <span class="num" style="font-weight:800;color:var(--green-dark)">${p.yield}%</span>
+   </div></div>
+  <div class="iconbtn" style="width:38px;height:38px;box-shadow:none;background:var(--primary-light);color:var(--primary)" onclick="openDetail(${p.id})">${chevStart}</div>`;
+ pop.classList.add('show');
+}
+
+/* ============================ MARKETPLACE ============================ */
+let mkSort='hot';
+function mkRow(p,i){const ch=p.change||0;const data=ch>=0?[8,10,9,12,11,14,16,18]:[18,16,17,13,14,11,10,8];
+ return `<div class="mk stagger" style="animation-delay:${(i||0)*55}ms" onclick="openDetail(${p.id})">
+   <div class="pic">${photoHTML(p)}</div>
+   <div style="flex:1;min-width:0"><div style="font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.short}</div>
+     <div class="addr" style="font-size:11.5px;margin-top:3px">${pinIc}רובע ${p.dist} · ${p.yield}% תשואה</div></div>
+   <div style="margin-inline:2px">${sparkSVG(data,ch>=0?'#00C48C':'#E53E3E',58,30)}</div>
+   <div style="text-align:end;flex-shrink:0;min-width:62px"><div class="num" style="font-weight:800;font-size:14.5px">${fmt(p.token)}</div>
+     <div class="${ch>=0?'up':'down'} num" style="font-size:12px;font-weight:700;margin-top:2px">${ch>=0?'▲':'▼'} ${Math.abs(ch)}%</div></div>
+ </div>`}
+function screenMarket(){
+ let list=props.filter(p=>p.status!=='fund');
+ if(mkSort==='hot')list=[...list].sort((a,b)=>(b.change||0)-(a.change||0));
+ if(mkSort==='yield')list=[...list].sort((a,b)=>b.yield-a.yield);
+ if(mkSort==='price')list=[...list].sort((a,b)=>a.token-b.token);
+ if(mkSort==='gain')list=list.filter(p=>(p.change||0)>0);
+ const sorts=[['hot','החמים ביותר'],['yield','תשואה גבוהה'],['price','מחיר נמוך'],['gain','בעלייה']];
+ return `<div class="hdr solid sticky"><h1>שוק משני</h1>
+   <div class="iconbtn" onclick="toast('הזמן קנייה/מכירה')">${svg('<path d="M3 6h18M6 12h12M9 18h6"/>',{w:20})}</div></div>
+ <div class="screen">
+   <div class="search">${svg('<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>',{w:18,s:'#9CA3AF'})}<input style="border:none;outline:none;background:transparent;font-family:inherit;font-size:14px;flex:1;color:var(--t1)" placeholder="חיפוש לפי נכס, כתובת או רובע" oninput="mkFilter(this.value)"></div>
+   <div class="sort-chips">${sorts.map(s=>`<div class="sc ${mkSort===s[0]?'on':''}" onclick="setSort('${s[0]}')">${s[1]}</div>`).join('')}</div>
+   <div class="sec-title">הנכסים החמים <span class="link num">${list.length} נכסים</span></div>
+   <div class="pad" id="mkList">${list.length?list.map((p,i)=>mkRow(p,i)).join(''):`<div style="text-align:center;color:var(--t3);padding:40px 0;font-weight:600">אין נכסים בעלייה כרגע</div>`}<div id="mkEmpty" style="display:none;text-align:center;color:var(--t3);padding:40px 0;font-weight:600">לא נמצאו נכסים תואמים</div></div>
+   <div style="height:10px"></div>
+ </div>`;
+}
+function setSort(s){mkSort=s;render();}
+function mkFilter(q){q=(q||'').trim();let shown=0;
+ document.querySelectorAll('#mkList .mk').forEach(r=>{const m=r.textContent.includes(q);r.style.display=m?'':'none';if(m)shown++;});
+ const e=el('mkEmpty');if(e)e.style.display=shown?'none':'block';}
+
+/* ============================ PORTFOLIO ============================ */
+const perfData={
+ '1ח':[40.8,41.1,40.6,41.4,41.0,41.8,42.0,41.6,42.1,42.0,42.3,42.4],
+ '3ח':[38.9,39.4,39.1,40.0,39.8,40.6,40.9,41.2,41.0,41.7,42.0,42.4],
+ '6ח':[35.2,36.0,35.7,37.1,37.8,38.4,39.0,39.6,40.4,41.1,41.8,42.4],
+ 'שנה':[31.0,32.4,33.1,34.6,35.2,36.8,37.4,38.9,39.6,40.8,41.5,42.4],
+ 'הכל':[24.0,26.5,28.2,30.1,32.4,34.0,35.8,37.2,38.9,40.1,41.2,42.4],
+};
+let perfTF='6ח';
+function chartSVG(data){const w=320,h=130,pad=6;const mn=Math.min(...data)*0.985,mx=Math.max(...data)*1.005,rg=(mx-mn)||1;
+ const pts=data.map((d,i)=>{const x=pad+(i/(data.length-1))*(w-pad*2);const y=pad+(1-(d-mn)/rg)*(h-pad*2);return [x,y]});
+ const line=pts.map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join(' ');
+ const area=line+` L${(w-pad).toFixed(1)} ${h-pad} L${pad} ${h-pad} Z`;
+ const last=pts[pts.length-1];
+ return `<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="overflow:visible">
+   <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A73E8" stop-opacity=".22"/><stop offset="1" stop-color="#1A73E8" stop-opacity="0"/></linearGradient></defs>
+   <path d="${area}" fill="url(#ag)"/>
+   <path d="${line}" fill="none" stroke="#1A73E8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw3 1.1s var(--ease) forwards"/>
+   <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4.5" fill="#1A73E8" stroke="#fff" stroke-width="2"/>
+ </svg><style>@keyframes draw3{to{stroke-dashoffset:0}}</style>`;
+}
+function screenPortfolio(){
+ const seg=allocation().length?allocation():[['#E5E7EB',100,'אין החזקות']];
+ let off=0;const circ=2*Math.PI*42;
+ const donut=seg.map(s=>{const len=circ*s[1]/100;const c=`<circle cx="60" cy="60" r="42" fill="none" stroke="${s[0]}" stroke-width="15" stroke-linecap="round" stroke-dasharray="${(len-3).toFixed(1)} ${(circ-len+3).toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" transform="rotate(-90 60 60)" style="transition:stroke-dasharray .8s ${' var(--ease)'}"/>`;off+=len;return c}).join('');
+ const totalGain=PORTFOLIO_VALUE-PORTFOLIO_COST;const gainPct=(totalGain/PORTFOLIO_COST*100).toFixed(1);
+ const hold=holdings.map((h,i)=>`<div class="holding stagger" style="animation-delay:${i*70}ms" onclick="openDetail(${h.p.id})">
+   <div class="pic">${photoHTML(h.p)}</div>
+   <div class="info"><div class="nm">${h.p.short}</div>
+     <div class="sm"><span class="num">${h.tokens}</span> טוקנים${h.pending?' · <span style="color:var(--amber-text);font-weight:700">בתהליך מימון</span>':' · רובע '+h.p.dist}</div></div>
+   <div class="val"><div class="vv num">${fmt(h.val)}</div>
+     ${h.pending?`<div class="ch num" style="color:var(--amber-text)">+₪${h.accrued} ריבית</div>`:`<div class="ch up num">▲ ${h.ch}%</div>`}</div>
+ </div>`).join('');
+ const tfs=['1ח','3ח','6ח','שנה','הכל'];
+ return `<div class="hdr solid sticky"><h1>התיק שלי</h1>
+   <div class="iconbtn" onclick="toast('ייצוא דוח תיק (PDF)')">${svg('<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',{w:20})}</div></div>
+ <div class="screen pad">
+   <div class="hero" style="margin:8px 0 14px">
+     <div class="lbl">שווי כולל</div>
+     <div class="big num" data-count="${PORTFOLIO_VALUE}" data-pre="₪">₪0</div>
+     <span class="pill-ret">${svg('<path d="M7 17 17 7M9 7h8v8"/>',{w:14,s:'#aef5db'})}<span class="num">+${fmt(totalGain)}</span> (+${gainPct}%)</span>
+     <div class="row"><div><div class="k">הכנסה החודש</div><div class="v green num">+₪${PORTFOLIO_INCOME}</div></div>
+       <div><div class="k">לעומת חודש שעבר</div><div class="v green num">+12%</div></div>
+       <div><div class="k">עלות בסיס</div><div class="v num">${fmtK(PORTFOLIO_COST)}</div></div></div>
+   </div>
+   <div class="chart-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+     <div style="font-weight:800;font-size:15px">ביצועי התיק</div>
+     <div class="up num" style="font-weight:800;font-size:14px">▲ ${gainPct}%</div></div>
+     <div id="chartBox">${chartSVG(perfData[perfTF])}</div>
+     <div class="tf-chips">${tfs.map(t=>`<button class="${perfTF===t?'on':''}" onclick="setTF('${t}')">${t}</button>`).join('')}</div>
+   </div>
+   <div class="donut-wrap">
+     <svg width="120" height="120" viewBox="0 0 120 120">${donut}
+       <text x="60" y="54" text-anchor="middle" font-size="10.5" fill="#9CA3AF" font-family="Inter" font-weight="600">סה״כ</text>
+       <text x="60" y="73" text-anchor="middle" font-size="17" font-weight="800" fill="#1A1D26" font-family="Inter">${fmtK(PORTFOLIO_VALUE)}</text></svg>
+     <div class="legend2">${seg.map(s=>`<div><i style="background:${s[0]}"></i>${s[2]}<span class="pct num">${s[1]}%</span></div>`).join('')}</div>
+   </div>
+   <div class="sec-title" style="margin-inline:0">הנכסים שלי <span class="link num">${holdings.length}</span></div>
+   ${holdings.length?hold:'<div style="text-align:center;padding:24px 16px"><div style="font-weight:700;font-size:15px;color:var(--t2)">אין החזקות עדיין</div><div style="font-size:13px;color:var(--t3);margin-top:6px">התחילו להשקיע כדי לראות את התיק שלכם כאן</div><button class="btn grad" style="margin-top:16px" onclick="go(\'home\')">עיון בנכסים</button></div>'}
+   <div class="disclaimer">תשואות העבר אינן מבטיחות תשואות עתידיות. השקעה בנדל״ן כרוכה בסיכון, לרבות אובדן הקרן.</div>
+   <div style="height:6px"></div>
+ </div>`;
+}
+function setTF(t){perfTF=t;el('chartBox').innerHTML=chartSVG(perfData[t]);
+ document.querySelectorAll('.tf-chips button').forEach(b=>b.classList.toggle('on',b.textContent===t));}
+
+/* ============================ PROFILE ============================ */
+function screenProfile(){
+ const groups=[
+  ['חשבון',[
+    ['פרטים אישיים','user','',''],
+    ['סטטוס KYC','shield','<span class="verified">מאומת '+svg('<path d="M20 6 9 17l-5-5"/>',{w:14,s:'#00A878',sw:2.6})+'</span>',''],
+    ['אמצעי תשלום','card','Visa ••42',''],
+    ['חשבון בנק למשיכות','bank','',''],
+  ]],
+  ['מסמכים והגדרות',[
+    ['מסמכי מס','doc','',''],
+    ['שפה','globe','עברית',''],
+    ['אבטחה ו-2FA','lock','פעיל',''],
+  ]],
+  ['תמיכה',[
+    ['עזרה ותמיכה','help','',''],
+    ['מסמכים משפטיים','scale','',''],
+    ['התנתקות','logout','','danger'],
+  ]],
+ ];
+ const mic={
+  user:'<circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-5 7-5s7 1.5 7 5"/>',
+  shield:'<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/>',
+  card:'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>',
+  bank:'<path d="M3 9l9-5 9 5M5 9v9M19 9v9M9 9v9M15 9v9M3 21h18"/>',
+  doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/>',
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01"/>',
+  scale:'<path d="M12 3v18M5 7h14M7 7l-3 7h6zM17 7l-3 7h6z"/>',
+  logout:'<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l-5-5 5-5M5 12h11"/>',
+ };
+ return `<div class="hdr solid sticky"><h1>פרופיל</h1>
+   <div class="iconbtn" onclick="toast('הגדרות')">${svg('<circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.4-2.6h-4l-.4 2.6a7 7 0 0 0-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5a7 7 0 0 0 .1-1z"/>',{w:20})}</div></div>
+ <div class="screen">
+   <div class="profile-top"><div class="avatar"><span class="ring"></span>ע</div>
+     <div><div style="font-weight:800;font-size:19px">עדן הייזר</div>
+       <div class="addr" style="font-size:13px;margin-top:3px">eden@tennasys.com</div>
+       <div class="verified" style="margin-top:5px">${svg('<path d="M20 6 9 17l-5-5"/>',{w:13,s:'#00A878',sw:2.6})}חבר מאז מרץ 2026</div></div></div>
+   <div style="margin:0 16px 14px;border-radius:16px;padding:16px;background:var(--grad);color:#fff;box-shadow:0 10px 26px -8px rgba(26,115,232,.5);display:flex;align-items:center;justify-content:space-between">
+     <div><div style="font-size:12px;opacity:.85;font-weight:600">יתרה זמינה בארנק</div><div class="num" style="font-size:26px;font-weight:900;margin-top:3px">${fmt(S.wallet)}</div></div>
+     <button onclick="openDeposit()" style="border:none;background:rgba(255,255,255,.22);color:#fff;font-family:inherit;font-weight:800;font-size:14px;padding:12px 16px;border-radius:12px;cursor:pointer">+ הפקדה</button>
+   </div>
+   ${groups.map(g=>`<div class="menu"><div class="grp-h">${g[0]}</div>${g[1].map(i=>`
+     <div class="mi" onclick="toast('${i[0]}')">
+       <div class="mic" ${i[3]==='danger'?'style="background:var(--error-bg);color:var(--error)"':''}>${svg(mic[i[1]],{w:18})}</div>
+       <span ${i[3]==='danger'?'style="color:var(--error)"':''}>${i[0]}</span>
+       <span class="r">${i[2]}${i[3]!=='danger'?'<span style="color:var(--t3)">'+chevStart+'</span>':''}</span>
+     </div>`).join('')}</div>`).join('')}
+   <div style="padding:0 16px 8px"><button class="btn ghost" style="color:var(--t2)" onclick="resetDemo()">אפס נתוני הדגמה</button></div>
+   <div class="disclaimer">RealShare · אב טיפוס v0.2<br>נדל״ן בבעלות משותפת · בודפשט</div>
+   <div style="height:6px"></div>
+ </div>`;
+}
+
+/* ============================ NOTIFICATIONS ============================ */
+function openNotifs(){prevView=activeTab;activeTab='notifs';render();renderNav();}
+function markAllRead(){markNotifsRead();render();}
+function screenNotifs(){
+ const ic={income:['#00C48C','#E6F9F1','<path d="M12 3v18M7 8h7a3 3 0 0 1 0 6H8M17 16h-7a3 3 0 0 1 0-6"/>'],
+   fund:['#1A73E8','#E8F0FE','<path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6"/>'],
+   vote:['#FFB020','#FFF3D6','<path d="M9 11l3 3 8-8M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>'],
+   alert:['#E53E3E','#FDECEC','<path d="M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>']};
+ const today=S.notifs.filter(n=>n.grp==='today');
+ const week=S.notifs.filter(n=>n.grp!=='today');
+ const row=n=>{const c=ic[n.ty];return `<div class="notif ${n.u?'unread':''}">
+   <div class="nic" style="background:${c[1]};color:${c[0]}">${svg(c[2],{w:21})}</div>
+   <div class="ntx"><div class="nti">${n.t}</div><div class="nbd">${n.b}</div><div class="ntm">${n.m}</div></div>
+   ${n.u?'<span style="width:8px;height:8px;border-radius:50%;background:var(--primary);align-self:center;flex-shrink:0"></span>':''}
+ </div>`};
+ return `<div class="hdr solid sticky">
+   <div class="back" onclick="go('${prevView}')">${chevStart}</div>
+   <h1 style="font-size:18px">התראות</h1>
+   <div class="link" style="color:var(--primary);font-weight:700;font-size:13px;cursor:pointer" onclick="markAllRead()">סמן הכל</div>
+ </div>
+ <div class="screen" style="padding-bottom:84px">
+   ${today.length?'<div class="sec-title" style="margin-bottom:6px">היום</div>'+today.map(row).join(''):''}
+   ${week.length?'<div class="sec-title" style="margin-bottom:6px">קודם</div>'+week.map(row).join(''):''}
+   <div style="height:14px"></div>
+ </div>`;
+}
+
+/* ============================ SPLASH / ONBOARDING ============================ */
+let hasOnboarded=false;
+function boot(){
+ setStatusbarTheme(false);
+ setTimeout(()=>{
+   el('splash').classList.add('hide');
+   if(S.onboarded){startApp();}else{showOnboarding();}
+ },2050);
+}
+function showOnboarding(){
+ const slides=[
+  {ic:'<svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="54" fill="#E8F0FE"/><rect x="34" y="50" width="52" height="40" rx="4" fill="#1A73E8"/><path d="M34 56 60 38l26 18" stroke="#1557B0" stroke-width="4" fill="none" stroke-linejoin="round"/><circle cx="80" cy="74" r="13" fill="#00C48C"/><path d="M75 74l4 4 6-7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+   t:'בעלות על נדל״ן, חלקיק בכל פעם',d:'השקיעו בדירות מניבות בבודפשט החל מ-₪100 בלבד. בלי משכנתאות, בלי ניהול שוטף.'},
+  {ic:'<svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="54" fill="#E6F9F1"/><path d="M28 80 46 60l14 12 30-34" stroke="#00C48C" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="90" cy="38" r="6" fill="#1A73E8"/><path d="M28 88h64" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>',
+   t:'הכנסה חודשית מדמי שכירות',d:'קבלו את חלקכם היחסי מהשכירות, ישירות לחשבון — ועקבו אחרי הביצועים בזמן אמת.'},
+  {ic:'<svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="54" fill="#FFF3D6"/><rect x="40" y="44" width="40" height="48" rx="6" fill="#1A73E8"/><path d="M52 60h16M52 70h16M52 80h10" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="40" r="14" fill="#00C48C"/><path d="M75 40l4 4 6-7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+   t:'שקוף, נזיל ומאובטח',d:'כספכם מוחזק בנאמנות עד להשלמת המימון. מכרו את הטוקנים בשוק המשני בכל עת.'},
+ ];
+ const ob=el('onboard');
+ ob.innerHTML=`<button class="ob-skip" onclick="startApp()">דלג</button>
+  <div class="ob-track" id="obTrack" onscroll="obScroll()">
+    ${slides.map(s=>`<div class="ob-slide"><div class="ob-art">${s.ic}</div><h2>${s.t}</h2><p>${s.d}</p></div>`).join('')}
+  </div>
+  <div class="ob-foot">
+    <div class="ob-dots" id="obDots">${slides.map((s,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div>
+    <button class="btn grad" id="obBtn" onclick="obNext()">הבא</button>
+  </div>`;
+ ob.classList.add('show');
+}
+let onbCount=0;
+function obSync(){[...el('obDots').children].forEach((d,i)=>d.classList.toggle('on',i===onbCount));
+ el('obBtn').textContent=onbCount>=2?'בואו נתחיל':'הבא';}
+function obScroll(){/* RTL-safe: pick the slide whose center is nearest the viewport center */
+ const tr=el('obTrack');const slides=tr.querySelectorAll('.ob-slide');const c=tr.getBoundingClientRect();const cx=c.left+c.width/2;
+ let best=0,bd=1e9;slides.forEach((s,i)=>{const r=s.getBoundingClientRect();const d=Math.abs(r.left+r.width/2-cx);if(d<bd){bd=d;best=i;}});
+ onbCount=best;obSync();}
+function obNext(){const tr=el('obTrack');const slides=tr.querySelectorAll('.ob-slide');
+ if(onbCount>=slides.length-1){startApp();return;}
+ onbCount++;slides[onbCount].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});obSync();}
+function startApp(){S.onboarded=true;save();el('onboard').classList.remove('show');el('splash').classList.add('hide');
+ activeTab='home';renderNav();render();}
+
+/* ============================ NAV / ROUTING ============================ */
+function renderNav(){
+ el('nav').innerHTML=tabs.map(t=>{
+   const on=activeTab===t[0];const ic=on?(icons[t[2]+'F']||icons[t[2]]):icons[t[2]];
+   return `<div class="item ${on?'on':''}" onclick="go('${t[0]}')">
+     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg>${t[1]}</div>`;
+ }).join('');
+}
+function go(tab){activeTab=tab;activeDetail=null;render();renderNav();}
+
+const SCREENS={home:screenHome,map:screenMap,mk:screenMarket,portfolio:screenPortfolio,profile:screenProfile,notifs:screenNotifs};
+function render(){
+ recompute();
+ el('nav').style.display='';
+ const fn=SCREENS[activeTab]||screenHome;
+ el('app').innerHTML=`<div class="tabview">${fn()}</div>`;
+ afterRender();
+ el('app').querySelector('.screen')?.scrollTo(0,0);
+}
+function afterRender(){
+ setTimeout(()=>{document.querySelectorAll('.prog>i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%')},60);
+ document.querySelectorAll('[data-count]').forEach(n=>{
+   countUp(n,parseFloat(n.dataset.count),{pre:n.dataset.pre||'',dec:parseInt(n.dataset.dec||0)});
+ });
+ setStatusbarTheme(activeTab!=='home'&&activeTab!=='map');
+}
+
+/* ============================ PROPERTY DETAIL ============================ */
+function openDetail(id){const p=props.find(x=>x.id===id);activeDetail=p;gallIndex=0;prevView=activeTab;
+ const isFund=p.status==='fund';const isVote=p.status==='vote';const ch=p.change||0;
+ const slides=[p,p,p].map((s,i)=>`<div class="slide">${photoHTML(p)}${i===0?tagHTML(p):''}</div>`).join('');
+ el('app').innerHTML=`<div class="tabview">
+ <div class="hdr solid sticky">
+   <div class="back" onclick="go('${prevView}')">${chevStart}</div>
+   <h1 style="font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%">${p.short}</h1>
+   <div style="display:flex;gap:8px">
+     <div class="iconbtn" style="width:40px;height:40px" onclick="toggleFav(${p.id},this)">${svg('<path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5 6 5c2 0 3.2 1.2 4 2.5C10.8 6.2 12 5 14 5c3.5 0 5 4 3.5 7-2.5 4.5-9.5 9-9.5 9z"/>',{w:18,s:favs.has(p.id)?'#E53E3E':'#1A1D26'})}</div>
+     <div class="iconbtn" style="width:40px;height:40px" onclick="toast('הקישור הועתק','🔗')">${svg('<circle cx="6" cy="12" r="2.5"/><circle cx="17" cy="6" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M8.2 11 14.8 7.2M8.2 13l6.6 3.8"/>',{w:18})}</div>
+   </div>
+ </div>
+ <div class="screen" style="padding-bottom:0">
+   <div style="position:relative">
+     <div class="gallery" id="gallery" onscroll="gallScroll()">${slides}<div class="gtop"></div></div>
+     <div class="dots" id="gdots">${[0,1,2].map(i=>`<i class="${i===0?'on':''}"></i>`).join('')}</div>
+   </div>
+   <div class="detail-pad">
+     <h2 style="font-size:21px;font-weight:800;letter-spacing:-.5px">${p.name}</h2>
+     <div class="addr" style="margin-top:5px;font-size:13px">${pinIc}${p.addr} · בודפשט</div>
+     <div class="kpis">
+       <div class="kpi"><div class="k">שווי מוערך</div><div class="v num">${fmt(p.price)}</div></div>
+       <div class="kpi"><div class="k">מחיר טוקן</div><div class="v num">${fmt(p.token)}</div></div>
+       <div class="kpi"><div class="k">תשואה שנתית</div><div class="v green num">${p.yield}%</div></div>
+       <div class="kpi"><div class="k">הכנסה/טוקן</div><div class="v num">₪${p.monthly}/ח׳</div></div>
+       <div class="kpi"><div class="k">גודל</div><div class="v num">${p.size} מ״ר</div></div>
+       <div class="kpi"><div class="k">חדרים</div><div class="v num">${p.rooms}</div></div>
+     </div>
+     ${isFund?`<div style="background:var(--surface);border-radius:16px;box-shadow:var(--shadow-md);padding:16px;border:1px solid var(--divider)">
+       <div style="display:flex;justify-content:space-between;align-items:baseline">
+         <div style="font-weight:800;font-size:15px">סבב מימון פעיל</div>
+         <div class="cd num" style="font-size:13px">${svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>',{w:14,s:'currentColor'})} ${p.days}ימ׳ ${p.hrs}ש׳</div></div>
+       <div class="prog" style="margin-top:12px"><i data-w="${p.raised}"></i></div>
+       <div class="prog-meta"><span><b class="num">${p.raised}%</b> מתוך ${fmt(p.price)}</span><span class="num">${p.investors} משקיעים</span></div>
+       <div style="display:flex;gap:8px;margin-top:12px">
+         <div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center"><div style="font-size:11px;color:var(--t2)">גויס</div><div class="num" style="font-weight:800;font-size:14px">${fmtK(p.price*p.raised/100)}</div></div>
+         <div style="flex:1;background:var(--bg);border-radius:10px;padding:9px;text-align:center"><div style="font-size:11px;color:var(--t2)">נותר לגיוס</div><div class="num" style="font-weight:800;font-size:14px">${fmtK(p.price*(100-p.raised)/100)}</div></div>
+       </div></div>`
+       :`<div style="background:var(--surface);border-radius:16px;box-shadow:var(--shadow-md);padding:16px;border:1px solid var(--divider);display:flex;justify-content:space-between;align-items:center">
+       <div><div style="font-size:12px;color:var(--t2);font-weight:600">מחיר מסחר נוכחי</div>
+         <div class="num" style="font-size:24px;font-weight:900;margin-top:2px">${fmt(p.token)}</div></div>
+       <div style="text-align:end"><div class="${ch>=0?'up':'down'} num" style="font-weight:800;font-size:15px">${ch>=0?'▲':'▼'} ${Math.abs(ch)}%</div>
+         <div style="font-size:11px;color:var(--t3);margin-top:2px">7 ימים אחרונים</div>
+         ${sparkSVG(ch>=0?[8,10,9,12,11,14,16,18]:[18,16,17,13,14,11,10,8],ch>=0?'#00C48C':'#E53E3E',74,30)}</div></div>`}
+
+     <div class="expand" onclick="this.classList.toggle('open')"><div class="h">תחזית פיננסית<span class="plus">+</span></div>
+       <div class="c"><div class="c-in">הכנסה חודשית מוערכת לטוקן: ₪${p.monthly}. תשואה שנתית נטו מוערכת: ${(p.yield-2.4).toFixed(1)}% לאחר דמי ניהול, תחזוקה, ביטוח ומיסים מקומיים. תחזית עליית ערך: 2-4% בשנה. הסכומים אינם מובטחים ועשויים להשתנות.</div></div></div>
+     <div class="expand" onclick="this.classList.toggle('open')"><div class="h">פרטי הנכס<span class="plus">+</span></div>
+       <div class="c"><div class="c-in">קומה ${p.floor} · נבנה בשנת ${p.year} · ${p.size} מ״ר · ${p.rooms} חדרים · מיזוג אוויר · מרוהט וממוזג · אכלוס מלא. מבנה משופץ עם מעלית ומרפסת.</div></div></div>
+     <div class="expand" onclick="this.classList.toggle('open')"><div class="h">ניהול הנכס<span class="plus">+</span></div>
+       <div class="c"><div class="c-in">הנכס מנוהל ע״י חברת ניהול מקומית מורשית בבודפשט. גביית שכירות, תחזוקה שוטפת וטיפול בשוכרים מבוצעים אוטומטית. דוח רבעוני זמין לכלל בעלי הטוקנים.</div></div></div>
+     <div class="expand" onclick="this.classList.toggle('open')"><div class="h" style="color:var(--amber-text)">${svg('<path d="M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',{w:16,s:'currentColor'})} גילוי סיכונים<span class="plus" style="background:var(--amber-bg);color:var(--amber-text)">+</span></div>
+       <div class="c"><div class="c-in">תשלומי שכירות אינם מובטחים. ערך הטוקן עשוי לרדת ואף לאבד את מלוא ערכו. נזילות בשוק המשני אינה מובטחת. שינויי רגולציה, שער חליפין (HUF/EUR→₪) ותנאי שוק עשויים להשפיע מהותית על התשואה.</div></div></div>
+
+     <div class="divider"></div>
+     <div style="font-weight:800;font-size:15px;margin-bottom:8px">מיקום</div>
+     <div class="mini-map">
+       <div class="river" style="inset-inline-start:42%"></div>
+       <div class="road" style="left:0;right:0;top:50%;height:5px;transform:rotate(-3deg)"></div>
+       <div class="pin ${({fund:'g',active:'b',vote:'y'})[p.status]}" style="left:48%;top:54%"><span class="pulse"></span><div class="blob"><span class="num">${p.yield}%</span></div></div>
+     </div>
+
+     <div class="divider"></div>
+     <div style="font-weight:800;font-size:15px;margin-bottom:4px">מסמכים</div>
+     ${[['חוזה רכישת טוקנים','PDF · 2.1MB'],['דוח שמאות','PDF · 4.8MB'],['תקנון ניהול הנכס','PDF · 1.2MB']].map(d=>`
+       <div class="doc-row" onclick="toast('הורדת ${d[0]}','📄')">
+         <div class="doc-ic">${svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',{w:18})}</div>
+         <div style="flex:1"><div style="font-weight:700;font-size:14px">${d[0]}</div><div class="num" style="font-size:11.5px;color:var(--t3);margin-top:2px">${d[1]}</div></div>
+         ${svg('<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',{w:18,s:'#9CA3AF'})}
+       </div>`).join('')}
+     <div class="risk-banner" style="margin:14px 0 0">${svg('<path d="M12 9v4M12 17h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',{w:16,s:'currentColor'})}השקעה בנדל״ן כרוכה בסיכון. אינה מהווה ייעוץ השקעות.</div>
+   </div>
+   <div class="sticky-cta">
+     <div class="row">
+       <div class="price"><div class="k">${isFund?'מינימום השקעה':'מחיר טוקן'}</div><div class="v num">${fmt(p.token)}</div></div>
+       ${isVote
+         ?(S.votes[p.id]?`<button class="btn sec" style="flex:1" disabled>הצבעת ${S.votes[p.id]==='for'?'בעד':'נגד'} ✓</button>`
+                        :`<button class="btn amber" style="flex:1" onclick="ripple(event);openVote(${p.id})">הצביעו על מכירה</button>`)
+         :(!isFund&&ownedTokens(p.id)>0
+            ?`<button class="btn sec" style="flex:1" onclick="ripple(event);openSell(${p.id})">מכירה</button><button class="btn" style="flex:1" onclick="ripple(event);openInvest()">קנייה</button>`
+            :`<button class="btn ${isFund?'grad':''}" style="flex:1" onclick="ripple(event);openInvest()">${isFund?'השקיעו עכשיו':'קנו טוקנים'}</button>`)}
+     </div>
+   </div>
+ </div></div>`;
+ afterRender();setStatusbarTheme(true);el('nav').style.display='none';
+ el('app').querySelector('.screen')?.scrollTo(0,0);
+}
+function gallScroll(){const g=el('gallery');const w=g.clientWidth;const idx=Math.round(g.scrollLeft/w);
+ if(idx!==gallIndex){gallIndex=idx;[...el('gdots').children].forEach((d,i)=>d.classList.toggle('on',i===idx));}}
+
+/* ============================ INVEST FLOW ============================ */
+function openInvest(){investStep=1;investQty=10;investAck=false;investBusy=false;
+ renderInvest();el('sheet-bg').classList.add('show');}
+function closeSheet(){el('sheet-bg').classList.remove('show');}
+function setQty(n){investQty=Math.max(1,Math.min(500,n));renderInvest();}
+function investNext(){if(investStep===1){investStep=2;renderInvest();}}
+function investBack(){if(investStep===2){investStep=1;renderInvest();}}
+function toggleAck(){investAck=!investAck;renderInvest();}
+
+function renderInvest(){const p=activeDetail;const cost=investQty*p.token;const fee=cost*0.02;const total=cost+fee;
+ const stepDots=`<div class="steps">
+   <div class="dot ${investStep>1?'done':'on'}"></div>
+   <div class="dot ${investStep===2?'on':''}"></div>
+   <div class="dot"></div></div>`;
+ let body;
+ if(investStep===1){
+   body=`<div class="grip"></div>${stepDots}
+   <h2 style="font-size:20px;font-weight:800;text-align:center">כמה טוקנים?</h2>
+   <p style="text-align:center;color:var(--t2);font-size:13px;margin-top:4px">${p.short} · ${fmt(p.token)} לטוקן</p>
+   <div class="qty"><button onclick="setQty(investQty-1)">−</button><div class="q num">${investQty}</div><button onclick="setQty(investQty+1)">+</button></div>
+   <div class="chips">${[5,10,25,50,100].map(n=>`<div class="chip ${investQty===n?'on':''}" onclick="setQty(${n})">${n}</div>`).join('')}</div>
+   <div class="row-line"><span class="lbl">סכום השקעה</span><b class="num">${fmt(cost)}</b></div>
+   <div class="row-line"><span class="lbl">עמלת עסקה (2%)</span><b class="num">${fmt(fee)}</b></div>
+   <div class="row-line"><span class="lbl" style="color:var(--green-dark);font-weight:700">הכנסה חודשית מוערכת</span><b class="green num" style="color:var(--green-dark)">≈ ₪${(investQty*p.monthly).toFixed(0)}</b></div>
+   <div class="row-line"><span class="lbl">תשואה שנתית</span><b class="green num" style="color:var(--green-dark)">${p.yield}%</b></div>
+   <div class="row-line"><span class="lbl">יתרה זמינה בארנק</span><b class="num" style="color:${total>S.wallet?'var(--error)':'var(--t1)'}">${fmt(S.wallet)}</b></div>
+   ${total>S.wallet
+     ?`<button class="btn amber" style="margin-top:16px" onclick="closeSheet();openDeposit()">הפקדה לארנק כדי להמשיך</button>`
+     :`<button class="btn grad" style="margin-top:16px" onclick="ripple(event);investNext()">המשך · ${fmt(total)}</button>`}
+   <button class="btn ghost" style="margin-top:4px" onclick="closeSheet()">ביטול</button>`;
+ } else {
+   body=`<div class="grip"></div>${stepDots}
+   <h2 style="font-size:20px;font-weight:800;text-align:center">אישור השקעה</h2>
+   <p style="text-align:center;color:var(--t2);font-size:13px;margin-top:4px">בדקו את הפרטים לפני האישור</p>
+   <div style="background:var(--bg);border-radius:14px;padding:14px;margin:16px 0;border:1px solid var(--divider)">
+     <div style="display:flex;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:8px">
+       <div style="width:48px;height:48px;border-radius:12px;overflow:hidden;position:relative;flex-shrink:0">${photoHTML(p)}</div>
+       <div><div style="font-weight:800;font-size:14px">${p.short}</div><div class="addr" style="font-size:11.5px">רובע ${p.dist} · ${p.yield}% תשואה</div></div></div>
+     <div class="row-line" style="padding:8px 0"><span class="lbl">טוקנים</span><b class="num">${investQty}</b></div>
+     <div class="row-line" style="padding:8px 0"><span class="lbl">סכום השקעה</span><b class="num">${fmt(cost)}</b></div>
+     <div class="row-line" style="padding:8px 0"><span class="lbl">עמלת עסקה</span><b class="num">${fmt(fee)}</b></div>
+     <div class="row-line" style="padding:8px 0;border-top:1px solid var(--border);margin-top:2px"><span class="lbl" style="font-weight:800;color:var(--t1)">סה״כ לתשלום</span><b class="num" style="font-size:17px">${fmt(total)}</b></div>
+   </div>
+   <div class="info-box">${svg('<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',{w:18,s:'#1557B0'})}
+     <div>${p.status==='fund'?`כספך יוחזק בחשבון נאמנות מאובטח. אם הנכס ימומן במלואו תקבל <b>${investQty} טוקנים</b>. אם הסבב לא יושלם — תקבל את מלוא כספך בחזרה <b>בתוספת ריבית</b>.`:`<b>${investQty} טוקנים</b> יועברו לתיק שלך מיד עם אישור התשלום, ותתחיל/י לקבל את חלקך היחסי מדמי השכירות בתשלום הבא.`}</div></div>
+   <div class="ack ${investAck?'on':''}" onclick="toggleAck()">
+     <div class="box">${svg('<path d="M20 6 9 17l-5-5"/>',{w:14,s:'#fff',sw:3})}</div>
+     <div style="font-size:13px;line-height:1.55">קראתי והבנתי את <b>גילוי הסיכונים</b> ותנאי ההשקעה, ואני מאשר/ת שמדובר בהשקעה לא מובטחת.</div></div>
+   <button class="btn grad" id="confirmBtn" ${investAck?'':'disabled'} onclick="ripple(event);doInvest(${total},${investQty})">
+     ${investBusy?'מעבד...':'אישור ותשלום · '+fmt(total)}</button>
+   <button class="btn ghost" style="margin-top:4px" onclick="investBack()">חזרה</button>`;
+ }
+ el('sheet').innerHTML=body;
+}
+function doInvest(total,qty){if(investBusy)return;
+ const p=activeDetail;
+ if(total>S.wallet){toast('יתרה לא מספקת — בצעו הפקדה');return;}
+ investBusy=true;
+ const btn=el('confirmBtn');if(btn){btn.disabled=true;btn.innerHTML='<span style="display:inline-flex;gap:6px;align-items:center"><span class="spin"></span>מעבד תשלום...</span>';}
+ setTimeout(()=>{const r=invest(p,qty);investBusy=false;closeSheet();if(r.ok){showSuccess(total,qty);}else{toast(r.err||'שגיאה');}},1300);
+}
+
+/* ============================ DEPOSIT / SELL / VOTE SHEETS ============================ */
+let depAmt=1000;
+function openDeposit(){depAmt=1000;renderDeposit();el('sheet-bg').classList.add('show');}
+function setDep(n){depAmt=Math.max(500,Math.min(100000,n));renderDeposit();}
+function renderDeposit(){el('sheet').innerHTML=`<div class="grip"></div>
+ <h2 style="font-size:20px;font-weight:800;text-align:center">הפקדה לארנק</h2>
+ <p style="text-align:center;color:var(--t2);font-size:13px;margin-top:4px">יתרה נוכחית: <b class="num">${fmt(S.wallet)}</b></p>
+ <div class="qty"><button onclick="setDep(depAmt-500)">−</button><div class="q num" style="font-size:30px">${fmt(depAmt)}</div><button onclick="setDep(depAmt+500)">+</button></div>
+ <div class="chips">${[1000,2500,5000,10000].map(n=>`<div class="chip ${depAmt===n?'on':''}" onclick="setDep(${n})">${fmtK(n)}</div>`).join('')}</div>
+ <div class="info-box">${svg('<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>',{w:18,s:'#1557B0'})}<div>הפקדת הדגמה — לא מתבצע חיוב אמיתי. הכספים זמינים מיידית להשקעה.</div></div>
+ <button class="btn grad" onclick="ripple(event);doDeposit()">הפקדה · ${fmt(depAmt)}</button>
+ <button class="btn ghost" style="margin-top:4px" onclick="closeSheet()">ביטול</button>`;}
+function doDeposit(){const a=depAmt;deposit(a);closeSheet();toast('הופקדו '+fmt(a),'💰');recompute();render();}
+
+let sellId=null,sellQty=1,sellPrice=0;
+function openSell(id){sellId=id;const p=propById(id);sellPrice=p.token;sellQty=Math.min(10,ownedTokens(id))||1;renderSell();el('sheet-bg').classList.add('show');}
+function setSellQty(n){const max=ownedTokens(sellId);sellQty=Math.max(1,Math.min(max,n));renderSell();}
+function renderSell(){const p=propById(sellId);const max=ownedTokens(sellId);const proceeds=sellQty*sellPrice*0.98;
+ const chipVals=[1,5,10,max].filter((v,i,a)=>v>0&&a.indexOf(v)===i);
+ el('sheet').innerHTML=`<div class="grip"></div>
+ <h2 style="font-size:20px;font-weight:800;text-align:center">מכירת טוקנים</h2>
+ <p style="text-align:center;color:var(--t2);font-size:13px;margin-top:4px">${p.short} · ברשותך <b class="num">${max}</b> טוקנים</p>
+ <div class="qty"><button onclick="setSellQty(sellQty-1)">−</button><div class="q num">${sellQty}</div><button onclick="setSellQty(sellQty+1)">+</button></div>
+ <div class="chips">${chipVals.map(n=>`<div class="chip ${sellQty===n?'on':''}" onclick="setSellQty(${n})">${n===max?'הכל':n}</div>`).join('')}</div>
+ <div class="row-line"><span class="lbl">מחיר שוק לטוקן</span><b class="num">${fmt(p.token)}</b></div>
+ <div class="row-line"><span class="lbl">עמלת מכירה (2%)</span><b class="num">${fmt(sellQty*sellPrice*0.02)}</b></div>
+ <div class="row-line"><span class="lbl" style="color:var(--green-dark);font-weight:700">תקבול נטו לארנק</span><b class="green num" style="color:var(--green-dark)">${fmt(proceeds)}</b></div>
+ <button class="btn grad" style="margin-top:16px" onclick="ripple(event);doSell()">מכירה · ${fmt(proceeds)}</button>
+ <button class="btn ghost" style="margin-top:4px" onclick="closeSheet()">ביטול</button>`;}
+function doSell(){const p=propById(sellId);const r=sellTokens(p,sellQty,sellPrice);closeSheet();
+ if(r.ok){toast('נמכרו '+sellQty+' טוקנים','✓');recompute();openDetail(sellId);}else toast(r.err||'שגיאה');}
+
+let voteId=null;
+function openVote(id){voteId=id;const p=propById(id);
+ el('sheet').innerHTML=`<div class="grip"></div>
+ <h2 style="font-size:20px;font-weight:800;text-align:center">הצבעה על מכירת הנכס</h2>
+ <p style="text-align:center;color:var(--t2);font-size:13px;margin-top:4px;line-height:1.6">בעל טוקנים הציע למכור את <b>${p.short}</b>. ההצבעה משוקללת לפי כמות הטוקנים שברשותך.</p>
+ <div style="background:var(--bg);border-radius:14px;padding:14px;margin:16px 0;border:1px solid var(--divider)">
+   <div class="row-line" style="padding:8px 0"><span class="lbl">בעד מכירה</span><b class="num" style="color:var(--green-dark)">63%</b></div>
+   <div class="row-line" style="padding:8px 0"><span class="lbl">נגד מכירה</span><b class="num">37%</b></div>
+   <div class="row-line" style="padding:8px 0"><span class="lbl">סף נדרש לאישור</span><b class="num">67%</b></div>
+ </div>
+ <button class="btn grad" onclick="ripple(event);doVote('for')">הצבעה בעד מכירה</button>
+ <button class="btn sec" style="margin-top:8px" onclick="ripple(event);doVote('against')">הצבעה נגד מכירה</button>
+ <button class="btn ghost" style="margin-top:4px" onclick="closeSheet()">ביטול</button>`;
+ el('sheet-bg').classList.add('show');}
+function doVote(choice){const p=propById(voteId);castVote(p,choice);closeSheet();toast('הצבעתך נקלטה','🗳️');openDetail(voteId);}
+
+/* ============================ SUCCESS ============================ */
+function showSuccess(total,qty){const p=activeDetail;
+ const confColors=['#1A73E8','#00C48C','#FFB020','#E53E3E','#1557B0'];
+ let conf='';for(let i=0;i<26;i++){const c=confColors[i%5];const left=8+Math.random()*84;const delay=Math.random()*.3;const dur=1.1+Math.random()*.6;
+   conf+=`<span class="confetti" style="left:${left}%;background:${c};animation-duration:${dur}s;animation-delay:${delay}s"></span>`;}
+ el('success').innerHTML=`${conf}
+   <div class="check check-pop"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#00C48C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+   <h1>ההשקעה נקלטה!</h1>
+   <p style="color:var(--t2);margin-top:10px;line-height:1.6;font-size:15px">רכשת <b style="color:var(--t1)" class="num">${qty}</b> טוקנים ב${p.short}</p>
+   <div class="sum-card">
+     <div class="row-line"><span class="lbl">סכום ששולם</span><b class="num">${fmt(total)}</b></div>
+     <div class="row-line"><span class="lbl">סטטוס</span><b style="color:${p.status==='fund'?'var(--amber-text)':'var(--green-dark)'}">${p.status==='fund'?'בנאמנות עד השלמת מימון':'הטוקנים נוספו לתיק'}</b></div>
+     <div class="row-line"><span class="lbl">${p.status==='fund'?'תשלום שכירות ראשון צפוי':'תשלום שכירות הבא'}</span><b class="num">1 ביולי 2026</b></div>
+   </div>
+   <div style="width:100%;margin-top:24px">
+     <button class="btn grad" onclick="closeSuccess('portfolio')">צפייה בתיק</button>
+     <button class="btn ghost" style="margin-top:6px" onclick="closeSuccess('home')">המשך עיון</button>
+   </div>`;
+ el('success').classList.add('show');
+ setTimeout(()=>{document.querySelectorAll('.confetti').forEach(c=>c.classList.add('go'))},50);
+}
+function closeSuccess(tab){el('success').classList.remove('show');go(tab||'home');}
+
+/* ============================ INIT ============================ */
+renderNav();
+boot();
+</script>
+</body>
+</html>
