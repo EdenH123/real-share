@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
 import { PROPERTIES, getProperty, estimatedTokenPrice, type OrderSide } from "@/lib/seed";
-import { propTitle } from "@/lib/property";
+import { propTitle, propArea } from "@/lib/property";
 import { formatEUR } from "@/lib/format";
 import { Header } from "@/components/layout/Header";
 import { Card } from "@/components/ui/Card";
@@ -94,7 +94,7 @@ function TradeInner() {
                 selId === tp.id ? "bg-navy text-white" : "bg-tint text-muted"
               )}
             >
-              {t(tp.cityKey)}
+              {t(tp.cityKey)} · {propArea(tp, locale)}
             </button>
           ))}
         </div>

@@ -13,10 +13,10 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
   const showTabs = TAB_ROUTES.includes(pathname);
 
   return (
-    <div className="flex min-h-[100dvh] items-stretch justify-center bg-[#e9eef1] sm:py-6">
-      <div className="relative flex w-full max-w-app flex-col overflow-hidden bg-[#e9eef1] shadow-cardHover sm:min-h-[860px] sm:rounded-[40px] sm:ring-1 sm:ring-black/5 min-h-[100dvh]">
+    <div className="flex min-h-[100dvh] items-stretch justify-center bg-[#e9eef1] sm:items-center sm:py-6">
+      <div className="relative flex h-[100dvh] w-full max-w-app flex-col overflow-hidden bg-[#e9eef1] shadow-cardHover sm:h-[min(860px,calc(100dvh-48px))] sm:rounded-[40px] sm:ring-1 sm:ring-black/5">
         {/* Scrollable content */}
-        <main className="app-scroll no-scrollbar flex-1">{children}</main>
+        <main className="app-scroll no-scrollbar min-h-0 flex-1">{children}</main>
 
         {/* Persistent disclaimer legend (always visible) */}
         <DisclaimerBar />

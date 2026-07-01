@@ -54,7 +54,7 @@ export default function PropertyDetailPage() {
   const canInvest = p.status === "funding" || p.status === "active";
 
   return (
-    <div className="pb-32">
+    <div className="pb-2">
       {/* hero image with overlaid back header */}
       <div className="relative">
         <PropertyImage theme={p.theme} height="h-60" rounded="rounded-none" />
@@ -206,7 +206,7 @@ export default function PropertyDetailPage() {
       </div>
 
       {/* sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-30 mx-auto max-w-app">
+      <div className="sticky bottom-0 z-30">
         <div className="mx-3 mb-3 flex gap-2 rounded-2xl bg-surface/95 p-3 shadow-cardHover backdrop-blur">
           <ButtonLink
             href={`/trade?property=${p.id}`}

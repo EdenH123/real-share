@@ -330,6 +330,18 @@ export type Order = {
 };
 
 export const SEED_ORDERS: Order[] = [
+  // bud-district-vii (flagship, funding) around €25.7 est
+  { id: "b1", propertyId: "bud-district-vii", side: "buy", tokens: 40, price: 25.4 },
+  { id: "b2", propertyId: "bud-district-vii", side: "buy", tokens: 70, price: 25.1 },
+  { id: "b3", propertyId: "bud-district-vii", side: "buy", tokens: 130, price: 24.8 },
+  { id: "b4", propertyId: "bud-district-vii", side: "sell", tokens: 25, price: 26.0 },
+  { id: "b5", propertyId: "bud-district-vii", side: "sell", tokens: 60, price: 26.4 },
+  { id: "b6", propertyId: "bud-district-vii", side: "sell", tokens: 110, price: 26.9 },
+  // ath-exarchia (funding) around €25.4 est
+  { id: "e1", propertyId: "ath-exarchia", side: "buy", tokens: 35, price: 25.2 },
+  { id: "e2", propertyId: "ath-exarchia", side: "buy", tokens: 80, price: 24.9 },
+  { id: "e3", propertyId: "ath-exarchia", side: "sell", tokens: 30, price: 25.9 },
+  { id: "e4", propertyId: "ath-exarchia", side: "sell", tokens: 65, price: 26.3 },
   // bud-district-xiii around €25.4 est
   { id: "o1", propertyId: "bud-district-xiii", side: "buy", tokens: 30, price: 25.1 },
   { id: "o2", propertyId: "bud-district-xiii", side: "buy", tokens: 55, price: 24.9 },
