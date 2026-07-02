@@ -11,6 +11,7 @@ import { Header } from "@/components/layout/Header";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { IconMedallion } from "@/components/ui/IconMedallion";
+import { Aurora } from "@/components/fx/Aurora";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { Sheet } from "@/components/ui/Sheet";
 import { DepthChart } from "@/components/charts/DepthChart";
@@ -101,9 +102,10 @@ function TradeInner() {
         </div>
 
         {/* estimated price card */}
-        <Card variant="navy" className="p-5">
-          <div className="flex items-center gap-3">
-            <IconMedallion icon={Coins} size={44} />
+        <Card variant="navy" className="relative overflow-hidden p-5">
+          <Aurora intensity={0.7} />
+          <div className="relative flex items-center gap-3">
+            <IconMedallion icon={Coins} size={44} shine />
             <div className="flex-1">
               <div className="text-xs text-white/70">{t("trade.estPrice")}</div>
               <div className="num font-display text-2xl font-semibold text-gold">
@@ -118,7 +120,7 @@ function TradeInner() {
               </div>
             </div>
           </div>
-          <p className="mt-3 text-[11px] leading-relaxed text-white/55">
+          <p className="relative mt-3 text-[11px] leading-relaxed text-white/55">
             {t("trade.estPriceNote")}
           </p>
         </Card>

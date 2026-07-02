@@ -16,6 +16,7 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Button } from "@/components/ui/Button";
 import { WaitlistSheet } from "@/components/waitlist/WaitlistSheet";
 import { IconMedallion } from "@/components/ui/IconMedallion";
+import { Aurora } from "@/components/fx/Aurora";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { CountUp } from "@/components/ui/CountUp";
 import { Reveal } from "@/components/ui/Reveal";
@@ -55,7 +56,7 @@ export default function HomePage() {
       {/* Portfolio snapshot hero */}
       <div className="px-4">
         <Card variant="navy" className="relative overflow-hidden p-5">
-          <div className="absolute -end-8 -top-10 h-40 w-40 rounded-full bg-gold/15 blur-2xl" />
+          <Aurora dust />
           <div className="relative">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-white/70">
@@ -176,9 +177,10 @@ export default function HomePage() {
 
       {/* Waitlist CTA */}
       <Reveal className="mt-8 px-4">
-        <Card variant="navy" className="flex items-center gap-4 p-5">
-          <IconMedallion icon={Rocket} size={48} />
-          <div className="flex-1">
+        <Card variant="navy" className="relative flex items-center gap-4 overflow-hidden p-5">
+          <Aurora intensity={0.7} />
+          <IconMedallion icon={Rocket} size={48} shine className="relative" />
+          <div className="relative flex-1">
             <h3 className="font-display text-base font-semibold text-white">
               {t("home.joinCta.title")}
             </h3>

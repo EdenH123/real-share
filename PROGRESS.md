@@ -1,5 +1,17 @@
 # RealShare — Build Progress
 
+## v3 (2026-07-01) — "Gold dust & deep water" living design layer
+
+Full-app design elevation (designed + implemented by Fable): aurora ambient
+surfaces with film grain + drifting gold dust on every navy hero, orbiting
+particles + shine sweeps on hero medallions, sheened gold CTAs, View
+Transitions page navigation (progressive), sliding gold tab-bar pill with icon
+pop, scroll parallax on property heroes, breathing art blooms, liquid-gold
+funding thermometer, map pin drop-in + selected sonar pulse, springy sheets,
+card lift, swipeable onboarding cosmos. All motion gated behind
+prefers-reduced-motion; AA contrast, RTL, and the legal layer untouched;
+zero new dependencies.
+
 ## v2 (2026-07-01) — Map · Design · Data storytelling
 
 All three phases of `UPGRADE-PLAN.md` implemented (by Opus agents, orchestrated + verified by Fable), verified in he-RTL + en with zero build errors and no console errors beyond sandbox-blocked map-tile fetches:

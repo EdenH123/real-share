@@ -39,12 +39,12 @@ export function Sheet({
       aria-label={title}
     >
       <div
-        className="absolute inset-0 bg-navy/50 backdrop-blur-sm animate-[fade-up_.2s_ease]"
+        className="backdrop-in absolute inset-0 bg-navy/55 backdrop-blur-md"
         onClick={onClose}
       />
       <div
         className={cn(
-          "relative z-10 w-full max-w-app rounded-t-3xl bg-surface shadow-cardHover animate-[fade-up_.28s_cubic-bezier(.22,.61,.36,1)] max-h-[90dvh] overflow-y-auto no-scrollbar",
+          "sheet-in relative z-10 w-full max-w-app rounded-t-3xl bg-surface shadow-cardHover max-h-[90dvh] overflow-y-auto no-scrollbar",
           className
         )}
       >

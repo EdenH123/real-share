@@ -13,6 +13,7 @@ import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { PropertyImage } from "@/components/property/PropertyImage";
 import { IconMedallion } from "@/components/ui/IconMedallion";
+import { Aurora } from "@/components/fx/Aurora";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -71,7 +72,7 @@ export default function PortfolioPage() {
       <div className="space-y-5 px-4">
         {/* summary hero */}
         <Card variant="navy" className="relative overflow-hidden p-5">
-          <div className="absolute -end-8 -top-10 h-40 w-40 rounded-full bg-gold/15 blur-2xl" />
+          <Aurora dust />
           <div className="relative">
             <div className="text-xs text-white/70">{t("pf.totalValue")}</div>
             {ready ? (

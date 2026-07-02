@@ -175,3 +175,44 @@
 .rs-map .leaflet-control-attribution a {
   color: #1f6675;
 }
+
+/* ---- v3 pin choreography (motion-gated) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pin-drop {
+    0% {
+      transform: translateY(-14px) scale(0.7);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(2px) scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+    }
+  }
+  .rs-pin__dot {
+    animation: pin-drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes pin-sonar {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  .rs-pin--selected .rs-pin__dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 2px solid rgba(224, 164, 88, 0.8);
+    animation: pin-sonar 1.6s ease-out infinite;
+  }
+  .rs-pin--selected .rs-pin__dot {
+    position: relative;
+  }
+}

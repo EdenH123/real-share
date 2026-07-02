@@ -43,6 +43,8 @@ export function ProgressBar({
         className={cn(
           "h-full rounded-full",
           animate ? "progress-fill" : "transition-all",
+          // liquid-gold shimmer on the animated funding thermometer
+          animate && tone === "gold" && "progress-liquid",
           tones[tone]
         )}
         style={{ width: `${filled ? clamped : 0}%` }}
