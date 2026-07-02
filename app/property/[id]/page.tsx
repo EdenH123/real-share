@@ -11,6 +11,8 @@ import { PropertyImage } from "@/components/property/PropertyImage";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { StatWaterfall } from "@/components/property/StatWaterfall";
 import { TokenPriceCard } from "@/components/property/TokenPriceCard";
+import { VoteCard } from "@/components/property/VoteCard";
+import { ScenarioChart } from "@/components/charts/ScenarioChart";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
@@ -90,6 +92,9 @@ export default function PropertyDetailPage() {
           </h1>
         </div>
 
+        {/* exit-vote simulation */}
+        {p.status === "exitVote" && <VoteCard propertyId={p.id} />}
+
         {/* funding progress */}
         {p.status === "funding" && (
           <Card className="p-4">
@@ -99,7 +104,7 @@ export default function PropertyDetailPage() {
               </span>
               <span className="text-muted">{t("prop.daysLeft", { days: p.daysLeft })}</span>
             </div>
-            <ProgressBar pct={pct} className="mt-2" />
+            <ProgressBar pct={pct} className="mt-2" animate ticks />
             <div className="mt-2 flex justify-between text-xs text-muted">
               <span className="num">{t("prop.raised", { amount: formatEUR(p.fundingRaised) })}</span>
               <span className="num">{t("prop.target", { amount: formatEUR(p.fundingTarget) })}</span>
@@ -147,11 +152,10 @@ export default function PropertyDetailPage() {
             </h3>
             <IllustrativeTag />
           </div>
+          <div className="mt-3">
+            <ScenarioChart />
+          </div>
           <div className="mt-3 space-y-2 text-sm">
-            <Row label={t("prop.rentIncome")} value="+€133" />
-            <Row label={t("prop.appreciationBase")} value="+€338" />
-            <Row label={t("prop.appreciationBull")} value="+€611" muted />
-            <div className="my-1 h-px bg-hairline" />
             <div className="flex items-center justify-between">
               <span className="font-semibold text-ink">{t("prop.total5yr")}</span>
               <span className="num font-display text-lg font-semibold text-positive">
@@ -247,15 +251,6 @@ export default function PropertyDetailPage() {
           </ButtonLink>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Row({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-muted">{label}</span>
-      <span className={`num font-semibold ${muted ? "text-muted" : "text-ink"}`}>{value}</span>
     </div>
   );
 }

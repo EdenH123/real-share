@@ -129,7 +129,14 @@ export default function TaxReportPage() {
           <Check size={18} className="text-positive" />
         </Card>
 
-        <Button size="lg" onClick={() => setDownloaded(true)}>
+        <Button
+          size="lg"
+          className="no-print"
+          onClick={() => {
+            setDownloaded(true);
+            if (typeof window !== "undefined") window.print();
+          }}
+        >
           <Download size={18} />
           {downloaded ? t("common.done") : t("tax.download")}
         </Button>

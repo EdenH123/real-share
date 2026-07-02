@@ -174,6 +174,23 @@ export const he: Record<string, string> = {
   "prop.annualized": "≈ שנתי",
   "prop.returnNote":
     "להמחשה ומונע עליית ערך — בצמיחה של 0% התשואה ל־5 שנים ≈ שכר דירה בלבד. לפני מס ברמת המשקיע הישראלי, מט״ח HUF/EUR ועמלת יציאה של כ־2%.",
+  "prop.scenarioBase": "בסיס · 6% לשנה",
+  "prop.scenarioBull": "אופטימי · 10% לשנה",
+  "prop.scenarioCaption": "שווי €1,000 כולל שכר דירה",
+
+  // ---- exit-vote simulation ----
+  "vote.simBadge": "הצבעה בסימולציה",
+  "vote.headline": "למכור את הנכס?",
+  "vote.forLabel": "בעד המכירה",
+  "vote.threshold": "נדרש ⅔",
+  "vote.deadline": "נותרו {days} ימים להצבעה",
+  "vote.sell": "הצבעה למכירה (הדגמה)",
+  "vote.hold": "הצבעה להחזקה (הדגמה)",
+  "vote.recorded": "הצבעת ההדגמה שלכם נרשמה",
+  "vote.yourVoteSell": "הצבעתם למכירה",
+  "vote.yourVoteHold": "הצבעתם להחזקה",
+  "vote.note":
+    "הצבעת הדגמה — סימולציה המסומנת בבירור. לא מתבצעת הצבעה אמיתית ולא מתרחשת מכירה; הספירה מעדכנת רק את ההדגמה המקומית שלכם.",
 
   // ---- waterfall ----
   "wf.title": "משכר דירה ברוטו אל הנטו שלכם",
@@ -261,6 +278,7 @@ export const he: Record<string, string> = {
   "trade.myOrders": "הפקודות שלכם (סימולציה)",
   "trade.noOrders": "אין עדיין פקודות בסימולציה.",
   "trade.spread": "מרווח",
+  "trade.depth": "עומק שוק",
   "trade.listForSale": "רישום טוקנים למכירה",
   "trade.selectProperty": "בחירת נכס",
 
@@ -285,6 +303,10 @@ export const he: Record<string, string> = {
   "pf.upcoming": "צפוי",
   "pf.paid": "שולם",
   "pf.perTokenAmount": "{amount} לטוקן",
+  "pf.allocation": "פיזור לפי שוק",
+  "pf.allocationSub": "חלק מהשווי לפי שוק",
+  "pf.incomeTitle": "הכנסה לאורך זמן",
+  "pf.incomeSub": "שכר דירה מצטבר · ששולם וצפוי",
 
   // ---- profile ----
   "profile.title": "פרופיל",

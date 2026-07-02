@@ -208,3 +208,119 @@ input[type="range"].rs-range::-moz-range-thumb {
     animation: ob-slide-in 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
 }
+
+/* ============================================================
+   Charts (Phase C)
+   Draw-in / sweep transitions are declared ONLY inside the
+   no-preference query, so under reduced motion the drawn-state
+   flip lands instantly with no animation.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  /* line / sparkline / scenario: stroke-dashoffset draw */
+  .chart-draw {
+    transition: stroke-dashoffset 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  /* donut segments: stroke-dasharray grow */
+  .chart-grow {
+    transition: stroke-dasharray 900ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  /* areas / depth fill: fade + rise */
+  .chart-fade {
+    transition: opacity 700ms ease;
+  }
+  /* funding thermometer fill animates 0 → pct */
+  .progress-fill {
+    transition: width 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+/* Notifications: unread dot pulses once (no-preference only). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes notif-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(31, 102, 117, 0.5);
+    }
+    70%,
+    100% {
+      box-shadow: 0 0 0 6px rgba(31, 102, 117, 0);
+    }
+  }
+  .notif-dot {
+    animation: notif-pulse 1.6s ease-out 1;
+  }
+}
+
+/* Invest success: gold particle burst behind the check medallion. */
+.rs-burst {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.rs-burst span {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: theme("colors.gold.DEFAULT");
+  opacity: 0;
+  --a: calc(var(--i) * 45deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rs-burst {
+    0% {
+      transform: rotate(var(--a)) translateY(0) scale(0.4);
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(var(--a)) translateY(-48px) scale(1);
+      opacity: 0;
+    }
+  }
+  .rs-burst span {
+    animation: rs-burst 900ms cubic-bezier(0.22, 0.61, 0.36, 1) 1 both;
+  }
+}
+
+/* ============================================================
+   Print layout (Phase C) — clean A4 statement for the tax report.
+   Hide app chrome; keep the statement + compliance note visible.
+   ============================================================ */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body {
+    height: auto !important;
+    background: #fff !important;
+  }
+  .app-frame-outer {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+  .app-frame {
+    height: auto !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+  }
+  .app-frame :is([class*="sm:ring"]) {
+    box-shadow: none !important;
+  }
+  .app-scroll {
+    overflow: visible !important;
+  }
+  main {
+    background: #fff !important;
+  }
+}

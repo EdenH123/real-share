@@ -9,6 +9,7 @@ import { IconMedallion } from "@/components/ui/IconMedallion";
 import { formatDate } from "@/lib/format";
 import { Coins, PiggyBank, Vote, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/cn";
 
 const ICONS: Record<NotificationType, LucideIcon> = {
   payout: Coins,
@@ -51,13 +52,22 @@ export default function NotificationsPage() {
           return (
             <Card
               key={n.id}
-              className={`flex gap-3 p-4 ${read ? "" : "ring-1 ring-teal/30"}`}
+              className={cn(
+                "flex gap-3 p-4 ring-1 transition-shadow duration-500",
+                read ? "ring-transparent" : "ring-teal/30"
+              )}
             >
               <IconMedallion icon={Icon} size={42} tone={n.type === "payout" ? "gold" : "navy"} />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="eyebrow">{t(TYPE_KEY[n.type])}</span>
-                  {!read && <span className="h-2 w-2 rounded-full bg-teal" />}
+                  <span
+                    className={cn(
+                      "h-2 w-2 rounded-full bg-teal transition-opacity duration-500",
+                      read ? "opacity-0" : "opacity-100 notif-dot"
+                    )}
+                    aria-hidden
+                  />
                 </div>
                 <h3 className="mt-0.5 text-sm font-semibold text-ink">
                   {locale === "he" ? n.titleHe : n.titleEn}

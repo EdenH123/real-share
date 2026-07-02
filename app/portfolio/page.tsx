@@ -17,6 +17,9 @@ import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { CountUp } from "@/components/ui/CountUp";
+import { AllocationDonut } from "@/components/charts/AllocationDonut";
+import { IncomeChart } from "@/components/charts/IncomeChart";
+import { Sparkline } from "@/components/charts/Sparkline";
 import {
   Wallet,
   TrendingUp,
@@ -99,6 +102,30 @@ export default function PortfolioPage() {
           </div>
         </Card>
 
+        {/* allocation by market */}
+        <div>
+          <SectionTitle>{t("pf.allocation")}</SectionTitle>
+          <Card className="p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-xs text-muted">{t("pf.allocationSub")}</span>
+              <IllustrativeTag />
+            </div>
+            <AllocationDonut views={summary.views} />
+          </Card>
+        </div>
+
+        {/* accrued income over time */}
+        <div>
+          <SectionTitle>{t("pf.incomeTitle")}</SectionTitle>
+          <Card className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs text-muted">{t("pf.incomeSub")}</span>
+              <IllustrativeTag />
+            </div>
+            <IncomeChart holdings={holdings} />
+          </Card>
+        </div>
+
         {/* holdings */}
         <div>
           <SectionTitle>{t("pf.holdings")}</SectionTitle>
@@ -131,6 +158,12 @@ export default function PortfolioPage() {
                         </span>
                       </div>
                     </div>
+                    <Sparkline
+                      invested={v.invested}
+                      current={v.currentValue}
+                      seedKey={v.propertyId}
+                      className="shrink-0"
+                    />
                     <Chevron size={18} className="text-muted" />
                   </Card>
                 </Link>

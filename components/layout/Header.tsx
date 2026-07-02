@@ -47,7 +47,7 @@ export function Header({
         <button
           onClick={() => router.back()}
           className={cn(
-            "grid h-10 w-10 shrink-0 place-items-center rounded-full",
+            "no-print grid h-10 w-10 shrink-0 place-items-center rounded-full",
             onDark ? "bg-white/10 text-white" : "bg-tint text-ink"
           )}
           aria-label={t("common.back")}
@@ -68,7 +68,7 @@ export function Header({
         )}
       </div>
 
-      <div className="flex shrink-0 items-center gap-2">
+      <div className="no-print flex shrink-0 items-center gap-2">
         {right}
         {showLang && <LanguageToggle variant={onDark ? "dark" : "light"} />}
         {showBell && (

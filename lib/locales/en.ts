@@ -174,6 +174,23 @@ export const en: Record<string, string> = {
   "prop.annualized": "≈ annualized",
   "prop.returnNote":
     "Illustrative and appreciation-driven — at 0% growth the 5-yr return ≈ rent only. Before Israeli investor-side tax, HUF/EUR FX, and ~2% exit fee.",
+  "prop.scenarioBase": "Base · 6%/yr",
+  "prop.scenarioBull": "Bull · 10%/yr",
+  "prop.scenarioCaption": "Value of €1,000 incl. rent",
+
+  // ---- exit-vote simulation ----
+  "vote.simBadge": "Simulated vote",
+  "vote.headline": "Sell this property?",
+  "vote.forLabel": "in favour of sale",
+  "vote.threshold": "⅔ needed",
+  "vote.deadline": "{days} days left to vote",
+  "vote.sell": "Vote to sell (demo)",
+  "vote.hold": "Vote to hold (demo)",
+  "vote.recorded": "Your demo vote is recorded",
+  "vote.yourVoteSell": "You voted to sell",
+  "vote.yourVoteHold": "You voted to hold",
+  "vote.note":
+    "Demo vote — a clearly-labeled simulation. No real ballot is cast and no sale occurs; the tally updates your local demo only.",
 
   // ---- waterfall ----
   "wf.title": "From gross rent to your net",
@@ -261,6 +278,7 @@ export const en: Record<string, string> = {
   "trade.myOrders": "Your simulated orders",
   "trade.noOrders": "No simulated orders yet.",
   "trade.spread": "Spread",
+  "trade.depth": "Market depth",
   "trade.listForSale": "List tokens for sale",
   "trade.selectProperty": "Select property",
 
@@ -286,6 +304,10 @@ export const en: Record<string, string> = {
   "pf.upcoming": "Upcoming",
   "pf.paid": "Paid",
   "pf.perTokenAmount": "{amount}/token",
+  "pf.allocation": "Allocation by market",
+  "pf.allocationSub": "Share of value by market",
+  "pf.incomeTitle": "Income over time",
+  "pf.incomeSub": "Cumulative rent · paid & upcoming",
 
   // ---- profile ----
   "profile.title": "Profile",
