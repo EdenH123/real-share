@@ -1,10 +1,17 @@
 # RealShare v1 — Build Progress
 
-Status: **v1 complete.** Production-grade, installable PWA built per `BUILD-BRIEF.md`.
-All milestones done, verified visually in Hebrew (RTL) **and** English, `npm run build`
-passes with zero errors, no runtime console errors on any screen.
+Status: **v1 complete and pushed.** Production-grade, installable PWA built per
+`BUILD-BRIEF.md`. All milestones done, verified visually in Hebrew (RTL) **and**
+English, `npm run build` passes with zero errors, no runtime console errors on
+any screen. Pushed to `origin/claude/realshare-v1-build-ship-q1bw1y` (commit
+`6734a01`, 92 files).
 
 Last verified: 2026-07-01.
+
+**Deploy:** no Vercel credentials in the build environment, so deployment is
+documented rather than executed (per the completion condition). To go live:
+import `EdenH123/real-share` on vercel.com (zero-config Next.js, auto-deploys on
+push) or run `vercel --prod` locally. See README → "Deploy to the web".
 
 ## Milestones (BUILD-BRIEF.md §9)
 
