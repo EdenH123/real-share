@@ -97,6 +97,13 @@ export const en: Record<string, string> = {
   "map.listView": "List",
   "map.mapNote": "Illustrative map — pins show approximate districts.",
   "map.exploreMarkets": "Markets we’re exploring",
+  "map.tilesOffline": "Map tiles unavailable offline",
+  "map.attribution": "© OpenStreetMap contributors · © CARTO",
+  "map.collapse": "Collapse map",
+  "map.expand": "Expand map",
+  "map.approxLocation": "Approximate location — illustrative",
+  "map.viewDetails": "View details",
+  "map.grossYieldNote": "gross yield",
 
   // ---- markets ----
   "market.budapest": "Budapest",

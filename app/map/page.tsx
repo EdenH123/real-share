@@ -1,136 +1,157 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useI18n } from "@/lib/i18n";
-import { PROPERTIES, MARKETS, type MarketId } from "@/lib/seed";
+import { PROPERTIES, MARKETS, getProperty, type MarketId } from "@/lib/seed";
 import { Header } from "@/components/layout/Header";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { MarketsTable } from "@/components/home/MarketsTable";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/cn";
-import { MapPin, List, Map as MapIcon } from "lucide-react";
-import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
+import { ChevronUp, ChevronDown } from "lucide-react";
 
-// Approximate pin positions on the stylized map (% within the card).
-const PIN_POS: Record<MarketId, { top: string; start: string }> = {
-  portugal: { top: "46%", start: "10%" },
-  budapest: { top: "30%", start: "52%" },
-  athens: { top: "58%", start: "60%" },
-  israel: { top: "66%", start: "78%" },
-};
+const MapView = dynamic(() => import("@/components/map/MapView"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="h-full w-full"
+      style={{ background: "#0F2233" }}
+      aria-hidden
+    />
+  ),
+});
 
 export default function MapPage() {
   const { t } = useI18n();
   const [market, setMarket] = useState<MarketId | "all">("all");
-  const [view, setView] = useState<"list" | "map">("list");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState(true);
 
   const filtered = useMemo(
-    () => (market === "all" ? PROPERTIES : PROPERTIES.filter((p) => p.market === market)),
+    () =>
+      market === "all"
+        ? PROPERTIES
+        : PROPERTIES.filter((p) => p.market === market),
     [market]
+  );
+
+  function selectMarket(m: MarketId | "all") {
+    setMarket(m);
+    setSelectedId(null);
+  }
+
+  function handlePinSelect(id: string) {
+    const p = getProperty(id);
+    // Make sure the tapped property's card is present in the list.
+    if (p && market !== "all" && p.market !== market) setMarket("all");
+    setSelectedId(id);
+  }
+
+  // Scroll the selected property's card into view.
+  useEffect(() => {
+    if (!selectedId) return;
+    const reduce = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const id = window.setTimeout(() => {
+      const el = document.getElementById(`prop-card-${selectedId}`);
+      el?.scrollIntoView({
+        behavior: reduce ? "auto" : "smooth",
+        block: "center",
+      });
+    }, 60);
+    return () => window.clearTimeout(id);
+  }, [selectedId, filtered]);
+
+  const chips = (
+    <>
+      <button
+        onClick={() => selectMarket("all")}
+        className={cn(
+          "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold shadow-card transition-colors",
+          market === "all" ? "bg-navy text-white" : "bg-surface text-muted"
+        )}
+      >
+        {t("map.allMarkets")}
+      </button>
+      {MARKETS.map((m) => (
+        <button
+          key={m.id}
+          onClick={() => selectMarket(m.id)}
+          className={cn(
+            "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold shadow-card transition-colors",
+            market === m.id ? "bg-navy text-white" : "bg-surface text-muted"
+          )}
+        >
+          {t(m.nameKey)}
+        </button>
+      ))}
+    </>
   );
 
   return (
     <div className="pb-6">
       <Header title={t("map.title")} subtitle={t("map.subtitle")} />
 
-      {/* market filter */}
-      <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-1">
-        <button
-          onClick={() => setMarket("all")}
+      {/* Map hero — default view. Filter chips overlay the top; a collapse/
+          expand toggle sizes the map. */}
+      <div className="relative">
+        <div
           className={cn(
-            "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
-            market === "all" ? "bg-navy text-white" : "bg-tint text-muted"
+            "overflow-hidden transition-[height] duration-300 ease-out",
+            expanded ? "h-[46dvh]" : "h-0"
           )}
         >
-          {t("map.allMarkets")}
-        </button>
-        {MARKETS.map((m) => (
+          <MapView
+            market={market}
+            selectedId={selectedId}
+            onSelect={handlePinSelect}
+            expanded={expanded}
+          />
+        </div>
+
+        <div
+          className={cn(
+            "flex items-center gap-2",
+            expanded ? "absolute inset-x-0 top-0 z-[600] p-3" : "px-4 pt-3"
+          )}
+        >
+          <div className="no-scrollbar flex flex-1 gap-2 overflow-x-auto">
+            {chips}
+          </div>
           <button
-            key={m.id}
-            onClick={() => setMarket(m.id)}
-            className={cn(
-              "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
-              market === m.id ? "bg-navy text-white" : "bg-tint text-muted"
-            )}
+            onClick={() => setExpanded((v) => !v)}
+            aria-label={expanded ? t("map.collapse") : t("map.expand")}
+            aria-expanded={expanded}
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-navy text-white shadow-card"
           >
-            {t(m.nameKey)}
+            {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
           </button>
-        ))}
+        </div>
       </div>
 
-      {/* view toggle + count */}
-      <div className="mt-3 flex items-center justify-between px-4">
+      {/* results count */}
+      <div className="mt-3 px-4">
         <span className="text-sm font-semibold text-muted">
           {t("map.results", { count: filtered.length })}
         </span>
-        <div className="inline-flex rounded-full bg-tint p-0.5 text-sm font-semibold">
-          <button
-            onClick={() => setView("list")}
-            className={cn(
-              "flex items-center gap-1 rounded-full px-3 py-1",
-              view === "list" ? "bg-surface text-ink shadow-card" : "text-muted"
-            )}
-          >
-            <List size={15} /> {t("map.listView")}
-          </button>
-          <button
-            onClick={() => setView("map")}
-            className={cn(
-              "flex items-center gap-1 rounded-full px-3 py-1",
-              view === "map" ? "bg-surface text-ink shadow-card" : "text-muted"
-            )}
-          >
-            <MapIcon size={15} /> {t("map.mapView")}
-          </button>
-        </div>
       </div>
 
-      {view === "map" && (
-        <div className="mt-3 px-4">
-          <Card className="overflow-hidden">
-            <div className="relative h-64 bg-gradient-to-br from-[#123049] via-[#1B3A5B] to-[#1F6675]">
-              {/* stylized landmass blobs */}
-              <div className="absolute left-[6%] top-[38%] h-24 w-28 rounded-[40%] bg-white/5" />
-              <div className="absolute left-[40%] top-[22%] h-28 w-40 rounded-[45%] bg-white/5" />
-              <div className="absolute left-[62%] top-[52%] h-20 w-24 rounded-[45%] bg-white/5" />
-              {MARKETS.map((m) => {
-                const pos = PIN_POS[m.id];
-                const count = PROPERTIES.filter((p) => p.market === m.id).length;
-                const active = market === "all" || market === m.id;
-                return (
-                  <button
-                    key={m.id}
-                    onClick={() => setMarket(m.id)}
-                    className="absolute -translate-x-1/2 rtl:translate-x-1/2"
-                    style={{ top: pos.top, insetInlineStart: pos.start }}
-                  >
-                    <span
-                      className={cn(
-                        "flex flex-col items-center transition-all",
-                        active ? "opacity-100" : "opacity-40"
-                      )}
-                    >
-                      <span className="flex items-center gap-1 rounded-full bg-gold px-2 py-1 text-xs font-bold text-navy shadow-lg">
-                        <MapPin size={12} /> {t(m.nameKey)}
-                        <span className="num rounded-full bg-navy/20 px-1">{count}</span>
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-            <div className="flex items-center justify-between px-4 py-2.5">
-              <span className="text-[11px] text-muted">{t("map.mapNote")}</span>
-              <IllustrativeTag />
-            </div>
-          </Card>
-        </div>
-      )}
-
-      <div className="mt-4 space-y-4 px-4">
+      {/* list */}
+      <div className="mt-3 space-y-4 px-4">
         {filtered.map((p) => (
-          <PropertyCard key={p.id} p={p} />
+          <div
+            key={p.id}
+            id={`prop-card-${p.id}`}
+            className={cn(
+              "scroll-mt-24 rounded-card transition-shadow",
+              selectedId === p.id &&
+                "ring-2 ring-gold ring-offset-2 ring-offset-[#e9eef1]"
+            )}
+          >
+            <PropertyCard p={p} />
+          </div>
         ))}
       </div>
 

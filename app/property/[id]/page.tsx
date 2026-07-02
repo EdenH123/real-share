@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { getProperty } from "@/lib/seed";
@@ -27,6 +28,17 @@ import {
   Landmark,
   ShieldCheck,
 } from "lucide-react";
+
+const MiniMap = dynamic(() => import("@/components/map/MiniMap"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="h-36 rounded-card"
+      style={{ background: "#0F2233" }}
+      aria-hidden
+    />
+  ),
+});
 
 export default function PropertyDetailPage() {
   const { t, locale } = useI18n();
@@ -162,6 +174,15 @@ export default function PropertyDetailPage() {
             {t("prop.about")}
           </h2>
           <p className="text-sm leading-relaxed text-muted">{propAbout(p, locale)}</p>
+        </div>
+
+        {/* location mini-map */}
+        <div>
+          <MiniMap lat={p.lat} lng={p.lng} />
+          <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted">
+            <MapPin size={12} className="text-teal" />
+            {t(p.cityKey)} · {propDistrict(p, locale)} · {t("map.approxLocation")}
+          </div>
         </div>
 
         {/* appraisal + market */}

@@ -97,6 +97,13 @@ export const he: Record<string, string> = {
   "map.listView": "רשימה",
   "map.mapNote": "מפה להמחשה — הסיכות מציגות אזורים משוערים.",
   "map.exploreMarkets": "שווקים שאנחנו בוחנים",
+  "map.tilesOffline": "אריחי המפה אינם זמינים במצב לא־מקוון",
+  "map.attribution": "© תורמי OpenStreetMap · © CARTO",
+  "map.collapse": "צמצום המפה",
+  "map.expand": "הרחבת המפה",
+  "map.approxLocation": "מיקום משוער — להמחשה",
+  "map.viewDetails": "לפרטים",
+  "map.grossYieldNote": "תשואה ברוטו",
 
   // ---- markets ----
   "market.budapest": "בודפשט",
