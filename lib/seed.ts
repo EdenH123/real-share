@@ -217,6 +217,246 @@ export const PROPERTIES: Property[] = [
     marketAppreciation: 9,
     tags: [],
   },
+  {
+    id: "bud-obuda",
+    market: "budapest",
+    cityKey: "market.budapest",
+    countryKey: "market.hungary",
+    district: "District III · Óbuda",
+    districtHe: "רובע III · אובודה",
+    title: "Garden-view 2-room, Óbuda",
+    titleHe: "דירת 2 חדרים עם נוף לגן, אובודה",
+    about:
+      "A quiet garden-view flat in historic Óbuda, well connected by the HÉV line. Tenanted to a long-term family; tokens are live and paying rent.",
+    aboutHe:
+      "דירה שקטה עם נוף לגן באובודה ההיסטורית, מחוברת היטב בקו הרכבת HÉV. מושכרת למשפחה לטווח ארוך; הטוקנים פעילים ומניבים שכר דירה.",
+    lat: 47.556,
+    lng: 19.041,
+    theme: 2,
+    price: 128000,
+    grossYield: 5.3,
+    netYield: 2.9,
+    monthlyRent: 565,
+    tokenCount: 5120,
+    tokenPrice: 25,
+    status: "active",
+    fundingRaised: 128000,
+    fundingTarget: 128000,
+    daysLeft: 0,
+    appraisalValue: 132000,
+    marketAppreciation: 13,
+    tags: ["highYield"],
+  },
+  {
+    id: "bud-district-ix",
+    market: "budapest",
+    cityKey: "market.budapest",
+    countryKey: "market.hungary",
+    district: "District IX · Ferencváros",
+    districtHe: "רובע IX · פרנצווארוש",
+    title: "Canalside new-build, District IX",
+    titleHe: "בנייה חדשה לצד התעלה, רובע IX",
+    about:
+      "A new-build one-bedroom in fast-regenerating Ferencváros, near the river and the university. Funding round open with escrow protection.",
+    aboutHe:
+      "דירת חדר שינה בבנייה חדשה בפרנצווארוש המתחדשת במהירות, ליד הנהר והאוניברסיטה. סבב הגיוס פתוח עם הגנת נאמנות.",
+    lat: 47.478,
+    lng: 19.069,
+    theme: 0,
+    price: 142000,
+    grossYield: 5.1,
+    netYield: 2.7,
+    monthlyRent: 604,
+    tokenCount: 5680,
+    tokenPrice: 25,
+    status: "funding",
+    fundingRaised: 58000,
+    fundingTarget: 142000,
+    daysLeft: 18,
+    appraisalValue: 145000,
+    marketAppreciation: 13,
+    tags: ["hot"],
+  },
+  {
+    id: "ath-pagrati",
+    market: "athens",
+    cityKey: "market.athens",
+    countryKey: "market.greece",
+    district: "Pagrati",
+    districtHe: "פנגראטי",
+    title: "Bright 3-room, Pagrati",
+    titleHe: "דירת 3 חדרים מוארת, פנגראטי",
+    about:
+      "A bright top-floor flat in Pagrati, a residential favourite near the Panathenaic Stadium. Active and distributing rent.",
+    aboutHe:
+      "דירה מוארת בקומה עליונה בפנגראטי, שכונת מגורים אהובה ליד האצטדיון הפנאתנאי. פעילה ומחלקת שכר דירה.",
+    lat: 37.968,
+    lng: 23.752,
+    theme: 3,
+    price: 148000,
+    grossYield: 5.2,
+    netYield: 2.9,
+    monthlyRent: 641,
+    tokenCount: 5920,
+    tokenPrice: 25,
+    status: "active",
+    fundingRaised: 148000,
+    fundingTarget: 148000,
+    daysLeft: 0,
+    appraisalValue: 152000,
+    marketAppreciation: 10,
+    tags: ["highYield"],
+  },
+  {
+    id: "ath-kolonaki",
+    market: "athens",
+    cityKey: "market.athens",
+    countryKey: "market.greece",
+    district: "Kolonaki",
+    districtHe: "קולונאקי",
+    title: "Prime flat, Kolonaki",
+    titleHe: "דירה יוקרתית, קולונאקי",
+    about:
+      "A prime flat in upscale Kolonaki at the foot of Lycabettus. Lower yield, premium location; funding round open.",
+    aboutHe:
+      "דירה יוקרתית בקולונאקי המפואר למרגלות הליקאבטוס. תשואה נמוכה יותר, מיקום פרימיום; סבב הגיוס פתוח.",
+    lat: 37.979,
+    lng: 23.744,
+    theme: 2,
+    price: 189000,
+    grossYield: 4.6,
+    netYield: 2.6,
+    monthlyRent: 725,
+    tokenCount: 7560,
+    tokenPrice: 25,
+    status: "funding",
+    fundingRaised: 121000,
+    fundingTarget: 189000,
+    daysLeft: 9,
+    appraisalValue: 194000,
+    marketAppreciation: 10,
+    tags: ["hot"],
+  },
+  {
+    id: "prt-cedofeita",
+    market: "portugal",
+    cityKey: "market.portugal",
+    countryKey: "market.portugal",
+    district: "Porto · Cedofeita",
+    districtHe: "פורטו · סדופייטה",
+    title: "Design loft, Cedofeita",
+    titleHe: "לופט מעוצב, סדופייטה",
+    about:
+      "A converted design loft in Porto's artsy Cedofeita district. Active and distributing rent; Portugal leads the corridor on appreciation.",
+    aboutHe:
+      "לופט מעוצב משופץ ברובע האמנותי סדופייטה בפורטו. פעיל ומחלק שכר דירה; פורטוגל מובילה במסדרון בעליית ערך.",
+    lat: 41.157,
+    lng: -8.62,
+    theme: 4,
+    price: 178000,
+    grossYield: 4.4,
+    netYield: 2.5,
+    monthlyRent: 653,
+    tokenCount: 7120,
+    tokenPrice: 25,
+    status: "active",
+    fundingRaised: 178000,
+    fundingTarget: 178000,
+    daysLeft: 0,
+    appraisalValue: 188000,
+    marketAppreciation: 15,
+    tags: ["hot"],
+  },
+  {
+    id: "prt-foz",
+    market: "portugal",
+    cityKey: "market.portugal",
+    countryKey: "market.portugal",
+    district: "Porto · Foz do Douro",
+    districtHe: "פורטו · פוז דו דורו",
+    title: "Coastal 2-room, Foz do Douro",
+    titleHe: "דירת 2 חדרים על החוף, פוז דו דורו",
+    about:
+      "A coastal flat where the Douro meets the Atlantic — Porto's most sought-after seafront. Funding round open with escrow protection.",
+    aboutHe:
+      "דירה על החוף במקום שבו הדורו נפגש עם האוקיינוס האטלנטי — קו החוף המבוקש ביותר בפורטו. סבב הגיוס פתוח עם הגנת נאמנות.",
+    lat: 41.15,
+    lng: -8.64,
+    theme: 3,
+    price: 232000,
+    grossYield: 4.0,
+    netYield: 2.3,
+    monthlyRent: 773,
+    tokenCount: 9280,
+    tokenPrice: 25,
+    status: "funding",
+    fundingRaised: 96000,
+    fundingTarget: 232000,
+    daysLeft: 24,
+    appraisalValue: 240000,
+    marketAppreciation: 15,
+    tags: [],
+  },
+  {
+    id: "isr-carmel",
+    market: "israel",
+    cityKey: "market.israel",
+    countryKey: "market.israel",
+    district: "Haifa · Carmel",
+    districtHe: "חיפה · הכרמל",
+    title: "Sea-view flat, Carmel",
+    titleHe: "דירה עם נוף לים, הכרמל",
+    about:
+      "A sea-view flat high on the Carmel ridge. The home market: lower yields, priced for lifestyle. Active and distributing rent.",
+    aboutHe:
+      "דירה עם נוף לים גבוה על רכס הכרמל. השוק הביתי: תשואות נמוכות יותר, מתומחר לאיכות חיים. פעילה ומחלקת שכר דירה.",
+    lat: 32.813,
+    lng: 34.984,
+    theme: 1,
+    price: 545000,
+    grossYield: 3.3,
+    netYield: 2.0,
+    monthlyRent: 1499,
+    tokenCount: 10900,
+    tokenPrice: 50,
+    status: "active",
+    fundingRaised: 545000,
+    fundingTarget: 545000,
+    daysLeft: 0,
+    appraisalValue: 558000,
+    marketAppreciation: 9,
+    tags: [],
+  },
+  {
+    id: "isr-german-colony",
+    market: "israel",
+    cityKey: "market.israel",
+    countryKey: "market.israel",
+    district: "Haifa · German Colony",
+    districtHe: "חיפה · המושבה הגרמנית",
+    title: "Restored Templer house, German Colony",
+    titleHe: "בית טמפלרי משוחזר, המושבה הגרמנית",
+    about:
+      "A restored 19th-century Templer stone house on the German Colony axis below the Bahá'í Gardens. Funding round open.",
+    aboutHe:
+      "בית אבן טמפלרי משוחזר מהמאה ה־19 על ציר המושבה הגרמנית מתחת לגני הבהאים. סבב הגיוס פתוח.",
+    lat: 32.818,
+    lng: 34.988,
+    theme: 2,
+    price: 610000,
+    grossYield: 3.5,
+    netYield: 2.1,
+    monthlyRent: 1779,
+    tokenCount: 12200,
+    tokenPrice: 50,
+    status: "funding",
+    fundingRaised: 232000,
+    fundingTarget: 610000,
+    daysLeft: 15,
+    appraisalValue: 620000,
+    marketAppreciation: 9,
+    tags: ["highYield"],
+  },
 ];
 
 export function getProperty(id: string): Property | undefined {
@@ -326,6 +566,8 @@ export type Holding = {
 export const SEED_HOLDINGS: Holding[] = [
   { propertyId: "bud-district-xiii", tokens: 40, costBasisPerToken: 25 },
   { propertyId: "ath-koukaki", tokens: 24, costBasisPerToken: 25 },
+  { propertyId: "bud-obuda", tokens: 30, costBasisPerToken: 25 },
+  { propertyId: "prt-cedofeita", tokens: 20, costBasisPerToken: 25 },
 ];
 
 // ---- Distributions (rent history + upcoming), per token ----
@@ -336,14 +578,30 @@ export type Distribution = {
   paid: boolean;
 };
 
+// A rolling year of monthly rent distributions. The most recent month is
+// still "upcoming" (scheduled, not yet paid); everything before it is paid.
+const HISTORY_MONTHS = [
+  "2025-08", "2025-09", "2025-10", "2025-11", "2025-12",
+  "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07",
+];
+const UPCOMING_MONTH = "2026-07";
+
+// Deterministic per-token monthly amount with a small seasonal wobble
+// (no Math.random → stable across renders/SSR).
+function monthlySeries(propertyId: string, base: number): Distribution[] {
+  return HISTORY_MONTHS.map((m, i) => ({
+    propertyId,
+    date: `${m}-01`,
+    amountPerToken: Math.round((base + ((i % 3) - 1) * 0.01) * 100) / 100,
+    paid: m !== UPCOMING_MONTH,
+  }));
+}
+
 export const SEED_DISTRIBUTIONS: Distribution[] = [
-  { propertyId: "bud-district-xiii", date: "2026-04-01", amountPerToken: 0.29, paid: true },
-  { propertyId: "bud-district-xiii", date: "2026-05-01", amountPerToken: 0.29, paid: true },
-  { propertyId: "bud-district-xiii", date: "2026-06-01", amountPerToken: 0.29, paid: true },
-  { propertyId: "bud-district-xiii", date: "2026-07-01", amountPerToken: 0.29, paid: false },
-  { propertyId: "ath-koukaki", date: "2026-05-01", amountPerToken: 0.33, paid: true },
-  { propertyId: "ath-koukaki", date: "2026-06-01", amountPerToken: 0.33, paid: true },
-  { propertyId: "ath-koukaki", date: "2026-07-01", amountPerToken: 0.33, paid: false },
+  ...monthlySeries("bud-district-xiii", 0.29),
+  ...monthlySeries("ath-koukaki", 0.33),
+  ...monthlySeries("bud-obuda", 0.27),
+  ...monthlySeries("prt-cedofeita", 0.22),
 ];
 
 // ---- Marketplace orders (order book), per property ----
@@ -357,32 +615,41 @@ export type Order = {
   mine?: boolean;
 };
 
-export const SEED_ORDERS: Order[] = [
-  // bud-district-vii (flagship, funding) around €25.7 est
-  { id: "b1", propertyId: "bud-district-vii", side: "buy", tokens: 40, price: 25.4 },
-  { id: "b2", propertyId: "bud-district-vii", side: "buy", tokens: 70, price: 25.1 },
-  { id: "b3", propertyId: "bud-district-vii", side: "buy", tokens: 130, price: 24.8 },
-  { id: "b4", propertyId: "bud-district-vii", side: "sell", tokens: 25, price: 26.0 },
-  { id: "b5", propertyId: "bud-district-vii", side: "sell", tokens: 60, price: 26.4 },
-  { id: "b6", propertyId: "bud-district-vii", side: "sell", tokens: 110, price: 26.9 },
-  // ath-exarchia (funding) around €25.4 est
-  { id: "e1", propertyId: "ath-exarchia", side: "buy", tokens: 35, price: 25.2 },
-  { id: "e2", propertyId: "ath-exarchia", side: "buy", tokens: 80, price: 24.9 },
-  { id: "e3", propertyId: "ath-exarchia", side: "sell", tokens: 30, price: 25.9 },
-  { id: "e4", propertyId: "ath-exarchia", side: "sell", tokens: 65, price: 26.3 },
-  // bud-district-xiii around €25.4 est
-  { id: "o1", propertyId: "bud-district-xiii", side: "buy", tokens: 30, price: 25.1 },
-  { id: "o2", propertyId: "bud-district-xiii", side: "buy", tokens: 55, price: 24.9 },
-  { id: "o3", propertyId: "bud-district-xiii", side: "buy", tokens: 120, price: 24.6 },
-  { id: "o4", propertyId: "bud-district-xiii", side: "sell", tokens: 20, price: 25.8 },
-  { id: "o5", propertyId: "bud-district-xiii", side: "sell", tokens: 45, price: 26.1 },
-  { id: "o6", propertyId: "bud-district-xiii", side: "sell", tokens: 90, price: 26.5 },
-  // ath-koukaki
-  { id: "o7", propertyId: "ath-koukaki", side: "buy", tokens: 40, price: 25.5 },
-  { id: "o8", propertyId: "ath-koukaki", side: "buy", tokens: 75, price: 25.2 },
-  { id: "o9", propertyId: "ath-koukaki", side: "sell", tokens: 35, price: 26.2 },
-  { id: "o10", propertyId: "ath-koukaki", side: "sell", tokens: 60, price: 26.6 },
-];
+// A depth book is generated around each tradeable property's NAV-anchored
+// estimated price, so every selectable market on the Trade screen has a
+// populated order book (3 bids below, 3 asks above).
+function orderBook(p: Property): Order[] {
+  const mid = estimatedTokenPrice(p);
+  const r2 = (n: number) => Math.round(n * 100) / 100;
+  const bidTokens = [40, 75, 130];
+  const askTokens = [30, 60, 105];
+  const bidOff = [0.27, 0.5, 0.82];
+  const askOff = [0.3, 0.62, 1.0];
+  const orders: Order[] = [];
+  bidOff.forEach((off, i) =>
+    orders.push({
+      id: `${p.id}-b${i}`,
+      propertyId: p.id,
+      side: "buy",
+      tokens: bidTokens[i],
+      price: r2(mid - off),
+    })
+  );
+  askOff.forEach((off, i) =>
+    orders.push({
+      id: `${p.id}-a${i}`,
+      propertyId: p.id,
+      side: "sell",
+      tokens: askTokens[i],
+      price: r2(mid + off),
+    })
+  );
+  return orders;
+}
+
+export const SEED_ORDERS: Order[] = PROPERTIES.filter(
+  (p) => p.status === "active" || p.status === "funding"
+).flatMap(orderBook);
 
 /** RealShare estimated (NAV-anchored) price per token, from appraisal. */
 export function estimatedTokenPrice(p: { appraisalValue: number; tokenCount: number }): number {
@@ -447,13 +714,63 @@ export const SEED_NOTIFICATIONS: AppNotification[] = [
     read: true,
   },
   {
-    id: "n4",
+    id: "n5",
+    type: "payout",
+    titleEn: "June rent distributed",
+    titleHe: "שכר הדירה של יוני חולק",
+    bodyEn: "€30.72 in June rent across your 4 holdings has been distributed to your demo balance.",
+    bodyHe: "€30.72 שכר דירה של יוני על פני 4 ההחזקות שלכם חולקו ליתרת ההדגמה שלכם.",
+    date: "2026-06-01",
+    read: true,
+  },
+  {
+    id: "n6",
     type: "system",
-    titleEn: "Welcome to the RealShare preview",
-    titleHe: "ברוכים הבאים לתצוגה המקדימה של RealShare",
-    bodyEn: "This is a preview. Join the waitlist to be first when we launch for real.",
-    bodyHe: "זו תצוגה מקדימה. הצטרפו לרשימת ההמתנה כדי להיות ראשונים בהשקה האמיתית.",
-    date: "2026-06-20",
+    titleEn: "New listing: Kolonaki, Athens",
+    titleHe: "נכס חדש: קולונאקי, אתונה",
+    bodyEn: "A prime Kolonaki flat just opened for funding — €189,000, 4.6% gross yield (illustrative).",
+    bodyHe: "דירה יוקרתית בקולונאקי נפתחה לגיוס — €189,000, תשואה ברוטו 4.6% (להמחשה).",
+    date: "2026-05-22",
+    read: true,
+  },
+  {
+    id: "n7",
+    type: "system",
+    titleEn: "Appraisal update: District XIII",
+    titleHe: "עדכון הערכת שמאי: רובע XIII",
+    bodyEn: "The District XIII studio was re-appraised upward; your estimated token price rose to €25.64 (illustrative).",
+    bodyHe: "הסטודיו ברובע XIII הוערך מחדש כלפי מעלה; מחיר הטוקן המשוער שלכם עלה ל־€25.64 (להמחשה).",
+    date: "2026-05-04",
+    read: true,
+  },
+  {
+    id: "n8",
+    type: "payout",
+    titleEn: "May rent distributed",
+    titleHe: "שכר הדירה של מאי חולק",
+    bodyEn: "€30.66 in May rent has been distributed across your holdings.",
+    bodyHe: "€30.66 שכר דירה של מאי חולקו על פני ההחזקות שלכם.",
+    date: "2026-05-01",
+    read: true,
+  },
+  {
+    id: "n9",
+    type: "round",
+    titleEn: "Óbuda round fully funded",
+    titleHe: "סבב אובודה גויס במלואו",
+    bodyEn: "The Óbuda garden-view flat reached 100% funding — tokens are now active and paying rent.",
+    bodyHe: "דירת הגן באובודה הגיעה ל־100% גיוס — הטוקנים פעילים כעת ומניבים שכר דירה.",
+    date: "2026-03-18",
+    read: true,
+  },
+  {
+    id: "n10",
+    type: "system",
+    titleEn: "Your automated tax report is ready",
+    titleHe: "דו״ח המס האוטומטי שלכם מוכן",
+    bodyEn: "Your 2025 Israeli tax report has been pre-filled from your distributions (mock, illustrative).",
+    bodyHe: "דו״ח המס הישראלי שלכם ל־2025 מולא מראש מתוך החלוקות שלכם (הדמיה, להמחשה).",
+    date: "2026-02-11",
     read: true,
   },
 ];
