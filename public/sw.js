@@ -1,6 +1,6 @@
 // RealShare service worker — offline-capable app shell (cache-first for assets,
 // network-first for navigations with an offline fallback).
-const CACHE = "realshare-v1";
+const CACHE = "realshare-v3.1";
 const APP_SHELL = [
   "/",
   "/manifest.webmanifest",
