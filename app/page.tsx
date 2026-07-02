@@ -16,6 +16,10 @@ import { SectionTitle } from "@/components/ui/SectionTitle";
 import { Button } from "@/components/ui/Button";
 import { WaitlistSheet } from "@/components/waitlist/WaitlistSheet";
 import { IconMedallion } from "@/components/ui/IconMedallion";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { CountUp } from "@/components/ui/CountUp";
+import { Reveal } from "@/components/ui/Reveal";
+import { InstallPromptCard } from "@/components/home/InstallPromptCard";
 import { cn } from "@/lib/cn";
 import { ArrowUpRight, TrendingUp, Sparkles, Rocket } from "lucide-react";
 
@@ -65,37 +69,62 @@ export default function HomePage() {
                 <ArrowUpRight size={14} className="rtl:-scale-x-100" />
               </Link>
             </div>
-            <div className="num mt-1 font-display text-4xl font-semibold text-white">
-              {ready ? formatEUR(summary.currentValue, { decimals: 0 }) : "—"}
-            </div>
-            <div className="mt-1 flex items-center gap-1.5 text-sm">
-              <TrendingUp size={15} className="text-positive" />
-              <span className="num font-semibold text-positive">
-                {formatPct(summary.gainPct, { sign: true })}
-              </span>
-              <span className="text-white/50">·</span>
-              <span className="num text-white/70">
-                +{formatEUR(summary.gain)} {t("home.totalReturn")}
-              </span>
-            </div>
+            {ready ? (
+              <>
+                <div className="num mt-1 font-display text-4xl font-semibold text-white">
+                  <CountUp
+                    value={summary.currentValue}
+                    format={(n) => formatEUR(n, { decimals: 0 })}
+                  />
+                </div>
+                <div className="mt-1 flex items-center gap-1.5 text-sm">
+                  <TrendingUp size={15} className="text-positive" />
+                  <span className="num font-semibold text-positive">
+                    {formatPct(summary.gainPct, { sign: true })}
+                  </span>
+                  <span className="text-white/50">·</span>
+                  <span className="num text-white/70">
+                    +{formatEUR(summary.gain)} {t("home.totalReturn")}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <Skeleton dark className="mt-1.5 h-10 w-44 rounded-lg" />
+                <Skeleton dark className="mt-2 h-4 w-52 rounded" />
+              </>
+            )}
 
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div className="rounded-xl bg-white/5 p-3">
                 <div className="text-[11px] text-white/60">{t("home.monthlyIncome")}</div>
-                <div className="num mt-0.5 font-semibold text-white">
-                  {formatEUR(summary.monthlyIncome, { decimals: 0 })}
-                  <span className="text-xs font-normal text-white/50">/{t("common.month")}</span>
-                </div>
+                {ready ? (
+                  <div className="num mt-0.5 font-semibold text-white">
+                    {formatEUR(summary.monthlyIncome, { decimals: 0 })}
+                    <span className="text-xs font-normal text-white/50">/{t("common.month")}</span>
+                  </div>
+                ) : (
+                  <Skeleton dark className="mt-1 h-5 w-20 rounded" />
+                )}
               </div>
               <div className="rounded-xl bg-white/5 p-3">
                 <div className="text-[11px] text-white/60">{t("home.nextPayout")}</div>
-                <div className="num mt-0.5 font-semibold text-gold">
-                  {formatEUR(summary.nextPayout, { decimals: 2 })}
-                </div>
+                {ready ? (
+                  <div className="num mt-0.5 font-semibold text-gold">
+                    {formatEUR(summary.nextPayout, { decimals: 2 })}
+                  </div>
+                ) : (
+                  <Skeleton dark className="mt-1 h-5 w-16 rounded" />
+                )}
               </div>
             </div>
           </div>
         </Card>
+      </div>
+
+      {/* Install prompt (shown only when installable / iOS & not dismissed) */}
+      <div className="mt-4 px-4">
+        <InstallPromptCard />
       </div>
 
       {/* Featured with filters */}
@@ -118,20 +147,24 @@ export default function HomePage() {
           ))}
         </div>
         <div className="mt-3 space-y-4 px-4">
-          {filtered.map((p) => (
-            <PropertyCard key={p.id} p={p} />
-          ))}
+          {!ready
+            ? [0, 1].map((i) => <PropertyCardSkeleton key={i} />)
+            : filtered.map((p, i) => (
+                <Reveal key={p.id} delay={Math.min(i, 4) * 60}>
+                  <PropertyCard p={p} />
+                </Reveal>
+              ))}
         </div>
       </div>
 
       {/* How it works */}
-      <div className="mt-8 px-4">
+      <Reveal className="mt-8 px-4">
         <SectionTitle>{t("home.how.title")}</SectionTitle>
         <HowItWorks />
-      </div>
+      </Reveal>
 
       {/* Markets */}
-      <div className="mt-8 px-4">
+      <Reveal className="mt-8 px-4">
         <div className="mb-3 px-1">
           <h2 className="font-display text-lg font-semibold text-ink">
             {t("home.markets.title")}
@@ -139,10 +172,10 @@ export default function HomePage() {
           <p className="text-xs text-muted">{t("home.markets.subtitle")}</p>
         </div>
         <MarketsTable />
-      </div>
+      </Reveal>
 
       {/* Waitlist CTA */}
-      <div className="mt-8 px-4">
+      <Reveal className="mt-8 px-4">
         <Card variant="navy" className="flex items-center gap-4 p-5">
           <IconMedallion icon={Rocket} size={48} />
           <div className="flex-1">
@@ -156,9 +189,25 @@ export default function HomePage() {
           <Sparkles size={18} />
           {t("ob.join")}
         </Button>
-      </div>
+      </Reveal>
 
       <WaitlistSheet open={waitlist} onClose={() => setWaitlist(false)} />
+    </div>
+  );
+}
+
+function PropertyCardSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-card bg-surface shadow-card">
+      <Skeleton className="h-40 w-full rounded-none" />
+      <div className="space-y-3 p-4">
+        <Skeleton className="h-3 w-28 rounded" />
+        <Skeleton className="h-5 w-48 rounded" />
+        <div className="flex items-end justify-between">
+          <Skeleton className="h-6 w-24 rounded" />
+          <Skeleton className="h-5 w-16 rounded" />
+        </div>
+      </div>
     </div>
   );
 }

@@ -40,6 +40,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl" className={`${fraunces.variable} ${assistant.variable}`}>
+      <head>
+        {/* Mark that JS is available before first paint so reveal-on-scroll
+            content is hidden only when it can be animated; without JS it
+            renders visible by default. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+      </head>
       <body>
         <Providers>
           <AppFrame>{children}</AppFrame>

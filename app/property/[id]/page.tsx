@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { getProperty } from "@/lib/seed";
@@ -10,6 +11,8 @@ import { PropertyImage } from "@/components/property/PropertyImage";
 import { StatusChip } from "@/components/ui/StatusChip";
 import { StatWaterfall } from "@/components/property/StatWaterfall";
 import { TokenPriceCard } from "@/components/property/TokenPriceCard";
+import { VoteCard } from "@/components/property/VoteCard";
+import { ScenarioChart } from "@/components/charts/ScenarioChart";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
@@ -27,6 +30,17 @@ import {
   Landmark,
   ShieldCheck,
 } from "lucide-react";
+
+const MiniMap = dynamic(() => import("@/components/map/MiniMap"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="h-36 rounded-card"
+      style={{ background: "#0F2233" }}
+      aria-hidden
+    />
+  ),
+});
 
 export default function PropertyDetailPage() {
   const { t, locale } = useI18n();
@@ -57,7 +71,7 @@ export default function PropertyDetailPage() {
     <div className="pb-2">
       {/* hero image with overlaid back header */}
       <div className="relative">
-        <PropertyImage theme={p.theme} height="h-60" rounded="rounded-none" />
+        <PropertyImage theme={p.theme} market={p.market} height="h-60" rounded="rounded-none" />
         <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-navy/60 to-transparent">
           <Header back onDark showBell={false} />
         </div>
@@ -78,6 +92,9 @@ export default function PropertyDetailPage() {
           </h1>
         </div>
 
+        {/* exit-vote simulation */}
+        {p.status === "exitVote" && <VoteCard propertyId={p.id} />}
+
         {/* funding progress */}
         {p.status === "funding" && (
           <Card className="p-4">
@@ -87,7 +104,7 @@ export default function PropertyDetailPage() {
               </span>
               <span className="text-muted">{t("prop.daysLeft", { days: p.daysLeft })}</span>
             </div>
-            <ProgressBar pct={pct} className="mt-2" />
+            <ProgressBar pct={pct} className="mt-2" animate ticks />
             <div className="mt-2 flex justify-between text-xs text-muted">
               <span className="num">{t("prop.raised", { amount: formatEUR(p.fundingRaised) })}</span>
               <span className="num">{t("prop.target", { amount: formatEUR(p.fundingTarget) })}</span>
@@ -135,11 +152,10 @@ export default function PropertyDetailPage() {
             </h3>
             <IllustrativeTag />
           </div>
+          <div className="mt-3">
+            <ScenarioChart />
+          </div>
           <div className="mt-3 space-y-2 text-sm">
-            <Row label={t("prop.rentIncome")} value="+€133" />
-            <Row label={t("prop.appreciationBase")} value="+€338" />
-            <Row label={t("prop.appreciationBull")} value="+€611" muted />
-            <div className="my-1 h-px bg-hairline" />
             <div className="flex items-center justify-between">
               <span className="font-semibold text-ink">{t("prop.total5yr")}</span>
               <span className="num font-display text-lg font-semibold text-positive">
@@ -162,6 +178,15 @@ export default function PropertyDetailPage() {
             {t("prop.about")}
           </h2>
           <p className="text-sm leading-relaxed text-muted">{propAbout(p, locale)}</p>
+        </div>
+
+        {/* location mini-map */}
+        <div>
+          <MiniMap lat={p.lat} lng={p.lng} />
+          <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted">
+            <MapPin size={12} className="text-teal" />
+            {t(p.cityKey)} · {propDistrict(p, locale)} · {t("map.approxLocation")}
+          </div>
         </div>
 
         {/* appraisal + market */}
@@ -226,15 +251,6 @@ export default function PropertyDetailPage() {
           </ButtonLink>
         </div>
       </div>
-    </div>
-  );
-}
-
-function Row({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
-  return (
-    <div className="flex items-center justify-between">
-      <span className="text-muted">{label}</span>
-      <span className={`num font-semibold ${muted ? "text-muted" : "text-ink"}`}>{value}</span>
     </div>
   );
 }

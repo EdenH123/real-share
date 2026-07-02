@@ -17,9 +17,14 @@ export function PropertyCard({ p }: { p: Property }) {
 
   return (
     <Link href={`/property/${p.id}`} className="block">
-      <Card className="overflow-hidden transition-shadow hover:shadow-cardHover">
+      <Card className="press overflow-hidden transition-shadow hover:shadow-cardHover">
         <div className="relative">
-          <PropertyImage theme={p.theme} height="h-40" rounded="rounded-none" />
+          <PropertyImage
+            theme={p.theme}
+            market={p.market}
+            height="h-40"
+            rounded="rounded-none"
+          />
           <div className="absolute start-3 top-3">
             <StatusChip status={p.status} />
           </div>

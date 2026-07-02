@@ -1,3 +1,13 @@
+# RealShare — Build Progress
+
+## v2 (2026-07-01) — Map · Design · Data storytelling
+
+All three phases of `UPGRADE-PLAN.md` implemented (by Opus agents, orchestrated + verified by Fable), verified in he-RTL + en with zero build errors and no console errors beyond sandbox-blocked map-tile fetches:
+
+- [x] **Phase A — Real map**: interactive Leaflet map (CARTO tiles, no API key) with gold-medallion pins + price chips at real coordinates, locale-aware navy popups, flyTo per market / fitBounds all-markets, collapse/expand map hero on /map, pin→card highlight+scroll, non-interactive MiniMap on property detail, designed offline fallback (navy sea + grid) with i18n chip.
+- [x] **Phase B — Design & UX**: reveal/count-up/press motion system (reduced-motion + no-JS safe), skeleton shimmer loading, per-market gradient art identities, search + sort on properties, install-prompt card (beforeinstallprompt + iOS hint, persisted dismissal), route loading skeletons, onboarding float/slide polish, one-line disclaimer bar.
+- [x] **Phase C — Data storytelling + flows** (dataviz-skill compliant, hand-rolled SVG): portfolio allocation donut + cumulative income chart (paid solid / upcoming dashed) + per-holding sparklines, trade market-depth chart with est-price marker, 5-yr base/bull scenario chart on property detail, animated funding thermometer with escrow ticks, exit-vote demo simulation (persisted), invest success gold burst + count-up, print-ready tax report (window.print), notification read transitions.
+
 # RealShare v1 — Build Progress
 
 Status: **v1 complete and pushed.** Production-grade, installable PWA built per

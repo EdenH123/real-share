@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { useParams } from "next/navigation";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/Card";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { IconMedallion } from "@/components/ui/IconMedallion";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
+import { CountUp } from "@/components/ui/CountUp";
 import { NotFoundInline } from "@/components/ui/NotFoundInline";
 import { WaitlistSheet } from "@/components/waitlist/WaitlistSheet";
 import {
@@ -59,7 +60,14 @@ export default function InvestPage() {
       <div className="min-h-full">
         <Header back showBell={false} showLang title={t("invest.title")} />
         <div className="flex flex-col items-center px-6 pt-8 text-center">
-          <IconMedallion icon={CheckCircle2} size={72} className="!bg-positive" tone="teal" />
+          <div className="relative grid place-items-center">
+            <div className="rs-burst" aria-hidden>
+              {Array.from({ length: 8 }).map((_, i) => (
+                <span key={i} style={{ "--i": i } as CSSProperties} />
+              ))}
+            </div>
+            <IconMedallion icon={CheckCircle2} size={72} className="!bg-positive" tone="teal" />
+          </div>
           <h1 className="mt-4 font-display text-2xl font-semibold text-ink">
             {t("invest.successTitle")}
           </h1>
@@ -69,7 +77,7 @@ export default function InvestPage() {
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted">{propTitle(p, locale)}</span>
               <span className="num font-semibold text-ink">
-                {tokens} {t("common.tokens")}
+                <CountUp value={tokens} format={(n) => String(Math.round(n))} /> {t("common.tokens")}
               </span>
             </div>
             <div className="mt-2 flex items-center justify-between text-sm">

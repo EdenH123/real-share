@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { IconMedallion } from "@/components/ui/IconMedallion";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { Sheet } from "@/components/ui/Sheet";
+import { DepthChart } from "@/components/charts/DepthChart";
 import { cn } from "@/lib/cn";
 import { Info, TrendingUp, Coins, CheckCircle2 } from "lucide-react";
 
@@ -120,6 +121,17 @@ function TradeInner() {
           <p className="mt-3 text-[11px] leading-relaxed text-white/55">
             {t("trade.estPriceNote")}
           </p>
+        </Card>
+
+        {/* market depth */}
+        <Card className="p-4">
+          <div className="mb-1 flex items-center justify-between">
+            <h2 className="font-display text-base font-semibold text-ink">
+              {t("trade.depth")}
+            </h2>
+            <IllustrativeTag />
+          </div>
+          <DepthChart bids={book.bids} asks={book.asks} est={est} />
         </Card>
 
         {/* order book */}

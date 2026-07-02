@@ -15,6 +15,9 @@ export type Property = {
   titleHe: string;
   about: string;
   aboutHe: string;
+  /** approximate map coordinates (district-level, illustrative) */
+  lat: number;
+  lng: number;
   /** visual gradient theme index 0..4 */
   theme: number;
   price: number; // €
@@ -47,6 +50,8 @@ export const PROPERTIES: Property[] = [
       "A renovated two-room flat in Budapest's lively District VII, a short walk from the ruin-bar quarter. Long-term let to a professional tenant. This is the deck's worked-example asset.",
     aboutHe:
       "דירת שני חדרים משופצת ברובע VII התוסס של בודפשט, במרחק הליכה קצר מרובע פאבי־החורבות. מושכרת לטווח ארוך לדייר מקצועי. זהו נכס הדוגמה המחושבת של המצגת.",
+    lat: 47.503,
+    lng: 19.07,
     theme: 0,
     price: 150000,
     grossYield: 5.0,
@@ -75,6 +80,8 @@ export const PROPERTIES: Property[] = [
       "A compact riverside studio in a sought-after residential district. Fully tenanted and paying rent — tokens are live.",
     aboutHe:
       "סטודיו קומפקטי על גדת הנהר ברובע מגורים מבוקש. מאוכלס במלואו ומניב שכר דירה — הטוקנים פעילים.",
+    lat: 47.532,
+    lng: 19.055,
     theme: 1,
     price: 118000,
     grossYield: 5.6,
@@ -103,6 +110,8 @@ export const PROPERTIES: Property[] = [
       "A sunlit flat below the Acropolis in Koukaki, one of Athens' most in-demand rental districts. Around 40% of buyers here are foreign.",
     aboutHe:
       "דירה שטופת שמש למרגלות האקרופוליס בקוקאקי, אחד מאזורי השכירות המבוקשים באתונה. כ־40% מהקונים כאן הם זרים.",
+    lat: 37.963,
+    lng: 23.728,
     theme: 2,
     price: 132000,
     grossYield: 5.4,
@@ -131,6 +140,8 @@ export const PROPERTIES: Property[] = [
       "A small flat in a rapidly-gentrifying district. Funding round is currently open with escrow protection.",
     aboutHe:
       "דירה קטנה באזור שעובר תהליך התחדשות מהיר. סבב הגיוס פתוח כעת עם הגנת נאמנות.",
+    lat: 37.987,
+    lng: 23.733,
     theme: 3,
     price: 96000,
     grossYield: 5.0,
@@ -159,6 +170,8 @@ export const PROPERTIES: Property[] = [
       "A restored unit in Porto's Bonfim district — Portugal leads on appreciation, though yields are lower and the Golden-Visa property route ended in 2023.",
     aboutHe:
       "יחידה משוחזרת ברובע בונפים בפורטו — פורטוגל מובילה בעליית ערך, אם כי התשואות נמוכות יותר ומסלול ויזת הזהב בנדל״ן הסתיים ב־2023.",
+    lat: 41.15,
+    lng: -8.595,
     theme: 4,
     price: 205000,
     grossYield: 4.2,
@@ -187,6 +200,8 @@ export const PROPERTIES: Property[] = [
       "A home-market example. This funding round did not fill in time, so all investors were refunded their principal plus escrow interest — exactly as designed.",
     aboutHe:
       "דוגמה מהשוק המקומי. סבב הגיוס הזה לא התמלא בזמן, ולכן כל המשקיעים קיבלו החזר של הקרן בתוספת ריבית נאמנות — בדיוק כפי שתוכנן.",
+    lat: 32.808,
+    lng: 34.989,
     theme: 1,
     price: 520000,
     grossYield: 3.4,
@@ -258,6 +273,19 @@ export const MARKETS: Market[] = [
     rank: 4,
   },
 ];
+
+// ---- Map view presets (leaflet center/zoom) ----
+export type MapPreset = { center: [number, number]; zoom: number };
+
+// All-markets overview: roughly centered over the Mediterranean corridor.
+export const ALL_MARKETS_VIEW: MapPreset = { center: [41.5, 15], zoom: 4.3 };
+
+export const MARKET_VIEWS: Record<MarketId, MapPreset> = {
+  budapest: { center: [47.5175, 19.0625], zoom: 12 },
+  athens: { center: [37.975, 23.7305], zoom: 12.5 },
+  portugal: { center: [41.15, -8.595], zoom: 13 },
+  israel: { center: [32.808, 34.989], zoom: 13 },
+};
 
 // Market friction copy (added to dictionaries at runtime via these keys)
 export const MARKET_FRICTION: Record<string, { en: string; he: string }> = {

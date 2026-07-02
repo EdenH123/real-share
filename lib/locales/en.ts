@@ -97,6 +97,26 @@ export const en: Record<string, string> = {
   "map.listView": "List",
   "map.mapNote": "Illustrative map — pins show approximate districts.",
   "map.exploreMarkets": "Markets we’re exploring",
+  "map.tilesOffline": "Map tiles unavailable offline",
+  "map.attribution": "© OpenStreetMap contributors · © CARTO",
+  "map.collapse": "Collapse map",
+  "map.expand": "Expand map",
+  "map.approxLocation": "Approximate location — illustrative",
+  "map.viewDetails": "View details",
+  "map.grossYieldNote": "gross yield",
+  "map.searchPlaceholder": "Search by title or district",
+  "map.sort.default": "Default",
+  "map.sort.priceAsc": "Price ↑",
+  "map.sort.priceDesc": "Price ↓",
+  "map.sort.yieldDesc": "Gross yield ↓",
+  "map.sort.status": "Status",
+
+  // ---- install prompt ----
+  "install.title": "Install RealShare",
+  "install.body": "Add the preview to your home screen for a full-screen, app-like experience.",
+  "install.cta": "Install app",
+  "install.iosHint": "Tap the Share icon, then “Add to Home Screen”.",
+  "install.dismiss": "Dismiss",
 
   // ---- markets ----
   "market.budapest": "Budapest",
@@ -154,6 +174,23 @@ export const en: Record<string, string> = {
   "prop.annualized": "≈ annualized",
   "prop.returnNote":
     "Illustrative and appreciation-driven — at 0% growth the 5-yr return ≈ rent only. Before Israeli investor-side tax, HUF/EUR FX, and ~2% exit fee.",
+  "prop.scenarioBase": "Base · 6%/yr",
+  "prop.scenarioBull": "Bull · 10%/yr",
+  "prop.scenarioCaption": "Value of €1,000 incl. rent",
+
+  // ---- exit-vote simulation ----
+  "vote.simBadge": "Simulated vote",
+  "vote.headline": "Sell this property?",
+  "vote.forLabel": "in favour of sale",
+  "vote.threshold": "⅔ needed",
+  "vote.deadline": "{days} days left to vote",
+  "vote.sell": "Vote to sell (demo)",
+  "vote.hold": "Vote to hold (demo)",
+  "vote.recorded": "Your demo vote is recorded",
+  "vote.yourVoteSell": "You voted to sell",
+  "vote.yourVoteHold": "You voted to hold",
+  "vote.note":
+    "Demo vote — a clearly-labeled simulation. No real ballot is cast and no sale occurs; the tally updates your local demo only.",
 
   // ---- waterfall ----
   "wf.title": "From gross rent to your net",
@@ -241,6 +278,7 @@ export const en: Record<string, string> = {
   "trade.myOrders": "Your simulated orders",
   "trade.noOrders": "No simulated orders yet.",
   "trade.spread": "Spread",
+  "trade.depth": "Market depth",
   "trade.listForSale": "List tokens for sale",
   "trade.selectProperty": "Select property",
 
@@ -266,6 +304,10 @@ export const en: Record<string, string> = {
   "pf.upcoming": "Upcoming",
   "pf.paid": "Paid",
   "pf.perTokenAmount": "{amount}/token",
+  "pf.allocation": "Allocation by market",
+  "pf.allocationSub": "Share of value by market",
+  "pf.incomeTitle": "Income over time",
+  "pf.incomeSub": "Cumulative rent · paid & upcoming",
 
   // ---- profile ----
   "profile.title": "Profile",

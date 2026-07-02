@@ -56,16 +56,18 @@ export function Onboarding({ onFinish }: { onFinish: () => void }) {
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-        <div className="mb-8 grid h-24 w-24 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
+        <div className="ob-float mb-8 grid h-24 w-24 place-items-center rounded-full bg-white/5 ring-1 ring-white/10">
           <IconMedallion icon={slide.icon} size={72} />
         </div>
-        <div className="eyebrow !text-gold">{t(slide.eyebrow)}</div>
-        <h1 key={slide.title} className="mt-3 font-display text-3xl font-semibold leading-tight animate-fade-up">
-          {t(slide.title)}
-        </h1>
-        <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/75">
-          {t(slide.body)}
-        </p>
+        <div key={i} className="ob-slide-in flex flex-col items-center">
+          <div className="eyebrow !text-gold">{t(slide.eyebrow)}</div>
+          <h1 className="mt-3 font-display text-3xl font-semibold leading-tight">
+            {t(slide.title)}
+          </h1>
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/75">
+            {t(slide.body)}
+          </p>
+        </div>
       </div>
 
       <div className="p-6 pb-8">
@@ -74,7 +76,7 @@ export function Onboarding({ onFinish }: { onFinish: () => void }) {
             <span
               key={idx}
               className={cn(
-                "h-1.5 rounded-full transition-all",
+                "h-1.5 rounded-full transition-[width,background-color] duration-300 ease-out",
                 idx === i ? "w-6 bg-gold" : "w-1.5 bg-white/25"
               )}
             />
