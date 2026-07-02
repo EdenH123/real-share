@@ -14,7 +14,7 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="app-frame-outer flex min-h-[100dvh] items-stretch justify-center bg-[#e9eef1] sm:items-center sm:py-6">
-      <div className="app-frame relative flex h-[100dvh] w-full max-w-app flex-col overflow-hidden bg-[#e9eef1] shadow-cardHover sm:h-[min(860px,calc(100dvh-48px))] sm:rounded-[40px] sm:ring-1 sm:ring-black/5">
+      <div className="app-frame relative flex h-[100dvh] w-full max-w-app flex-col overflow-hidden bg-[#e9eef1] pt-[env(safe-area-inset-top)] shadow-cardHover sm:h-[min(860px,calc(100dvh-48px))] sm:rounded-[40px] sm:ring-1 sm:ring-black/5">
         {/* Scrollable content */}
         <main className="app-scroll no-scrollbar min-h-0 flex-1">{children}</main>
 
@@ -28,6 +28,13 @@ export function AppFrame({ children }: { children: React.ReactNode }) {
           <div className="no-print contents">
             <TabBar />
           </div>
+        )}
+
+        {/* When the tab bar (which carries its own safe-area padding) is
+            hidden, pad the home-indicator area so the disclaimer bar isn't
+            overlapped on installed iOS PWAs. */}
+        {!showTabs && (
+          <div aria-hidden className="no-print h-[env(safe-area-inset-bottom)] bg-navy" />
         )}
 
         {/* Onboarding overlay on first visit */}

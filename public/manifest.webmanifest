@@ -2,6 +2,7 @@
   "name": "RealShare — fractional real estate",
   "short_name": "RealShare",
   "description": "Own fractional, tokenized shares of rental property — at home in Israel and abroad. Preview; figures are illustrative.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

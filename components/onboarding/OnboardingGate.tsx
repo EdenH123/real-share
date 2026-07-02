@@ -10,7 +10,7 @@ export function OnboardingGate() {
   if (!ready || onboarded) return null;
 
   return (
-    <div className="absolute inset-0 z-[90]">
+    <div className="absolute inset-0 z-[90] bg-[#0F2233] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       <Onboarding onFinish={() => setOnboarded(true)} />
     </div>
   );

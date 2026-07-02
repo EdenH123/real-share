@@ -12,7 +12,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    // "default" keeps app content BELOW the iOS status bar (black-translucent
+    // let the system clock overlay the app header when installed).
+    statusBarStyle: "default",
     title: "RealShare",
   },
   icons: {
