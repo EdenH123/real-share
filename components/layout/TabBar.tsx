@@ -25,7 +25,8 @@ export function TabBar() {
   );
 
   return (
-    <nav className="relative flex items-stretch justify-around border-t border-hairline bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur">
+    <div className="bg-[#e9eef1] px-3 pb-[max(10px,env(safe-area-inset-bottom))] pt-2">
+      <nav className="relative flex items-stretch justify-around rounded-[26px] border border-white/60 bg-surface/90 shadow-cardHover backdrop-blur-xl">
       {/* sliding active pill (logical inset → RTL-correct) */}
       {activeIdx >= 0 && (
         <span
@@ -60,6 +61,7 @@ export function TabBar() {
           </button>
         );
       })}
-    </nav>
+      </nav>
+    </div>
   );
 }

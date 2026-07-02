@@ -1,5 +1,16 @@
 # RealShare — Build Progress
 
+## v4 (2026-07-01) — "Editorial fintech" shell redesign
+
+Full visual-architecture redesign (Fable): immersive navy aurora header bands
+on every main screen with the content rising over them as a rounded light
+sheet (HeroShell); hand-crafted layered SVG city scenes as property art
+(Budapest parliament dusk, the Acropolis, Porto's arch bridge, Haifa's port
+cranes — glowing windows, signature skies); floating glass dock navigation
+with the sliding gold pill; gold-ringed avatar medallions; frosted-glass stat
+tiles; bigger editorial hero numbers. RTL fix for the depth chart axis.
+AA, RTL, reduced-motion, and the legal layer intact; zero new dependencies.
+
 ## v3 (2026-07-01) — "Gold dust & deep water" living design layer
 
 Full-app design elevation (designed + implemented by Fable): aurora ambient

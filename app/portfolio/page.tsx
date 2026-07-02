@@ -9,6 +9,7 @@ import { propTitle } from "@/lib/property";
 import { computePortfolio } from "@/lib/portfolio";
 import { formatEUR, formatPct, formatDate } from "@/lib/format";
 import { Header } from "@/components/layout/Header";
+import { HeroShell, GlassStat } from "@/components/layout/HeroShell";
 import { Card } from "@/components/ui/Card";
 import { ButtonLink } from "@/components/ui/Button";
 import { PropertyImage } from "@/components/property/PropertyImage";
@@ -65,43 +66,43 @@ export default function PortfolioPage() {
     );
   }
 
-  return (
-    <div className="pb-8">
-      <Header title={t("pf.title")} subtitle={t("pf.subtitle")} />
-
-      <div className="space-y-5 px-4">
-        {/* summary hero */}
-        <Card variant="navy" className="relative overflow-hidden p-5">
-          <Aurora dust />
-          <div className="relative">
-            <div className="text-xs text-white/70">{t("pf.totalValue")}</div>
-            {ready ? (
-              <div className="num mt-1 font-display text-4xl font-semibold text-white">
-                <CountUp
-                  value={summary.currentValue}
-                  format={(n) => formatEUR(n, { decimals: 2 })}
-                />
-              </div>
-            ) : (
-              <Skeleton dark className="mt-1.5 h-10 w-48 rounded-lg" />
-            )}
-            <div className="mt-1 flex items-center gap-1.5 text-sm">
-              <TrendingUp size={15} className="text-positive" />
-              <span className="num font-semibold text-positive">
-                {formatPct(summary.gainPct, { sign: true })}
-              </span>
-              <span className="num text-white/70">
-                (+{formatEUR(summary.gain, { decimals: 2 })})
-              </span>
-              <IllustrativeTag className="!bg-white/10 !text-white/70" />
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              <Stat label={t("pf.investedTitle")} value={formatEUR(summary.invested, { decimals: 0 })} />
-              <Stat label={t("pf.accrued")} value={formatEUR(summary.accrued, { decimals: 2 })} gold />
-              <Stat label={t("pf.nextPayout")} value={formatEUR(summary.nextPayout, { decimals: 2 })} gold />
-            </div>
+  const hero = (
+    <>
+      <Header title={t("pf.title")} subtitle={t("pf.subtitle")} onDark />
+      <div className="px-5 pt-1">
+        <div className="eyebrow !text-gold">{t("pf.totalValue")}</div>
+        {ready ? (
+          <div className="num mt-1 font-display text-[44px] font-semibold leading-none text-white">
+            <CountUp
+              value={summary.currentValue}
+              format={(n) => formatEUR(n, { decimals: 2 })}
+            />
           </div>
-        </Card>
+        ) : (
+          <Skeleton dark className="mt-1.5 h-11 w-48 rounded-lg" />
+        )}
+        <div className="mt-2 flex items-center gap-1.5 text-sm">
+          <TrendingUp size={15} className="text-[#5fc493]" />
+          <span className="num font-semibold text-[#5fc493]">
+            {formatPct(summary.gainPct, { sign: true })}
+          </span>
+          <span className="num text-white/70">
+            (+{formatEUR(summary.gain, { decimals: 2 })})
+          </span>
+          <IllustrativeTag className="!bg-white/10 !text-white/70" />
+        </div>
+        <div className="mt-5 grid grid-cols-3 gap-2">
+          <GlassStat label={t("pf.investedTitle")} value={formatEUR(summary.invested, { decimals: 0 })} />
+          <GlassStat label={t("pf.accrued")} value={formatEUR(summary.accrued, { decimals: 2 })} gold />
+          <GlassStat label={t("pf.nextPayout")} value={formatEUR(summary.nextPayout, { decimals: 2 })} gold />
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <HeroShell hero={hero} className="pb-8">
+      <div className="space-y-5 px-4">
 
         {/* allocation by market */}
         <div>
@@ -206,7 +207,7 @@ export default function PortfolioPage() {
           </Card>
         </div>
       </div>
-    </div>
+    </HeroShell>
   );
 }
 

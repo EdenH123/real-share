@@ -17,6 +17,7 @@ export function Header({
   showLang = true,
   showBell = true,
   onDark = false,
+  avatar,
   right,
 }: {
   title?: string;
@@ -25,6 +26,8 @@ export function Header({
   showLang?: boolean;
   showBell?: boolean;
   onDark?: boolean;
+  /** initial letter for a gold-ringed avatar medallion before the title */
+  avatar?: string;
   right?: React.ReactNode;
 }) {
   const { t, dir } = useI18n();
@@ -54,6 +57,14 @@ export function Header({
         >
           <BackIcon size={22} />
         </button>
+      )}
+      {avatar && (
+        <span
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#EBB877] to-gold font-display text-lg font-semibold text-navy ring-2 ring-gold/40 ring-offset-2 ring-offset-transparent"
+          aria-hidden
+        >
+          {avatar}
+        </span>
       )}
       <div className="min-w-0 flex-1">
         {title && (

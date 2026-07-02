@@ -63,7 +63,7 @@ export const he: Record<string, string> = {
 
   // ---- home ----
   "home.greeting": "שלום, {name}",
-  "home.subtitle": "הנה התצוגה המקדימה שלכם ב־RealShare",
+  "home.subtitle": "התצוגה המקדימה שלכם",
   "home.portfolioValue": "שווי התיק",
   "home.totalReturn": "תשואה כוללת",
   "home.nextPayout": "התשלום הבא",

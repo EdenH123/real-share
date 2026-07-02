@@ -6,6 +6,7 @@ import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
 import { SEED_USER } from "@/lib/seed";
 import { Header } from "@/components/layout/Header";
+import { HeroShell } from "@/components/layout/HeroShell";
 import { Card } from "@/components/ui/Card";
 import { IconMedallion } from "@/components/ui/IconMedallion";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
@@ -49,29 +50,30 @@ export default function ProfilePage() {
     { href: "/waitlist", icon: BadgeCheck, label: t("ob.join") },
   ];
 
-  return (
-    <div className="pb-8">
-      <Header title={t("profile.title")} showLang={false} showBell={false} />
-
-      <div className="space-y-5 px-4">
-        {/* user card */}
-        <Card variant="navy" className="p-5">
-          <div className="flex items-center gap-4">
-            <div className="grid h-16 w-16 place-items-center rounded-full bg-gold font-display text-2xl font-semibold text-navy">
-              {name.charAt(0)}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="font-display text-lg font-semibold text-white">{name}</div>
-              <div className="truncate text-sm text-white/70" dir="ltr">
-                {waitlist?.email ?? SEED_USER.email}
-              </div>
-              <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-positive/20 px-2 py-0.5 text-[11px] font-semibold text-[#7fd3ab]">
-                <BadgeCheck size={12} />
-                {t("profile.kyc")}: {t("profile.kyc.verified")}
-              </div>
-            </div>
+  const hero = (
+    <>
+      <Header title={t("profile.title")} showLang={false} showBell={false} onDark />
+      <div className="flex items-center gap-4 px-5 pt-1">
+        <div className="grid h-[72px] w-[72px] place-items-center rounded-full bg-gradient-to-br from-[#EBB877] to-gold font-display text-3xl font-semibold text-navy ring-2 ring-gold/40 ring-offset-4 ring-offset-transparent">
+          {name.charAt(0)}
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="font-display text-xl font-semibold text-white">{name}</div>
+          <div className="truncate text-sm text-white/70" dir="ltr">
+            {waitlist?.email ?? SEED_USER.email}
           </div>
-        </Card>
+          <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-white/[.08] px-2.5 py-1 text-[11px] font-semibold text-[#7fd3ab] ring-1 ring-white/[.14]">
+            <BadgeCheck size={12} />
+            {t("profile.kyc")}: {t("profile.kyc.verified")}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <HeroShell hero={hero} className="pb-8">
+      <div className="space-y-5 px-4">
 
         {/* language toggle row */}
         <Card className="flex items-center justify-between p-4">
@@ -126,7 +128,7 @@ export default function ProfilePage() {
           {t("brand.name")} · {t("common.preview")}
         </p>
       </div>
-    </div>
+    </HeroShell>
   );
 }
 
