@@ -17,7 +17,7 @@ export function PropertyCard({ p }: { p: Property }) {
 
   return (
     <Link href={`/property/${p.id}`} className="block">
-      <Card className="press overflow-hidden transition-shadow hover:shadow-cardHover">
+      <Card className="press lift overflow-hidden hover:shadow-cardHover">
         <div className="relative">
           <PropertyImage
             theme={p.theme}

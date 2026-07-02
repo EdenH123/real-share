@@ -10,11 +10,14 @@ export function IconMedallion({
   size = 44,
   className,
   tone = "gold",
+  shine = false,
 }: {
   icon: LucideIcon;
   size?: number;
   className?: string;
   tone?: "gold" | "navy" | "teal";
+  /** periodic light sweep across the medallion (motion-gated) */
+  shine?: boolean;
 }) {
   const glyph = Math.round(size * 0.52);
   const tones = {
@@ -26,6 +29,7 @@ export function IconMedallion({
     <span
       className={cn(
         "inline-grid place-items-center rounded-full shrink-0",
+        shine && "relative overflow-hidden sheen-auto",
         tones[tone],
         className
       )}

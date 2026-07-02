@@ -19,6 +19,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { IconMedallion } from "@/components/ui/IconMedallion";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { NotFoundInline } from "@/components/ui/NotFoundInline";
+import { useParallax } from "@/components/fx/useParallax";
 import {
   MapPin,
   Percent,
@@ -45,6 +46,7 @@ const MiniMap = dynamic(() => import("@/components/map/MiniMap"), {
 export default function PropertyDetailPage() {
   const { t, locale } = useI18n();
   const params = useParams();
+  const heroRef = useParallax<HTMLDivElement>(0.35);
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const p = id ? getProperty(id) : undefined;
 
@@ -67,11 +69,14 @@ export default function PropertyDetailPage() {
 
   const canInvest = p.status === "funding" || p.status === "active";
 
+
   return (
     <div className="pb-2">
-      {/* hero image with overlaid back header */}
-      <div className="relative">
-        <PropertyImage theme={p.theme} market={p.market} height="h-60" rounded="rounded-none" />
+      {/* hero image with overlaid back header — gentle scroll parallax */}
+      <div className="relative overflow-hidden">
+        <div ref={heroRef} className="will-change-transform">
+          <PropertyImage theme={p.theme} market={p.market} height="h-60" rounded="rounded-none" />
+        </div>
         <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-navy/60 to-transparent">
           <Header back onDark showBell={false} />
         </div>

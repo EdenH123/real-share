@@ -79,9 +79,9 @@ export function PropertyImage({
         className
       )}
     >
-      {/* soft light blooms */}
-      <div className="absolute -start-8 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
-      <div className="absolute -end-6 bottom-0 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
+      {/* soft light blooms — slowly breathing (motion-gated) */}
+      <div className="bloom-breathe absolute -start-8 -top-10 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+      <div className="bloom-breathe bloom-breathe--slow absolute -end-6 bottom-0 h-28 w-28 rounded-full bg-gold/20 blur-2xl" />
       {/* skyline silhouette */}
       <div className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-1 opacity-25">
         {skyline.map(([h, domed], i) => (

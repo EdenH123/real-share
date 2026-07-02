@@ -324,3 +324,275 @@ input[type="range"].rs-range::-moz-range-thumb {
     background: #fff !important;
   }
 }
+
+/* ============================================================
+   v3 "Gold dust & deep water" — living design layer.
+   Ambient aurora surfaces, sheen sweeps, orbiting dust, liquid
+   progress, view transitions, tab pill, pin choreography.
+   Every animation is gated behind prefers-reduced-motion.
+   ============================================================ */
+
+/* Film-grain texture for navy surfaces (static, motion-safe). */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* Aurora blobs — set size/color inline; drift only under no-preference. */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(42px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes aurora-drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(8%, -6%, 0) scale(1.15);
+    }
+    100% {
+      transform: translate3d(-6%, 5%, 0) scale(0.95);
+    }
+  }
+  .aurora-blob {
+    animation: aurora-drift 16s ease-in-out infinite alternate;
+  }
+  .aurora-blob--2 {
+    animation-duration: 21s;
+    animation-delay: -7s;
+  }
+  .aurora-blob--3 {
+    animation-duration: 26s;
+    animation-delay: -13s;
+  }
+
+  /* Floating gold dust */
+  @keyframes dust-float {
+    0% {
+      transform: translate3d(0, 10px, 0);
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.9;
+    }
+    85% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate3d(var(--dx, 8px), -54px, 0);
+      opacity: 0;
+    }
+  }
+  .dust > i {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 9999px;
+    background: #e0a458;
+    box-shadow: 0 0 6px 1px rgba(224, 164, 88, 0.75);
+    animation: dust-float var(--dur, 5.5s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* Orbiting particles (hero medallions) */
+  @keyframes orbit-spin {
+    from {
+      transform: rotate(0deg) translateX(var(--r, 58px)) rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg) translateX(var(--r, 58px)) rotate(-360deg);
+    }
+  }
+  .orbit > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -2px 0 0 -2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 9999px;
+    background: #e0a458;
+    box-shadow: 0 0 8px 2px rgba(224, 164, 88, 0.6);
+    animation: orbit-spin var(--dur, 9s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* Sheen sweep — periodic on .sheen-auto, hover on .sheen-hover */
+  @keyframes sheen-sweep {
+    0%,
+    78% {
+      transform: translateX(-160%) skewX(-18deg);
+    }
+    92%,
+    100% {
+      transform: translateX(260%) skewX(-18deg);
+    }
+  }
+  .sheen-auto::after,
+  .sheen-hover::after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    bottom: -30%;
+    inset-inline-start: 0;
+    width: 40%;
+    background: linear-gradient(
+      105deg,
+      transparent,
+      rgba(255, 255, 255, 0.38),
+      transparent
+    );
+    transform: translateX(-160%) skewX(-18deg);
+    pointer-events: none;
+  }
+  .sheen-auto::after {
+    animation: sheen-sweep 6.5s ease-in-out infinite;
+  }
+  .sheen-hover:hover::after {
+    animation: sheen-sweep 1.2s ease;
+  }
+
+  /* Liquid gold progress fill */
+  @keyframes liquid-shimmer {
+    from {
+      background-position: -120px 0;
+    }
+    to {
+      background-position: 120px 0;
+    }
+  }
+  .progress-liquid {
+    background-image: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.45) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    background-size: 120px 100%;
+    background-repeat: no-repeat;
+    animation: liquid-shimmer 2.4s ease-in-out infinite;
+  }
+
+  /* Art blooms breathe (property imagery) */
+  @keyframes bloom-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.75;
+    }
+    50% {
+      transform: scale(1.25);
+      opacity: 1;
+    }
+  }
+  .bloom-breathe {
+    animation: bloom-breathe 7s ease-in-out infinite;
+  }
+  .bloom-breathe--slow {
+    animation-duration: 11s;
+    animation-delay: -3s;
+  }
+
+  /* Tab icon pop on activation */
+  @keyframes tab-pop {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.22) translateY(-1px);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .tab-pop {
+    animation: tab-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Interactive card lift */
+  .lift {
+    transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+      box-shadow 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .lift:hover {
+    transform: translateY(-3px);
+  }
+
+  /* View transitions — soft depth crossfade between pages */
+  @keyframes vt-out {
+    to {
+      opacity: 0;
+      transform: translateY(8px) scale(0.992);
+    }
+  }
+  @keyframes vt-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.992);
+    }
+  }
+  ::view-transition-old(root) {
+    animation: vt-out 0.2s ease both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+}
+
+/* Tab bar sliding pill (transition gated; position via logical inset works in RTL) */
+.tab-pill {
+  position: absolute;
+  top: 6px;
+  height: 40px;
+  width: 20%;
+  pointer-events: none;
+}
+.tab-pill::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(31, 102, 117, 0.14), rgba(224, 164, 88, 0.18));
+  box-shadow: inset 0 0 0 1px rgba(31, 102, 117, 0.15);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tab-pill {
+    transition: inset-inline-start 0.32s cubic-bezier(0.34, 1.3, 0.5, 1);
+  }
+}
+
+/* Springy bottom-sheet entrance (motion-gated; instant otherwise) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sheet-in {
+    from {
+      transform: translateY(60%);
+      opacity: 0.4;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .sheet-in {
+    animation: sheet-in 0.42s cubic-bezier(0.26, 1.2, 0.42, 1) both;
+  }
+  @keyframes backdrop-in {
+    from {
+      opacity: 0;
+    }
+  }
+  .backdrop-in {
+    animation: backdrop-in 0.25s ease both;
+  }
+}
