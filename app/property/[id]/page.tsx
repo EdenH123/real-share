@@ -69,7 +69,7 @@ export default function PropertyDetailPage() {
     <div className="pb-2">
       {/* hero image with overlaid back header */}
       <div className="relative">
-        <PropertyImage theme={p.theme} height="h-60" rounded="rounded-none" />
+        <PropertyImage theme={p.theme} market={p.market} height="h-60" rounded="rounded-none" />
         <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-navy/60 to-transparent">
           <Header back onDark showBell={false} />
         </div>

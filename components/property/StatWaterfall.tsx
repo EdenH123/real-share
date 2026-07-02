@@ -3,6 +3,7 @@
 import { useI18n } from "@/lib/i18n";
 import { formatEUR, formatPct } from "@/lib/format";
 import { Card } from "@/components/ui/Card";
+import { CountUp } from "@/components/ui/CountUp";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 
 // Worked example (deck "The Numbers"): €150k flat.
@@ -60,7 +61,7 @@ export function StatWaterfall() {
           <span className="text-sm font-semibold text-white">{t("wf.netDistributable")}</span>
           <div className="text-end">
             <div className="num font-display text-2xl font-semibold text-gold">
-              {formatEUR(NET)}
+              <CountUp value={NET} format={(n) => formatEUR(Math.round(n))} />
             </div>
             <div className="text-xs font-semibold text-gold/90">
               {t("wf.netYield", { pct: formatPct(NET_YIELD, { decimals: 2 }) })}

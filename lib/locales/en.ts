@@ -104,6 +104,19 @@ export const en: Record<string, string> = {
   "map.approxLocation": "Approximate location — illustrative",
   "map.viewDetails": "View details",
   "map.grossYieldNote": "gross yield",
+  "map.searchPlaceholder": "Search by title or district",
+  "map.sort.default": "Default",
+  "map.sort.priceAsc": "Price ↑",
+  "map.sort.priceDesc": "Price ↓",
+  "map.sort.yieldDesc": "Gross yield ↓",
+  "map.sort.status": "Status",
+
+  // ---- install prompt ----
+  "install.title": "Install RealShare",
+  "install.body": "Add the preview to your home screen for a full-screen, app-like experience.",
+  "install.cta": "Install app",
+  "install.iosHint": "Tap the Share icon, then “Add to Home Screen”.",
+  "install.dismiss": "Dismiss",
 
   // ---- markets ----
   "market.budapest": "Budapest",

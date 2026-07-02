@@ -104,6 +104,19 @@ export const he: Record<string, string> = {
   "map.approxLocation": "מיקום משוער — להמחשה",
   "map.viewDetails": "לפרטים",
   "map.grossYieldNote": "תשואה ברוטו",
+  "map.searchPlaceholder": "חיפוש לפי שם או אזור",
+  "map.sort.default": "ברירת מחדל",
+  "map.sort.priceAsc": "מחיר ↑",
+  "map.sort.priceDesc": "מחיר ↓",
+  "map.sort.yieldDesc": "תשואה ברוטו ↓",
+  "map.sort.status": "סטטוס",
+
+  // ---- install prompt ----
+  "install.title": "התקנת RealShare",
+  "install.body": "הוסיפו את התצוגה המקדימה למסך הבית לחוויה במסך מלא, כמו אפליקציה.",
+  "install.cta": "התקנת האפליקציה",
+  "install.iosHint": "הקישו על סמל השיתוף ואז ״הוספה למסך הבית״.",
+  "install.dismiss": "סגירה",
 
   // ---- markets ----
   "market.budapest": "בודפשט",

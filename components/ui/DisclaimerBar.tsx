@@ -21,7 +21,7 @@ export function DisclaimerBar() {
         aria-label={t("disclaimer.title")}
       >
         <ShieldAlert size={15} className="shrink-0 text-gold" />
-        <span className="line-clamp-2 flex-1 text-[10.5px] leading-tight text-white/80">
+        <span className="line-clamp-1 flex-1 text-[11px] leading-tight text-white/80">
           {t("disclaimer.short")}
         </span>
         <ChevronUp size={14} className="shrink-0 text-white/50" />

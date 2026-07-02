@@ -15,7 +15,17 @@ import { PropertyImage } from "@/components/property/PropertyImage";
 import { IconMedallion } from "@/components/ui/IconMedallion";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { Wallet, TrendingUp, ChevronLeft, ChevronRight, Coins } from "lucide-react";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { CountUp } from "@/components/ui/CountUp";
+import {
+  Wallet,
+  TrendingUp,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft,
+  ArrowRight,
+  Coins,
+} from "lucide-react";
 
 export default function PortfolioPage() {
   const { t, locale, dir } = useI18n();
@@ -30,17 +40,21 @@ export default function PortfolioPage() {
   }, [holdings]);
 
   const Chevron = dir === "rtl" ? ChevronLeft : ChevronRight;
+  const Arrow = dir === "rtl" ? ArrowLeft : ArrowRight;
 
   if (ready && holdings.length === 0) {
     return (
       <div>
         <Header title={t("pf.title")} subtitle={t("pf.subtitle")} />
         <div className="flex flex-col items-center gap-4 px-6 py-24 text-center">
-          <IconMedallion icon={Wallet} size={64} tone="navy" />
+          <div className="ob-float">
+            <IconMedallion icon={Wallet} size={72} tone="navy" />
+          </div>
           <h1 className="font-display text-xl font-semibold text-ink">{t("pf.empty.title")}</h1>
           <p className="max-w-xs text-sm text-muted">{t("pf.empty.body")}</p>
-          <ButtonLink href="/map" variant="gold" size="md">
+          <ButtonLink href="/map" variant="gold" size="md" className="mt-1">
             {t("pf.empty.cta")}
+            <Arrow size={18} />
           </ButtonLink>
         </div>
       </div>
@@ -57,9 +71,16 @@ export default function PortfolioPage() {
           <div className="absolute -end-8 -top-10 h-40 w-40 rounded-full bg-gold/15 blur-2xl" />
           <div className="relative">
             <div className="text-xs text-white/70">{t("pf.totalValue")}</div>
-            <div className="num mt-1 font-display text-4xl font-semibold text-white">
-              {formatEUR(summary.currentValue, { decimals: 2 })}
-            </div>
+            {ready ? (
+              <div className="num mt-1 font-display text-4xl font-semibold text-white">
+                <CountUp
+                  value={summary.currentValue}
+                  format={(n) => formatEUR(n, { decimals: 2 })}
+                />
+              </div>
+            ) : (
+              <Skeleton dark className="mt-1.5 h-10 w-48 rounded-lg" />
+            )}
             <div className="mt-1 flex items-center gap-1.5 text-sm">
               <TrendingUp size={15} className="text-positive" />
               <span className="num font-semibold text-positive">
@@ -86,9 +107,10 @@ export default function PortfolioPage() {
               const p = getProperty(v.propertyId)!;
               return (
                 <Link key={v.propertyId} href={`/property/${v.propertyId}`}>
-                  <Card className="flex items-center gap-3 p-3">
+                  <Card className="press flex items-center gap-3 p-3">
                     <PropertyImage
                       theme={p.theme}
+                      market={p.market}
                       height="h-16"
                       className="!w-16 shrink-0"
                       rounded="rounded-xl"

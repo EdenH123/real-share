@@ -3,13 +3,29 @@
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useI18n } from "@/lib/i18n";
-import { PROPERTIES, MARKETS, getProperty, type MarketId } from "@/lib/seed";
+import {
+  PROPERTIES,
+  MARKETS,
+  getProperty,
+  type MarketId,
+  type PropertyStatus,
+} from "@/lib/seed";
+import { propTitle, propDistrict } from "@/lib/property";
 import { Header } from "@/components/layout/Header";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { MarketsTable } from "@/components/home/MarketsTable";
 import { SectionTitle } from "@/components/ui/SectionTitle";
 import { cn } from "@/lib/cn";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Search } from "lucide-react";
+
+type SortKey = "default" | "priceAsc" | "priceDesc" | "yieldDesc" | "status";
+
+const STATUS_ORDER: Record<PropertyStatus, number> = {
+  funding: 0,
+  active: 1,
+  exitVote: 2,
+  failed: 3,
+};
 
 const MapView = dynamic(() => import("@/components/map/MapView"), {
   ssr: false,
@@ -23,10 +39,12 @@ const MapView = dynamic(() => import("@/components/map/MapView"), {
 });
 
 export default function MapPage() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [market, setMarket] = useState<MarketId | "all">("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(true);
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<SortKey>("default");
 
   const filtered = useMemo(
     () =>
@@ -35,6 +53,45 @@ export default function MapPage() {
         : PROPERTIES.filter((p) => p.market === market),
     [market]
   );
+
+  // Search (title + district, current locale) then sort.
+  const displayed = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    let list = filtered;
+    if (q) {
+      list = list.filter(
+        (p) =>
+          propTitle(p, locale).toLowerCase().includes(q) ||
+          propDistrict(p, locale).toLowerCase().includes(q)
+      );
+    }
+    const sorted = [...list];
+    switch (sort) {
+      case "priceAsc":
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      case "priceDesc":
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case "yieldDesc":
+        sorted.sort((a, b) => b.grossYield - a.grossYield);
+        break;
+      case "status":
+        sorted.sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }, [filtered, query, sort, locale]);
+
+  const sortOptions: { id: SortKey; label: string }[] = [
+    { id: "default", label: t("map.sort.default") },
+    { id: "priceAsc", label: t("map.sort.priceAsc") },
+    { id: "priceDesc", label: t("map.sort.priceDesc") },
+    { id: "yieldDesc", label: t("map.sort.yieldDesc") },
+    { id: "status", label: t("map.sort.status") },
+  ];
 
   function selectMarket(m: MarketId | "all") {
     setMarket(m);
@@ -62,7 +119,7 @@ export default function MapPage() {
       });
     }, 60);
     return () => window.clearTimeout(id);
-  }, [selectedId, filtered]);
+  }, [selectedId, displayed]);
 
   const chips = (
     <>
@@ -131,16 +188,49 @@ export default function MapPage() {
         </div>
       </div>
 
+      {/* search + sort */}
+      <div className="mt-4 px-4">
+        <div className="relative">
+          <Search
+            size={17}
+            className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
+          />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("map.searchPlaceholder")}
+            aria-label={t("map.searchPlaceholder")}
+            className="h-11 w-full rounded-full border border-hairline bg-surface ps-10 pe-4 text-sm text-ink shadow-card outline-none placeholder:text-muted focus:border-teal"
+          />
+        </div>
+        <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
+          {sortOptions.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => setSort(s.id)}
+              aria-pressed={sort === s.id}
+              className={cn(
+                "shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors",
+                sort === s.id ? "bg-navy text-white" : "bg-tint text-muted"
+              )}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* results count */}
       <div className="mt-3 px-4">
         <span className="text-sm font-semibold text-muted">
-          {t("map.results", { count: filtered.length })}
+          {t("map.results", { count: displayed.length })}
         </span>
       </div>
 
       {/* list */}
       <div className="mt-3 space-y-4 px-4">
-        {filtered.map((p) => (
+        {displayed.map((p) => (
           <div
             key={p.id}
             id={`prop-card-${p.id}`}

@@ -30,6 +30,8 @@ type PersistState = {
   readNotifIds: string[];
   onboarded: boolean;
   waitlist: WaitlistEntry;
+  // install prompt card dismissed on Home
+  installDismissed: boolean;
 };
 
 const DEFAULT_STATE: PersistState = {
@@ -38,6 +40,7 @@ const DEFAULT_STATE: PersistState = {
   readNotifIds: [],
   onboarded: false,
   waitlist: null,
+  installDismissed: false,
 };
 
 type StoreValue = {
@@ -48,12 +51,14 @@ type StoreValue = {
   isRead: (id: string) => boolean;
   onboarded: boolean;
   waitlist: WaitlistEntry;
+  installDismissed: boolean;
   // actions
   addInvestment: (propertyId: string, tokens: number, pricePerToken: number) => void;
   placeOrder: (propertyId: string, side: OrderSide, tokens: number, price: number) => void;
   markAllRead: () => void;
   setOnboarded: (v: boolean) => void;
   setWaitlist: (entry: WaitlistEntry) => void;
+  dismissInstall: () => void;
   resetDemo: () => void;
 };
 
@@ -188,6 +193,18 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
+  const dismissInstall = useCallback(() => {
+    setState((prev) => {
+      const next: PersistState = { ...prev, installDismissed: true };
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
+
   const resetDemo = useCallback(() => persist(DEFAULT_STATE), [persist]);
 
   const holdings = useMemo(
@@ -215,11 +232,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     isRead,
     onboarded: state.onboarded,
     waitlist: state.waitlist,
+    installDismissed: state.installDismissed,
     addInvestment,
     placeOrder,
     markAllRead,
     setOnboarded,
     setWaitlist,
+    dismissInstall,
     resetDemo,
   };
 
