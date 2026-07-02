@@ -12,6 +12,7 @@ import {
 } from "@/lib/seed";
 import { propTitle, propDistrict } from "@/lib/property";
 import { Header } from "@/components/layout/Header";
+import { HeroShell } from "@/components/layout/HeroShell";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { MarketsTable } from "@/components/home/MarketsTable";
 import { SectionTitle } from "@/components/ui/SectionTitle";
@@ -148,8 +149,10 @@ export default function MapPage() {
   );
 
   return (
-    <div className="pb-6">
-      <Header title={t("map.title")} subtitle={t("map.subtitle")} />
+    <HeroShell
+      flush
+      hero={<Header title={t("map.title")} subtitle={t("map.subtitle")} onDark />}
+    >
 
       {/* Map hero — default view. Filter chips overlay the top; a collapse/
           expand toggle sizes the map. */}
@@ -249,6 +252,6 @@ export default function MapPage() {
         <SectionTitle>{t("map.exploreMarkets")}</SectionTitle>
         <MarketsTable />
       </div>
-    </div>
+    </HeroShell>
   );
 }

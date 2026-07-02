@@ -8,10 +8,10 @@ import { PROPERTIES, getProperty, estimatedTokenPrice, type OrderSide } from "@/
 import { propTitle, propArea } from "@/lib/property";
 import { formatEUR } from "@/lib/format";
 import { Header } from "@/components/layout/Header";
+import { HeroShell } from "@/components/layout/HeroShell";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { IconMedallion } from "@/components/ui/IconMedallion";
-import { Aurora } from "@/components/fx/Aurora";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { Sheet } from "@/components/ui/Sheet";
 import { DepthChart } from "@/components/charts/DepthChart";
@@ -75,55 +75,61 @@ function TradeInner() {
   );
 
   return (
-    <div className="pb-8">
-      <Header title={t("trade.title")} subtitle={t("trade.subtitle")} />
+    <HeroShell
+      className="pb-8"
+      hero={
+        <>
+          <Header title={t("trade.title")} subtitle={t("trade.subtitle")} onDark />
+          <div className="px-5 pt-1">
+            {/* property selector — glass chips on navy */}
+            <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+              {TRADEABLE.map((tp) => (
+                <button
+                  key={tp.id}
+                  onClick={() => setSelId(tp.id)}
+                  className={cn(
+                    "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
+                    selId === tp.id
+                      ? "bg-gold text-navy"
+                      : "bg-white/[.08] text-white/75 ring-1 ring-white/[.14]"
+                  )}
+                >
+                  {t(tp.cityKey)} · {propArea(tp, locale)}
+                </button>
+              ))}
+            </div>
 
+            <div className="mt-4 flex items-center gap-3">
+              <IconMedallion icon={Coins} size={46} shine />
+              <div className="flex-1">
+                <div className="eyebrow !text-gold">{t("trade.estPrice")}</div>
+                <div className="num font-display text-[34px] font-semibold leading-tight text-white">
+                  {formatEUR(est, { decimals: 2 })}
+                </div>
+              </div>
+              <div className="text-end">
+                <div className="max-w-[130px] truncate text-[11px] text-white/60">
+                  {propTitle(p, locale)}
+                </div>
+                <div className="mt-1 flex items-center justify-end gap-1 text-xs text-white/70">
+                  <TrendingUp size={13} className="text-[#5fc493]" />
+                  {t("trade.spread")}: <span className="num">{formatEUR(book.spread, { decimals: 2 })}</span>
+                </div>
+              </div>
+            </div>
+            <p className="mt-3 text-[11px] leading-relaxed text-white/55">
+              {t("trade.estPriceNote")}
+            </p>
+          </div>
+        </>
+      }
+    >
       <div className="space-y-4 px-4">
         {/* sim badge */}
         <div className="flex items-center gap-2 rounded-card bg-gold/12 px-3 py-2 text-xs font-semibold text-gold-text">
           <Info size={15} />
           {t("trade.simBadge")}
         </div>
-
-        {/* property selector */}
-        <div className="no-scrollbar flex gap-2 overflow-x-auto">
-          {TRADEABLE.map((tp) => (
-            <button
-              key={tp.id}
-              onClick={() => setSelId(tp.id)}
-              className={cn(
-                "shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
-                selId === tp.id ? "bg-navy text-white" : "bg-tint text-muted"
-              )}
-            >
-              {t(tp.cityKey)} · {propArea(tp, locale)}
-            </button>
-          ))}
-        </div>
-
-        {/* estimated price card */}
-        <Card variant="navy" className="relative overflow-hidden p-5">
-          <Aurora intensity={0.7} />
-          <div className="relative flex items-center gap-3">
-            <IconMedallion icon={Coins} size={44} shine />
-            <div className="flex-1">
-              <div className="text-xs text-white/70">{t("trade.estPrice")}</div>
-              <div className="num font-display text-2xl font-semibold text-gold">
-                {formatEUR(est, { decimals: 2 })}
-              </div>
-            </div>
-            <div className="text-end">
-              <div className="text-[11px] text-white/60">{propTitle(p, locale)}</div>
-              <div className="mt-1 flex items-center justify-end gap-1 text-xs text-white/70">
-                <TrendingUp size={13} className="text-positive" />
-                {t("trade.spread")}: <span className="num">{formatEUR(book.spread, { decimals: 2 })}</span>
-              </div>
-            </div>
-          </div>
-          <p className="relative mt-3 text-[11px] leading-relaxed text-white/55">
-            {t("trade.estPriceNote")}
-          </p>
-        </Card>
 
         {/* market depth */}
         <Card className="p-4">
@@ -305,7 +311,7 @@ function TradeInner() {
           </div>
         )}
       </Sheet>
-    </div>
+    </HeroShell>
   );
 }
 

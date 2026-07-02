@@ -8,6 +8,7 @@ import { PROPERTIES, SEED_USER } from "@/lib/seed";
 import { computePortfolio } from "@/lib/portfolio";
 import { formatEUR, formatPct } from "@/lib/format";
 import { Header } from "@/components/layout/Header";
+import { HeroShell, GlassStat } from "@/components/layout/HeroShell";
 import { Card } from "@/components/ui/Card";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { MarketsTable } from "@/components/home/MarketsTable";
@@ -49,82 +50,85 @@ export default function HomePage() {
     { id: "funding", label: t("home.filter.openFunding") },
   ];
 
-  return (
-    <div className="pb-6">
-      <Header title={t("home.greeting", { name })} subtitle={t("home.subtitle")} />
-
-      {/* Portfolio snapshot hero */}
-      <div className="px-4">
-        <Card variant="navy" className="relative overflow-hidden p-5">
-          <Aurora dust />
-          <div className="relative">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-white/70">
-                {t("home.portfolioValue")}
+  const hero = (
+    <>
+      <Header
+        title={t("home.greeting", { name })}
+        subtitle={t("home.subtitle")}
+        onDark
+        avatar={name.charAt(0)}
+      />
+      <div className="px-5 pt-2">
+        <div className="flex items-center justify-between">
+          <span className="eyebrow !text-gold">{t("home.portfolioValue")}</span>
+          <Link
+            href="/portfolio"
+            className="flex items-center gap-1 text-xs font-semibold text-gold"
+          >
+            {t("home.viewPortfolio")}
+            <ArrowUpRight size={14} className="rtl:-scale-x-100" />
+          </Link>
+        </div>
+        {ready ? (
+          <>
+            <div className="num mt-1 font-display text-[44px] font-semibold leading-none text-white">
+              <CountUp
+                value={summary.currentValue}
+                format={(n) => formatEUR(n, { decimals: 0 })}
+              />
+            </div>
+            <div className="mt-2 flex items-center gap-1.5 text-sm">
+              <TrendingUp size={15} className="text-[#5fc493]" />
+              <span className="num font-semibold text-[#5fc493]">
+                {formatPct(summary.gainPct, { sign: true })}
               </span>
-              <Link
-                href="/portfolio"
-                className="flex items-center gap-1 text-xs font-semibold text-gold"
-              >
-                {t("home.viewPortfolio")}
-                <ArrowUpRight size={14} className="rtl:-scale-x-100" />
-              </Link>
+              <span className="text-white/50">·</span>
+              <span className="num text-white/70">
+                +{formatEUR(summary.gain)} {t("home.totalReturn")}
+              </span>
             </div>
-            {ready ? (
-              <>
-                <div className="num mt-1 font-display text-4xl font-semibold text-white">
-                  <CountUp
-                    value={summary.currentValue}
-                    format={(n) => formatEUR(n, { decimals: 0 })}
-                  />
-                </div>
-                <div className="mt-1 flex items-center gap-1.5 text-sm">
-                  <TrendingUp size={15} className="text-positive" />
-                  <span className="num font-semibold text-positive">
-                    {formatPct(summary.gainPct, { sign: true })}
-                  </span>
-                  <span className="text-white/50">·</span>
-                  <span className="num text-white/70">
-                    +{formatEUR(summary.gain)} {t("home.totalReturn")}
-                  </span>
-                </div>
-              </>
-            ) : (
-              <>
-                <Skeleton dark className="mt-1.5 h-10 w-44 rounded-lg" />
-                <Skeleton dark className="mt-2 h-4 w-52 rounded" />
-              </>
-            )}
+          </>
+        ) : (
+          <>
+            <Skeleton dark className="mt-1.5 h-11 w-48 rounded-lg" />
+            <Skeleton dark className="mt-2 h-4 w-52 rounded" />
+          </>
+        )}
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/5 p-3">
-                <div className="text-[11px] text-white/60">{t("home.monthlyIncome")}</div>
-                {ready ? (
-                  <div className="num mt-0.5 font-semibold text-white">
-                    {formatEUR(summary.monthlyIncome, { decimals: 0 })}
-                    <span className="text-xs font-normal text-white/50">/{t("common.month")}</span>
-                  </div>
-                ) : (
-                  <Skeleton dark className="mt-1 h-5 w-20 rounded" />
-                )}
-              </div>
-              <div className="rounded-xl bg-white/5 p-3">
-                <div className="text-[11px] text-white/60">{t("home.nextPayout")}</div>
-                {ready ? (
-                  <div className="num mt-0.5 font-semibold text-gold">
-                    {formatEUR(summary.nextPayout, { decimals: 2 })}
-                  </div>
-                ) : (
-                  <Skeleton dark className="mt-1 h-5 w-16 rounded" />
-                )}
-              </div>
-            </div>
-          </div>
-        </Card>
+        <div className="mt-5 grid grid-cols-2 gap-3">
+          <GlassStat
+            label={t("home.monthlyIncome")}
+            value={
+              ready ? (
+                <>
+                  {formatEUR(summary.monthlyIncome, { decimals: 0 })}
+                  <span className="text-xs font-normal text-white/50">/{t("common.month")}</span>
+                </>
+              ) : (
+                <Skeleton dark className="h-5 w-20 rounded" />
+              )
+            }
+          />
+          <GlassStat
+            gold
+            label={t("home.nextPayout")}
+            value={
+              ready ? (
+                formatEUR(summary.nextPayout, { decimals: 2 })
+              ) : (
+                <Skeleton dark className="h-5 w-16 rounded" />
+              )
+            }
+          />
+        </div>
       </div>
+    </>
+  );
 
+  return (
+    <HeroShell hero={hero}>
       {/* Install prompt (shown only when installable / iOS & not dismissed) */}
-      <div className="mt-4 px-4">
+      <div className="px-4">
         <InstallPromptCard />
       </div>
 
@@ -194,7 +198,7 @@ export default function HomePage() {
       </Reveal>
 
       <WaitlistSheet open={waitlist} onClose={() => setWaitlist(false)} />
-    </div>
+    </HeroShell>
   );
 }
 

@@ -63,7 +63,7 @@ export const en: Record<string, string> = {
 
   // ---- home ----
   "home.greeting": "Hello, {name}",
-  "home.subtitle": "Here’s your RealShare preview",
+  "home.subtitle": "Your RealShare preview",
   "home.portfolioValue": "Portfolio value",
   "home.totalReturn": "Total return",
   "home.nextPayout": "Next payout",

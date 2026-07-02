@@ -97,7 +97,7 @@ export function DepthChart({
         </span>
       </div>
 
-      <div className="relative">
+      <div className="relative" dir="ltr">
         <svg
           viewBox={`0 0 ${W} ${H}`}
           width="100%"
