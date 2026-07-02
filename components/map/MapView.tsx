@@ -189,11 +189,20 @@ export function MapView({
       else map.flyToBounds(ALL_PINS_BOUNDS, { ...BOUNDS_PADDING, duration: 0.8 });
       return;
     }
-    const preset = MARKET_VIEWS[market];
-    if (reduce) {
-      map.setView(preset.center, preset.zoom);
+    // Fit the bounds of this market's pins (handles several properties per
+    // market); fall back to the preset if a market has a single pin.
+    const pins = PROPERTIES.filter((p) => p.market === market).map(
+      (p) => [p.lat, p.lng] as [number, number]
+    );
+    if (pins.length >= 2) {
+      const b = L.latLngBounds(pins).pad(0.15);
+      const opts: L.FitBoundsOptions = { padding: [56, 56], maxZoom: 13.5 };
+      if (reduce) map.fitBounds(b, opts);
+      else map.flyToBounds(b, { ...opts, duration: 0.8 });
     } else {
-      map.flyTo(preset.center, preset.zoom, { duration: 0.8 });
+      const preset = MARKET_VIEWS[market];
+      if (reduce) map.setView(preset.center, preset.zoom);
+      else map.flyTo(preset.center, preset.zoom, { duration: 0.8 });
     }
   }, [market]);
 

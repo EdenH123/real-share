@@ -174,19 +174,24 @@ export function IncomeChart({ holdings }: { holdings: Holding[] }) {
         {formatEUR(endPoint.cum, { decimals: 0 })}
       </text>
 
-      {/* month labels */}
-      {points.map((p, i) => (
-        <text
-          key={p.key}
-          x={x(i)}
-          y={H - 7}
-          fontSize={10}
-          fill="#5A6B78"
-          textAnchor="middle"
-        >
-          {monthLabel(p.key, locale)}
-        </text>
-      ))}
+      {/* month labels — thinned so a full year doesn't collide */}
+      {points.map((p, i) => {
+        const step = Math.ceil(n / 6);
+        const show = i === n - 1 || i % step === 0;
+        if (!show) return null;
+        return (
+          <text
+            key={p.key}
+            x={x(i)}
+            y={H - 7}
+            fontSize={10}
+            fill="#5A6B78"
+            textAnchor={i === n - 1 ? "end" : "middle"}
+          >
+            {monthLabel(p.key, locale)}
+          </text>
+        );
+      })}
     </svg>
   );
 }

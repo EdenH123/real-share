@@ -1,5 +1,15 @@
 # RealShare — Build Progress
 
+## v5 (2026-07-01) — richer mock data ("over time")
+
+Expanded the seed data so the app feels full and lived-in: 14 properties
+(from 6) across Budapest / Athens / Porto / Haifa, clustered near each city so
+skyline art + map views stay coherent; 4 portfolio holdings across 3 markets
+(3-slice allocation donut); a rolling 12-month rent-distribution history via a
+generator (income chart now spans a full year with thinned labels); auto-built
+order books for every tradeable property; 10 notifications spanning ~5 months.
+Map per-market view now fits that market's pins. Build clean, no console errors.
+
 ## v4 (2026-07-01) — "Editorial fintech" shell redesign
 
 Full visual-architecture redesign (Fable): immersive navy aurora header bands
