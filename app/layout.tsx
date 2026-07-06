@@ -71,7 +71,7 @@ export default function RootLayout({
         <Providers>
           <AppFrame>{children}</AppFrame>
         </Providers>
-        <Analytics />
+        {process.env.VERCEL ? <Analytics /> : null}
       </body>
     </html>
   );
