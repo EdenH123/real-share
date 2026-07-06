@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useI18n } from "@/lib/i18n";
 import { useStore } from "@/lib/store";
@@ -23,6 +23,7 @@ import { CountUp } from "@/components/ui/CountUp";
 import { Reveal } from "@/components/ui/Reveal";
 import { InstallPromptCard } from "@/components/home/InstallPromptCard";
 import { cn } from "@/lib/cn";
+import { track } from "@/lib/track";
 import { ArrowUpRight, TrendingUp, Sparkles, Rocket } from "lucide-react";
 
 type Filter = "all" | "hot" | "highYield" | "funding";
@@ -34,6 +35,10 @@ export default function HomePage() {
   const [waitlist, setWaitlist] = useState(false);
 
   const summary = useMemo(() => computePortfolio(holdings), [holdings]);
+
+  useEffect(() => {
+    track("view_home");
+  }, []);
 
   const filtered = useMemo(() => {
     if (filter === "all") return PROPERTIES;

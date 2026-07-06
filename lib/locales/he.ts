@@ -230,6 +230,7 @@ export const he: Record<string, string> = {
     "רוצים את הדבר האמיתי? הצטרפו לרשימת ההמתנה כדי להיות הראשונים בהשקה של RealShare.",
   "invest.goToPortfolio": "צפייה בתיק",
   "invest.joinWaitlist": "הצטרפות לרשימת ההמתנה",
+  "invest.registerInterest": "רישום הסכום כהבעת עניין (לא מחייב)",
   "invest.previewNote":
     "״השקעה״ היא סימולציה המסומנת בבירור. היא מעדכנת רק את תיק ההדגמה שלכם.",
 
@@ -251,6 +252,13 @@ export const he: Record<string, string> = {
   "waitlist.errorEmail": "נא להזין כתובת אימייל תקינה.",
   "waitlist.error": "משהו השתבש. נא לנסות שוב.",
   "waitlist.privacy": "נשתמש באימייל רק לעדכוני השקה.",
+  "waitlist.amountQ": "כמה הייתם שוקלים להשקיע בהשקה?",
+  "waitlist.amountNote": "רשות · לא מחייב · עוזר לנו לאמוד ביקוש.",
+  "waitlist.intentLabel": "העניין שהצהרתם עליו (לא מחייב)",
+  "waitlist.intentNote":
+    "זהו רישום עניין בלבד — אינו הצעה, התחייבות או עסקה. שום כסף אינו עובר בתצוגה המקדימה.",
+  "waitlist.intentRecorded": "הסכום שציינתם נרשם יחד עם ההרשמה (לא מחייב).",
+  "waitlist.submitIntent": "רישום העניין שלי (לא מחייב)",
 
   // ---- trade / marketplace ----
   "trade.title": "מסחר",

@@ -230,6 +230,7 @@ export const en: Record<string, string> = {
     "Want the real thing? Join the waitlist to be first when RealShare launches.",
   "invest.goToPortfolio": "View in portfolio",
   "invest.joinWaitlist": "Join the waitlist",
+  "invest.registerInterest": "Register this amount as interest (non-binding)",
   "invest.previewNote":
     "“Invest” is a clearly-labeled simulation. It updates your demo portfolio only.",
 
@@ -251,6 +252,13 @@ export const en: Record<string, string> = {
   "waitlist.errorEmail": "Please enter a valid email address.",
   "waitlist.error": "Something went wrong. Please try again.",
   "waitlist.privacy": "We’ll only use your email for launch updates.",
+  "waitlist.amountQ": "How much would you consider investing at launch?",
+  "waitlist.amountNote": "Optional · non-binding · helps us size demand.",
+  "waitlist.intentLabel": "Your stated interest (non-binding)",
+  "waitlist.intentNote":
+    "This registers interest only — it is not an offer, a commitment, or a transaction. No money moves in this preview.",
+  "waitlist.intentRecorded": "Your stated amount was recorded with your signup (non-binding).",
+  "waitlist.submitIntent": "Register my interest (non-binding)",
 
   // ---- trade / marketplace ----
   "trade.title": "Trade",

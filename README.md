@@ -63,3 +63,46 @@ reference/      original spec, deck, prototype, background docs
 - **[BUILD-BRIEF.md](BUILD-BRIEF.md)** — the primary, self-contained build spec.
 - **[BUILD-PROMPT.md](BUILD-PROMPT.md)** — the autonomous `/goal` prompt used to build this.
 - **`reference/`** — pitch deck (EN + HE), product/financial/regulatory docs, the original clickable prototype, founder/context notes.
+
+## Turning on the POC funnel (5 minutes)
+
+The preview measures real demand: every waitlist signup (with a stated,
+non-binding investment amount) and every funnel event (property views,
+invest-intents with € amounts, trade-intents) can land in a **Google Sheet you
+own**.
+
+### 1. Create the Sheet + webhook
+1. Create a new Google Sheet → **Extensions → Apps Script**.
+2. Replace the code with:
+   ```js
+   function doPost(e) {
+     var d = JSON.parse(e.postData.contents);
+     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+     sheet.appendRow([
+       d.at || new Date().toISOString(), d.type || "", d.event || "",
+       d.email || "", d.amountEur || "", d.propertyId || "", d.tokens || "",
+       d.market || "", d.name || "", d.locale || "", d.src || "", d.anon || "",
+       JSON.stringify(d.props || {}),
+     ]);
+     return ContentService.createTextOutput("ok");
+   }
+   ```
+3. **Deploy → New deployment → Web app** → Execute as *Me*, access
+   *Anyone* → **Deploy** → copy the web-app URL.
+
+### 2. Connect it to the app
+In Vercel: **Project → Settings → Environment Variables** → add
+`POC_WEBHOOK_URL` = the URL you copied → **Redeploy**.
+
+That's it. Rows appear in your Sheet as people use the app. Until you set the
+variable, everything still works — events are only in the server logs.
+
+### 3. Read the results
+- **Demand**: filter `type = signup` — each row has an email + stated amount
+  (non-binding) + the property that triggered it.
+- **Funnel**: count `view_property` → `invest_intent` → `signup` per `anon` id.
+- **Channels**: share links as `https://your-app.vercel.app/?src=whatsapp`
+  (or `src=linkedin`, `src=family`…) — the `src` column shows which channel
+  each signup came from.
+- Also enable **Vercel Analytics** (Project → Analytics → Enable) for
+  visitor/pageview counts — the app already includes the snippet.

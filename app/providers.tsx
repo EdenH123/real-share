@@ -3,6 +3,7 @@
 import { I18nProvider } from "@/lib/i18n";
 import { StoreProvider } from "@/lib/store";
 import { useEffect } from "react";
+import { captureSrc } from "@/lib/track";
 
 function ServiceWorkerRegistration() {
   useEffect(() => {
@@ -24,11 +25,19 @@ function ServiceWorkerRegistration() {
   return null;
 }
 
+function SrcCapture() {
+  useEffect(() => {
+    captureSrc();
+  }, []);
+  return null;
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <I18nProvider initialLocale="he">
       <StoreProvider>
         <ServiceWorkerRegistration />
+        <SrcCapture />
         {children}
       </StoreProvider>
     </I18nProvider>
