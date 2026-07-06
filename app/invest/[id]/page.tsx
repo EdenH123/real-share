@@ -15,6 +15,7 @@ import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { CountUp } from "@/components/ui/CountUp";
 import { NotFoundInline } from "@/components/ui/NotFoundInline";
 import { WaitlistSheet } from "@/components/waitlist/WaitlistSheet";
+import { track } from "@/lib/track";
 import {
   Minus,
   Plus,
@@ -52,6 +53,12 @@ export default function InvestPage() {
 
   function confirm() {
     addInvestment(p!.id, tokens, p!.tokenPrice);
+    // The POC's core signal: a sized, non-binding statement of intent.
+    track("invest_intent", {
+      property: p!.id,
+      tokens,
+      amountEur: Math.round(tokens * p!.tokenPrice),
+    });
     setStep("success");
   }
 
@@ -97,14 +104,22 @@ export default function InvestPage() {
 
           <div className="mt-5 w-full space-y-3">
             <Button size="lg" onClick={() => setWaitlist(true)}>
-              {t("invest.joinWaitlist")}
+              {t("invest.registerInterest")}
             </Button>
             <ButtonLink href="/portfolio" variant="secondary" size="lg">
               {t("invest.goToPortfolio")}
             </ButtonLink>
           </div>
         </div>
-        <WaitlistSheet open={waitlist} onClose={() => setWaitlist(false)} />
+        <WaitlistSheet
+          open={waitlist}
+          onClose={() => setWaitlist(false)}
+          intent={{
+            propertyId: p.id,
+            tokens,
+            amount: Math.round(calc.total),
+          }}
+        />
         <div className="h-8" />
       </div>
     );

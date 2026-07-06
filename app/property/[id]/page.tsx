@@ -20,6 +20,8 @@ import { IconMedallion } from "@/components/ui/IconMedallion";
 import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { NotFoundInline } from "@/components/ui/NotFoundInline";
 import { useParallax } from "@/components/fx/useParallax";
+import { useEffect } from "react";
+import { track } from "@/lib/track";
 import {
   MapPin,
   Percent,
@@ -49,6 +51,10 @@ export default function PropertyDetailPage() {
   const heroRef = useParallax<HTMLDivElement>(0.35);
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const p = id ? getProperty(id) : undefined;
+
+  useEffect(() => {
+    if (id) track("view_property", { property: id });
+  }, [id]);
 
   if (!p) return <NotFoundInline />;
 

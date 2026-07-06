@@ -3,6 +3,7 @@ import "./globals.css";
 import { fraunces, assistant } from "./fonts";
 import { Providers } from "./providers";
 import { AppFrame } from "@/components/layout/AppFrame";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "RealShare — fractional real estate (preview)",
@@ -16,6 +17,20 @@ export const metadata: Metadata = {
     // let the system clock overlay the app header when installed).
     statusBarStyle: "default",
     title: "RealShare",
+  },
+  openGraph: {
+    title: "RealShare — fractional real estate (preview)",
+    description:
+      "Own real estate, a slice at a time — from ₪100. Budapest · Athens · Porto · Haifa. Preview; figures are illustrative.",
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RealShare — fractional real estate (preview)",
+    description:
+      "Own real estate, a slice at a time — from ₪100. Preview; figures are illustrative.",
+    images: ["/og.png"],
   },
   icons: {
     icon: [
@@ -56,6 +71,7 @@ export default function RootLayout({
         <Providers>
           <AppFrame>{children}</AppFrame>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

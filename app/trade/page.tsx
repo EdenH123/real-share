@@ -16,6 +16,7 @@ import { IllustrativeTag } from "@/components/ui/IllustrativeTag";
 import { Sheet } from "@/components/ui/Sheet";
 import { DepthChart } from "@/components/charts/DepthChart";
 import { cn } from "@/lib/cn";
+import { track } from "@/lib/track";
 import { Info, TrendingUp, Coins, CheckCircle2 } from "lucide-react";
 
 // Only active/funding properties are tradeable in the demo.
@@ -65,6 +66,12 @@ function TradeInner() {
   function submitOrder() {
     if (!sheet) return;
     placeOrder(selId, sheet, qty, price);
+    track("trade_intent", {
+      property: selId,
+      side: sheet,
+      tokens: qty,
+      amountEur: Math.round(qty * price),
+    });
     setPlaced(true);
   }
 
